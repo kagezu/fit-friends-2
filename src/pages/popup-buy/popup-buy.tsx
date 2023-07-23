@@ -1,6 +1,6 @@
-export default function SignUp(): JSX.Element {
+export default function PopupBuy(): JSX.Element {
   return (
-    <main>
+    <main>!{/*
       <div className="popup-form popup-form--buy">
         <section className="popup">
           <div className="popup__wrapper">
@@ -92,7 +92,7 @@ export default function SignUp(): JSX.Element {
               </div>
             </div>
         </section>
-      </div>
+      </div>*/}
     </main>
   );
 }

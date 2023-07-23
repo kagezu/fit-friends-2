@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
 
 export default function Intro(): JSX.Element {
   return (
@@ -19,8 +20,8 @@ export default function Intro(): JSX.Element {
             </picture>
           </div>
           <div className="intro__buttons">
-            <Link className="btn intro__button" to="#" >Регистрация</Link>
-            <p className="intro__text">Есть аккаунт? <Link className="intro__link" to="/login">Вход</Link>
+            <Link className="btn intro__button" to={AppRoute.SignUp} >Регистрация</Link>
+            <p className="intro__text">Есть аккаунт? <Link className="intro__link" to={AppRoute.SignIn}>Вход</Link>
             </p>
           </div>
         </div>

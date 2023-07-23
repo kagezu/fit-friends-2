@@ -1,6 +1,6 @@
-export default function SignUp(): JSX.Element {
+export default function PopupUserMap(): JSX.Element {
   return (
-    <main>
+    <main>!{/*
       <div className="popup-form popup-form--map">
         <section className="popup">
           <div className="popup__wrapper popup__wrapper--map">
@@ -31,7 +31,7 @@ export default function SignUp(): JSX.Element {
               </div>
             </div>
         </section>
-      </div>
+      </div>*/}
     </main>
   );
 }

@@ -13,6 +13,6 @@ export default function PrivateRoute({ roles, children }: PrivateRouteProps): JS
   return (
     roles.some((allowed) => allowed === role)
       ? children
-      : <Navigate to={AppRoute.Login} />
+      : <Navigate to={AppRoute.SignIn} />
   );
 }

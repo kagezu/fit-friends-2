@@ -10,8 +10,8 @@ export default function App(): JSX.Element {
     <BrowserRouter>
       <Routes>
         <Route path={AppRoute.Intro} element={<Intro />} />
-        <Route path={AppRoute.Login} element={<SignIn />} />
-        <Route path={AppRoute.Registration} element={<SignUp />} />
+        <Route path={AppRoute.SignIn} element={<SignIn />} />
+        <Route path={AppRoute.SignUp} element={<SignUp />} />
 
         {/*
         <Route path="/" element={<Layout />}>

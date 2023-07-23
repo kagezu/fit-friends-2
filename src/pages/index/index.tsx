@@ -1,6 +1,6 @@
-export default function SignUp(): JSX.Element {
+export default function Index(): JSX.Element {
   return (
-    <>
+    <>!{/*
       <header className="header">
         <div className="container"><span className="header__logo">
           <svg width="187" height="70" aria-hidden="true">
@@ -552,7 +552,7 @@ export default function SignUp(): JSX.Element {
             </div>
           </div>
         </section>
-      </main>
+      </main>*/}
     </>
   );
 }

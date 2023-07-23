@@ -1,6 +1,6 @@
-export default function SignUp(): JSX.Element {
+export default function QuestionnaireUser(): JSX.Element {
   return (
-    <main>
+    <main>!{/*
       <div className="background-logo">
         <svg className="background-logo__logo" width="750" height="284" aria-hidden="true">
           <use xlinkHref="#logo-big"></use>
@@ -127,7 +127,7 @@ export default function SignUp(): JSX.Element {
             </div>
           </div>
         </div>
-      </div>
+      </div>*/}
     </main>
   );
 }

@@ -1,7 +1,7 @@
 export enum AppRoute {
   Intro = '/',
-  Login = '/sign-in',
-  Registration = '/sign-up',
+  SignIn = '/sign-in',
+  SignUp = '/sign-up',
   Error404 = '*',
 }
 
