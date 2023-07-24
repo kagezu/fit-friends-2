@@ -2,12 +2,17 @@ export enum AppRoute {
   Intro = '/',
   SignIn = '/sign-in',
   SignUp = '/sign-up',
+  Index = '/index',
+  PersonalAccountCoach = '/personal-account-coach',
+
+
   Error404 = '*',
 }
 
 export enum APIRoute {
-  Login = '/login',
-  Registration = '/register'
+  AuthCheck = 'user',
+  SignIn = 'auth/login',
+  SignUp = 'auth/register',
 }
 
 export enum NameSpace {

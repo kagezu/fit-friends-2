@@ -1,7 +1,7 @@
-import { Role } from '../const';
+import { User } from './user';
 
 export type UserData = {
-  name: string;
-  role: Role;
+  user: User;
   accessToken: string;
+  refreshToken: string;
 };

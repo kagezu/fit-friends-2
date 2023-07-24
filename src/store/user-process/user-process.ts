@@ -1,10 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace, Role } from '../../const';
-import { User } from '../../types/store';
+import { User } from '../../types/user';
 
 export const userInitialState: User = {
   role: Role.Unknown,
-  name: ''
+  name: '',
+  email: '',
+  gender: '',
+  location: ''
 };
 
 export const userProcess = createSlice({
@@ -13,8 +16,7 @@ export const userProcess = createSlice({
   reducers: {
     requireAuthorization:
       (state, action: PayloadAction<User>) => {
-        state.role = action.payload.role;
-        state.name = action.payload.name;
+        Object.assign(state, action.payload);
       }
   },
 });

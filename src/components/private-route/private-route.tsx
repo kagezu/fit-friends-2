@@ -1,15 +1,13 @@
 import { Navigate } from 'react-router-dom';
 import { AppRoute, Role } from '../../const';
-import { useAppSelector } from '../../hooks';
-import { getRole } from '../../store/selectors';
 
 type PrivateRouteProps = {
+  role: Role;
   roles: Role[];
   children: JSX.Element;
 }
 
-export default function PrivateRoute({ roles, children }: PrivateRouteProps): JSX.Element {
-  const role = useAppSelector(getRole);
+export default function PrivateRoute({ role, roles, children }: PrivateRouteProps): JSX.Element {
   return (
     roles.some((allowed) => allowed === role)
       ? children
