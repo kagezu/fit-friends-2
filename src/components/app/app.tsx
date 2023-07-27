@@ -57,9 +57,9 @@ export default function App(): JSX.Element {
         />
 
         <Route
-          path={AppRoute.Index}
+          path={AppRoute.PersonalAccountCoach}
           element={
-            <PrivateRoute role={role} roles={[Role.User]}>
+            <PrivateRoute role={role} roles={[Role.Coach]}>
               <PersonalAccountCoach />
             </PrivateRoute>
           }

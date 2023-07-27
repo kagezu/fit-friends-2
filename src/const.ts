@@ -3,6 +3,8 @@ export enum AppRoute {
   SignIn = '/sign-in',
   SignUp = '/sign-up',
   Index = '/index',
+  QuestionnaireCoach = '/questionnaire-coach',
+  QuestionnaireUser = '/questionnaire-user',
   PersonalAccountCoach = '/personal-account-coach',
 
 
@@ -17,6 +19,7 @@ export enum APIRoute {
 
 export enum NameSpace {
   User = 'User',
+  Error = 'Error',
 }
 
 export enum Role {
