@@ -1,6 +1,6 @@
 export type QuestionnaireData = {
   trainingLevel?: string;
-  trainingTypes?: string[];
+  trainingTypes?: string;
 
   interval?: string;
   caloriesToBurn?: number;

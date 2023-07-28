@@ -1,133 +1,198 @@
+import { useState, ChangeEvent, FormEvent, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import BackgroundLogo from '../../components/background-logo/background-logo';
+import { useAppSelector, useAppDispatch } from '../../hooks';
+import { responseError } from '../../store/error-process/error-process';
+import { getError, getUser } from '../../store/selectors';
+import { QuestionnaireData } from '../../types/questionnaire-data';
+import { AppRoute, Intervals, TrainingLevel, TrainingType } from '../../const';
+import { questionnaireAction } from '../../store/user-process/user-api-actions';
+import { toUpperCaseFirst } from '../../utils/util';
+
+const MAX_TRAINING_TYPE = 3;
+enum CaloriesToBurn {
+  Max = 5000,
+  Min = 1000
+}
+enum caloriesPerDay {
+  Max = 5000,
+  Min = 1000
+}
+
 export default function QuestionnaireUser(): JSX.Element {
+  const errors = useAppSelector(getError);
+  const user = useAppSelector(getUser);
+  const [request, setRequest] = useState<QuestionnaireData>({
+    trainingLevel: user.trainingLevel ?? TrainingLevel.Amateur,
+    interval: user.interval ?? Intervals.Second,
+    caloriesToBurn: user.caloriesToBurn ?? CaloriesToBurn.Min,
+    caloriesPerDay: user.caloriesPerDay ?? caloriesPerDay.Min
+  });
+  const [trainingTypes, setTrainingTypes] = useState<string[]>(user.trainingTypes ?? []);
+  const submitRef = useRef<HTMLButtonElement>(null);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  if (submitRef.current) {
+    submitRef.current.disabled = false;
+  }
+
+  const isTrainingTypes = (value: string) => trainingTypes.some((item) => item === value);
+
+  const handleFormDataChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    const name = evt.target.name;
+    setRequest({ ...request, [name]: evt.target.value });
+    if (errors[name]) {
+      dispatch(responseError({ ...errors, [name]: '' }));
+    }
+  };
+
+  const handleTrainingTypeChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    const value = evt.target.value;
+    if (evt.target.checked && trainingTypes?.length < MAX_TRAINING_TYPE) {
+      setTrainingTypes([...trainingTypes, value]);
+    } else {
+      setTrainingTypes(trainingTypes.filter((item) => item !== value));
+    }
+  };
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    if (request && submitRef.current) {
+      submitRef.current.disabled = true;
+      dispatch(questionnaireAction({
+        request: { ...request, trainingTypes: trainingTypes.join(',') },
+        target: AppRoute.QuestionnaireUser,
+        navigate
+      }));
+    }
+  };
+
   return (
-    <main>!{/*
-      <div className="background-logo">
-        <svg className="background-logo__logo" width="750" height="284" aria-hidden="true">
-          <use xlinkHref="#logo-big"></use>
-        </svg>
-        <svg className="background-logo__icon" width="343" height="343" aria-hidden="true">
-          <use xlinkHref="#icon-logotype"></use>
-        </svg>
-      </div>
+    <main>
+      <BackgroundLogo />
       <div className="popup-form popup-form--questionnaire-user">
         <div className="popup-form__wrapper">
           <div className="popup-form__content">
             <div className="popup-form__form">
-              <form method="get">
+              <form method="post" onSubmit={handleSubmit}>
                 <div className="questionnaire-user">
                   <h1 className="visually-hidden">Опросник</h1>
                   <div className="questionnaire-user__wrapper">
                     <div className="questionnaire-user__block"><span className="questionnaire-user__legend">Ваша специализация (тип) тренировок</span>
                       <div className="specialization-checkbox questionnaire-user__specializations">
-                        <div className="btn-checkbox">
-                          <label>
-                            <input className="visually-hidden" type="checkbox" name="specialisation" value="yoga"><span className="btn-checkbox__btn">Йога</span>
-                          </label>
-                        </div>
-                        <div className="btn-checkbox">
-                          <label>
-                            <input className="visually-hidden" type="checkbox" name="specialisation" value="running"><span className="btn-checkbox__btn">Бег</span>
-                          </label>
-                        </div>
-                        <div className="btn-checkbox">
-                          <label>
-                            <input className="visually-hidden" type="checkbox" name="specialisation" value="power" checked="checked"><span className="btn-checkbox__btn">Силовые</span>
-                          </label>
-                        </div>
-                        <div className="btn-checkbox">
-                          <label>
-                            <input className="visually-hidden" type="checkbox" name="specialisation" value="aerobics"><span className="btn-checkbox__btn">Аэробика</span>
-                          </label>
-                        </div>
-                        <div className="btn-checkbox">
-                          <label>
-                            <input className="visually-hidden" type="checkbox" name="specialisation" value="crossfit" checked="checked"><span className="btn-checkbox__btn">Кроссфит</span>
-                          </label>
-                        </div>
-                        <div className="btn-checkbox">
-                          <label>
-                            <input className="visually-hidden" type="checkbox" name="specialisation" value="boxing" checked="checked"><span className="btn-checkbox__btn">Бокс</span>
-                          </label>
-                        </div>
-                        <div className="btn-checkbox">
-                          <label>
-                            <input className="visually-hidden" type="checkbox" name="specialisation" value="pilates"><span className="btn-checkbox__btn">Пилатес</span>
-                          </label>
-                        </div>
-                        <div className="btn-checkbox">
-                          <label>
-                            <input className="visually-hidden" type="checkbox" name="specialisation" value="stretching"><span className="btn-checkbox__btn">Стрейчинг</span>
-                          </label>
-                        </div>
+                        {
+                          Object
+                            .values(TrainingType)
+                            .map((value) => (
+                              <div key={value} className="btn-checkbox">
+                                <label>
+                                  <input
+                                    className="visually-hidden"
+                                    type="checkbox"
+                                    name="trainingTypes"
+                                    value={value}
+                                    checked={isTrainingTypes(value)}
+                                    onChange={handleTrainingTypeChange}
+                                  />
+                                  <span className="btn-checkbox__btn">{toUpperCaseFirst(value)}</span>
+                                </label>
+                              </div>
+                            ))
+                        }
                       </div>
                     </div>
-                    <div className="questionnaire-user__block"><span className="questionnaire-user__legend">Сколько времени вы готовы уделять на тренировку в день</span>
+                    <div className="questionnaire-user__block">
+                      <span className="questionnaire-user__legend">Сколько времени вы готовы уделять на тренировку в день</span>
                       <div className="custom-toggle-radio custom-toggle-radio--big questionnaire-user__radio">
-                        <div className="custom-toggle-radio__block">
-                          <label>
-                            <input type="radio" name="time"><span className="custom-toggle-radio__icon"></span><span className="custom-toggle-radio__label">10-30 мин</span>
-                          </label>
-                        </div>
-                        <div className="custom-toggle-radio__block">
-                          <label>
-                            <input type="radio" name="time" checked><span className="custom-toggle-radio__icon"></span><span className="custom-toggle-radio__label">30-50 мин</span>
-                          </label>
-                        </div>
-                        <div className="custom-toggle-radio__block">
-                          <label>
-                            <input type="radio" name="time"><span className="custom-toggle-radio__icon"></span><span className="custom-toggle-radio__label">50-80 мин</span>
-                          </label>
-                        </div>
-                        <div className="custom-toggle-radio__block">
-                          <label>
-                            <input type="radio" name="time"><span className="custom-toggle-radio__icon"></span><span className="custom-toggle-radio__label">80-100 мин</span>
-                          </label>
-                        </div>
+                        {
+                          Object
+                            .values(Intervals)
+                            .map((value) => (
+                              <div key={value} className="custom-toggle-radio__block">
+                                <label>
+                                  <input
+                                    onChange={handleFormDataChange}
+                                    type="radio"
+                                    name="interval"
+                                    value={value}
+                                    checked={value === request.interval}
+                                  />
+                                  <span className="custom-toggle-radio__icon"></span>
+                                  <span className="custom-toggle-radio__label">{value}</span>
+                                </label>
+                              </div>
+                            ))
+                        }
                       </div>
                     </div>
                     <div className="questionnaire-user__block"><span className="questionnaire-user__legend">Ваш уровень</span>
                       <div className="custom-toggle-radio custom-toggle-radio--big questionnaire-user__radio">
-                        <div className="custom-toggle-radio__block">
-                          <label>
-                            <input type="radio" name="level"><span className="custom-toggle-radio__icon"></span><span className="custom-toggle-radio__label">Новичок</span>
-                          </label>
-                        </div>
-                        <div className="custom-toggle-radio__block">
-                          <label>
-                            <input type="radio" name="level" checked><span className="custom-toggle-radio__icon"></span><span className="custom-toggle-radio__label">Любитель</span>
-                          </label>
-                        </div>
-                        <div className="custom-toggle-radio__block">
-                          <label>
-                            <input type="radio" name="level"><span className="custom-toggle-radio__icon"></span><span className="custom-toggle-radio__label">Профессионал</span>
-                          </label>
-                        </div>
+                        {
+                          Object
+                            .values(TrainingLevel)
+                            .map((value) => (
+                              <div key={value} className="custom-toggle-radio__block">
+                                <label>
+                                  <input
+                                    onChange={handleFormDataChange}
+                                    type="radio"
+                                    name="trainingLevel"
+                                    value={value}
+                                    checked={value === request.trainingLevel}
+                                  />
+                                  <span className="custom-toggle-radio__icon"></span>
+                                  <span className="custom-toggle-radio__label">{toUpperCaseFirst(value)}</span>
+                                </label>
+                              </div>
+                            ))
+                        }
                       </div>
                     </div>
                     <div className="questionnaire-user__block">
                       <div className="questionnaire-user__calories-lose"><span className="questionnaire-user__legend">Сколько калорий хотите сбросить</span>
                         <div className="custom-input custom-input--with-text-right questionnaire-user__input">
-                          <label><span className="custom-input__wrapper">
-                            <input type="number" name="calories-lose"><span className="custom-input__text">ккал</span></span>
+                          <label>
+                            <span className="custom-input__wrapper">
+                              <input
+                                onChange={handleFormDataChange}
+                                type="number"
+                                name="caloriesToBurn"
+                                min={CaloriesToBurn.Min}
+                                max={CaloriesToBurn.Max}
+                                value={request.caloriesToBurn}
+                              />
+                              <span className="custom-input__text">ккал</span>
+                            </span>
                           </label>
                         </div>
                       </div>
                       <div className="questionnaire-user__calories-waste"><span className="questionnaire-user__legend">Сколько калорий тратить в день</span>
                         <div className="custom-input custom-input--with-text-right questionnaire-user__input">
-                          <label><span className="custom-input__wrapper">
-                            <input type="number" name="calories-waste"><span className="custom-input__text">ккал</span></span>
+                          <label>
+                            <span className="custom-input__wrapper">
+                              <input
+                                onChange={handleFormDataChange}
+                                type="number"
+                                name="caloriesPerDay"
+                                min={caloriesPerDay.Min}
+                                max={caloriesPerDay.Max}
+                                value={request.caloriesPerDay}
+                              />
+                              <span className="custom-input__text">ккал</span>
+                            </span>
                           </label>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <button className="btn questionnaire-user__button" type="submit">Продолжить</button>
+                  <button ref={submitRef} className="btn questionnaire-user__button" type="submit">Продолжить</button>
                 </div>
               </form>
             </div>
           </div>
         </div>
-      </div>*/}
+      </div>
     </main>
   );
 }

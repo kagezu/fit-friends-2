@@ -1,8 +1,9 @@
 import { useRef, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { loginAction } from '../../store/api-actions';
+import { loginAction } from '../../store/user-process/user-api-actions';
 import { getError } from '../../store/selectors';
+import BackgroundLogo from '../../components/background-logo/background-logo';
 
 export default function SignIn(): JSX.Element {
   const emailRef = useRef<HTMLInputElement | null>(null);
@@ -25,14 +26,7 @@ export default function SignIn(): JSX.Element {
 
   return (
     <main>
-      <div className="background-logo">
-        <svg className="background-logo__logo" width="750" height="284" aria-hidden="true">
-          <use xlinkHref="#logo-big"></use>
-        </svg>
-        <svg className="background-logo__icon" width="343" height="343" aria-hidden="true">
-          <use xlinkHref="#icon-logotype"></use>
-        </svg>
-      </div>
+      <BackgroundLogo />
       <div className="popup-form popup-form--sign-in">
         <div className="popup-form__wrapper">
           <div className="popup-form__content">

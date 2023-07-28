@@ -1,11 +1,12 @@
 import { FormEvent, useState, ChangeEvent, useRef, SyntheticEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { registerAction } from '../../store/api-actions';
+import { registerAction } from '../../store/user-process/user-api-actions';
 import { getError } from '../../store/selectors';
 import { RegistrationData } from '../../types/registration-data';
 import { responseError } from '../../store/error-process/error-process';
 import { locations } from '../../types/arrays';
+import BackgroundLogo from '../../components/background-logo/background-logo';
 
 export default function SignUp(): JSX.Element {
   const [request, setRequest] = useState<RegistrationData>({
@@ -57,14 +58,7 @@ export default function SignUp(): JSX.Element {
 
   return (
     <main>
-      <div className="background-logo">
-        <svg className="background-logo__logo" width="750" height="284" aria-hidden="true">
-          <use xlinkHref="#logo-big"></use>
-        </svg>
-        <svg className="background-logo__icon" width="343" height="343" aria-hidden="true">
-          <use xlinkHref="#icon-logotype"></use>
-        </svg>
-      </div>
+      <BackgroundLogo />
       <div className="popup-form popup-form--sign-up">
         <div className="popup-form__wrapper">
           <div className="popup-form__content">
