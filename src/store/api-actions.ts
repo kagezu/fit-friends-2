@@ -8,9 +8,9 @@ import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
 import { KeyName, saveItem } from '../services/token';
 import axios from 'axios';
-import { responseError } from './error/error';
-import { ErrorList } from '../types/types';
+import { responseError } from './error-process/error-process';
 import { RegistrationData } from '../types/registration-data';
+import { parseError } from './utils/parse-error';
 
 export const checkAuthAction = createAsyncThunk(
   'user/checkAuth',
@@ -34,18 +34,12 @@ export const loginAction = createAsyncThunk(
       dispatch(requireAuthorization(user));
       dispatch(responseError({}));
     } catch (err) {
-      if (axios.isAxiosError(err) && err.response?.data) {
-        const { message } = err.response.data as ErrorList;
-        const errors: ErrorList = {};
-        if (Array.isArray(message)) {
-          message.forEach((item: string) => {
-            const splits: string[] = item.split(' ');
-            errors[splits.shift() as string] = splits.join(' ');
-          });
-        } else {
-          errors['message'] = message as unknown as string;
+      if (axios.isAxiosError(err)) {
+        const errors = parseError(err);
+        if (errors) {
+          dispatch(responseError(errors));
+          navigate(AppRoute.SignIn);
         }
-        dispatch(responseError(errors));
       }
     }
 
@@ -74,20 +68,12 @@ export const registerAction = createAsyncThunk(
       navigate(AppRoute.QuestionnaireCoach);
 
     } catch (err) {
-      if (axios.isAxiosError(err) && err.response?.data) {
-        const { message } = err.response.data as ErrorList;
-        const errors: ErrorList = {};
-        if (Array.isArray(message)) {
-          message.forEach((item: string) => {
-            const splits: string[] = item.split(' ');
-            errors[splits.shift() as string] = splits.join(' ');
-          });
-        } else {
-          const splits: string[] = message.split(' ');
-          errors[splits.shift() as string] = splits.join(' ');
+      if (axios.isAxiosError(err)) {
+        const errors = parseError(err);
+        if (errors) {
+          dispatch(responseError(errors));
+          navigate(AppRoute.SignUp);
         }
-        dispatch(responseError(errors));
-        navigate(AppRoute.SignUp);
       }
     }
   }

@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { registerAction } from '../../store/api-actions';
 import { getError } from '../../store/selectors';
 import { RegistrationData } from '../../types/registration-data';
-import { responseError } from '../../store/error/error';
+import { responseError } from '../../store/error-process/error-process';
 import { locations } from '../../types/arrays';
 
 export default function SignUp(): JSX.Element {

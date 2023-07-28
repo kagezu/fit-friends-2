@@ -10,14 +10,16 @@ import Index from '../../pages/index';
 import PrivateRoute from '../private-route/private-route';
 import Error404 from '../../pages/error-404/error-404';
 import PersonalAccountCoach from '../../pages/personal-account-coach/personal-account-coach';
+import QuestionnaireUser from '../../pages/questionnaire-user/questionnaire-user';
+import QuestionnaireCoach from '../../pages/questionnaire-coach/questionnaire-coach';
 
 const redirectRoutes: Redirect[] = [
   {
-    target: Role.User,
+    trigger: Role.User,
     redirect: AppRoute.Index
   },
   {
-    target: Role.Coach,
+    trigger: Role.Coach,
     redirect: AppRoute.PersonalAccountCoach
   },
 ];
@@ -32,7 +34,7 @@ export default function App(): JSX.Element {
         <Route
           path={AppRoute.SignIn}
           element={
-            <RedirectRoute state={role} routes={redirectRoutes}>
+            <RedirectRoute target={role} routes={redirectRoutes}>
               <SignIn />
             </RedirectRoute>
           }
@@ -41,7 +43,7 @@ export default function App(): JSX.Element {
         <Route
           path={AppRoute.SignUp}
           element={
-            <RedirectRoute state={role} routes={redirectRoutes}>
+            <RedirectRoute target={role} routes={redirectRoutes}>
               <SignUp />
             </RedirectRoute>
           }
@@ -61,6 +63,24 @@ export default function App(): JSX.Element {
           element={
             <PrivateRoute role={role} roles={[Role.Coach]}>
               <PersonalAccountCoach />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path={AppRoute.QuestionnaireUser}
+          element={
+            <PrivateRoute role={role} roles={[Role.User]}>
+              <QuestionnaireUser />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path={AppRoute.QuestionnaireCoach}
+          element={
+            <PrivateRoute role={role} roles={[Role.Coach]}>
+              <QuestionnaireCoach />
             </PrivateRoute>
           }
         />
