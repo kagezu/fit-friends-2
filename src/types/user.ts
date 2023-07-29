@@ -1,4 +1,4 @@
-import { Role } from '../const';
+import { Role } from './enums';
 
 export type User = {
   id?: string;

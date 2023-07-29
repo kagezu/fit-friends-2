@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute } from '../../types/enums';
 
 export default function Intro(): JSX.Element {
   return (

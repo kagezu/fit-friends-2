@@ -1,5 +1,5 @@
 import { StoreType } from '../types/store';
-import { Role } from '../const';
+import { Role } from '../types/enums';
 import { User } from '../types/user';
 import { ErrorList } from '../utils/parse-error';
 

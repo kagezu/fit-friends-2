@@ -5,19 +5,10 @@ import { useAppSelector, useAppDispatch } from '../../hooks';
 import { responseError } from '../../store/error-process/error-process';
 import { getError, getUser } from '../../store/selectors';
 import { QuestionnaireData } from '../../types/questionnaire-data';
-import { AppRoute, Intervals, TrainingLevel, TrainingType } from '../../const';
 import { questionnaireAction } from '../../store/user-process/user-api-actions';
 import { toUpperCaseFirst } from '../../utils/util';
-
-const MAX_TRAINING_TYPE = 3;
-enum CaloriesToBurn {
-  Max = 5000,
-  Min = 1000
-}
-enum caloriesPerDay {
-  Max = 5000,
-  Min = 1000
-}
+import { MAX_TRAINING_TYPE } from '../../const';
+import { TrainingLevel, Intervals, CaloriesToBurnLimit, CaloriesPerDayLimit, AppRoute, TrainingType } from '../../types/enums';
 
 export default function QuestionnaireUser(): JSX.Element {
   const errors = useAppSelector(getError);
@@ -25,17 +16,13 @@ export default function QuestionnaireUser(): JSX.Element {
   const [request, setRequest] = useState<QuestionnaireData>({
     trainingLevel: user.trainingLevel ?? TrainingLevel.Amateur,
     interval: user.interval ?? Intervals.Second,
-    caloriesToBurn: user.caloriesToBurn ?? CaloriesToBurn.Min,
-    caloriesPerDay: user.caloriesPerDay ?? caloriesPerDay.Min
+    caloriesToBurn: user.caloriesToBurn ?? CaloriesToBurnLimit.Min,
+    caloriesPerDay: user.caloriesPerDay ?? CaloriesPerDayLimit.Min
   });
   const [trainingTypes, setTrainingTypes] = useState<string[]>(user.trainingTypes ?? []);
   const submitRef = useRef<HTMLButtonElement>(null);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-  if (submitRef.current) {
-    submitRef.current.disabled = false;
-  }
 
   const isTrainingTypes = (value: string) => trainingTypes.some((item) => item === value);
 
@@ -51,6 +38,9 @@ export default function QuestionnaireUser(): JSX.Element {
     const value = evt.target.value;
     if (evt.target.checked && trainingTypes?.length < MAX_TRAINING_TYPE) {
       setTrainingTypes([...trainingTypes, value]);
+      if (errors.trainingTypes) {
+        dispatch(responseError({ ...errors, trainingTypes: '' }));
+      }
     } else {
       setTrainingTypes(trainingTypes.filter((item) => item !== value));
     }
@@ -64,7 +54,12 @@ export default function QuestionnaireUser(): JSX.Element {
         request: { ...request, trainingTypes: trainingTypes.join(',') },
         target: AppRoute.QuestionnaireUser,
         navigate
-      }));
+      }))
+        .finally(() => {
+          if (submitRef.current) {
+            submitRef.current.disabled = false;
+          }
+        });
     }
   };
 
@@ -100,7 +95,9 @@ export default function QuestionnaireUser(): JSX.Element {
                               </div>
                             ))
                         }
+                        {errors.trainingTypes ? <span className="custom-input__error" style={{ opacity: 1 }}>{errors.trainingTypes}</span> : ''}
                       </div>
+                      {errors.trainingTypes ? <span className="custom-input__error">{errors.trainingTypes}</span> : ''}
                     </div>
                     <div className="questionnaire-user__block">
                       <span className="questionnaire-user__legend">Сколько времени вы готовы уделять на тренировку в день</span>
@@ -158,8 +155,8 @@ export default function QuestionnaireUser(): JSX.Element {
                                 onChange={handleFormDataChange}
                                 type="number"
                                 name="caloriesToBurn"
-                                min={CaloriesToBurn.Min}
-                                max={CaloriesToBurn.Max}
+                                min={CaloriesToBurnLimit.Min}
+                                max={CaloriesToBurnLimit.Max}
                                 value={request.caloriesToBurn}
                               />
                               <span className="custom-input__text">ккал</span>
@@ -175,8 +172,8 @@ export default function QuestionnaireUser(): JSX.Element {
                                 onChange={handleFormDataChange}
                                 type="number"
                                 name="caloriesPerDay"
-                                min={caloriesPerDay.Min}
-                                max={caloriesPerDay.Max}
+                                min={CaloriesPerDayLimit.Min}
+                                max={CaloriesPerDayLimit.Max}
                                 value={request.caloriesPerDay}
                               />
                               <span className="custom-input__text">ккал</span>

@@ -6,6 +6,7 @@ export type QuestionnaireData = {
   caloriesToBurn?: number;
   caloriesPerDay?: number;
 
-  certificate?: string;
+  certificate?: File;
   resume?: string;
+  readyForIndividualTraining?: boolean;
 };

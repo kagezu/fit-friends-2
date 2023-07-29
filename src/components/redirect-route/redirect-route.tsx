@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute } from '../../types/enums';
 
 export type Redirect = {
   trigger: string;

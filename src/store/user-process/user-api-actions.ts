@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { APIRoute, AppRoute, Role } from '../../const';
+import { APIRoute, AppRoute, Role } from '../../types/enums';
 import { Axios } from '../../services/api';
 import { requireAuthorization, userInitialState } from './user-process';
 import { User } from '../../types/user';
