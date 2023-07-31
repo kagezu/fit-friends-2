@@ -12,43 +12,52 @@ import Error404 from '../../pages/error-404/error-404';
 import PersonalAccountCoach from '../../pages/personal-account-coach/personal-account-coach';
 import QuestionnaireUser from '../../pages/questionnaire-user/questionnaire-user';
 import QuestionnaireCoach from '../../pages/questionnaire-coach/questionnaire-coach';
+import PersonalAccountUser from '../../pages/personal-account-user/personal-account-user';
 
-const redirectRoutes: Redirect[] = [
-  {
-    trigger: Role.User,
-    redirect: AppRoute.Index
-  },
-  {
-    trigger: Role.Coach,
-    redirect: AppRoute.PersonalAccountCoach
-  },
-];
+const redirectUser: Redirect = {
+  trigger: Role.User,
+  redirect: AppRoute.Index
+};
+
+const redirectCoach: Redirect = {
+  trigger: Role.Coach,
+  redirect: AppRoute.PersonalAccountCoach
+};
+
+const redirectUnknown: Redirect = {
+  trigger: Role.Unknown,
+  redirect: AppRoute.SignIn
+};
 
 export default function App(): JSX.Element {
   const role = useAppSelector(getRole);
   return (
     <BrowserRouter>
       <Routes>
+        {/* Разводящая */}
         <Route path={AppRoute.Intro} element={<Intro />} />
 
+        {/* Вход */}
         <Route
           path={AppRoute.SignIn}
           element={
-            <RedirectRoute target={role} routes={redirectRoutes}>
+            <RedirectRoute target={role} routes={[redirectUser, redirectCoach]}>
               <SignIn />
             </RedirectRoute>
           }
         />
 
+        {/* Регистрация */}
         <Route
           path={AppRoute.SignUp}
           element={
-            <RedirectRoute target={role} routes={redirectRoutes}>
+            <RedirectRoute target={role} routes={[redirectUser, redirectCoach]}>
               <SignUp />
             </RedirectRoute>
           }
         />
 
+        {/*  Главная */}
         <Route
           path={AppRoute.Index}
           element={
@@ -58,6 +67,17 @@ export default function App(): JSX.Element {
           }
         />
 
+        {/* Личный кабинет пользователя */}
+        <Route
+          path={AppRoute.PersonalAccountUser}
+          element={
+            <RedirectRoute target={role} routes={[redirectUnknown, redirectCoach]}>
+              <PersonalAccountUser />
+            </RedirectRoute>
+          }
+        />
+
+        {/* Личный кабинет тренера */}
         <Route
           path={AppRoute.PersonalAccountCoach}
           element={
@@ -67,6 +87,7 @@ export default function App(): JSX.Element {
           }
         />
 
+        {/* Опросник пользователя */}
         <Route
           path={AppRoute.QuestionnaireUser}
           element={
@@ -76,6 +97,7 @@ export default function App(): JSX.Element {
           }
         />
 
+        {/* Опросник тренера */}
         <Route
           path={AppRoute.QuestionnaireCoach}
           element={
@@ -85,6 +107,7 @@ export default function App(): JSX.Element {
           }
         />
 
+        {/* Запрошенная страница не существует */}
         <Route
           path={AppRoute.Error404}
           element={
