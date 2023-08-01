@@ -16,11 +16,13 @@ export enum APIRoute {
   SignIn = 'auth/login',
   SignUp = 'auth/register',
   UpdateUser = 'user/update',
+  Notify = '/notify',
 }
 
 export enum NameSpace {
   User = 'User',
   Error = 'Error',
+  Notify = 'Notify'
 }
 
 export enum Role {

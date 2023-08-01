@@ -1,10 +1,10 @@
 import { FormEvent, useState, ChangeEvent, useRef, SyntheticEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { registerAction } from '../../store/user-process/user-api-actions';
+import { registerAction } from '../../store/user/user-api-actions';
 import { getError } from '../../store/selectors';
 import { RegistrationData } from '../../types/registration-data';
-import { responseError } from '../../store/error-process/error-process';
+import { responseError } from '../../store/error/error-process';
 import { locations } from '../../types/arrays';
 import BackgroundLogo from '../../components/background-logo/background-logo';
 

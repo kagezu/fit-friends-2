@@ -1,7 +1,7 @@
 import { useRef, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { loginAction } from '../../store/user-process/user-api-actions';
+import { loginAction } from '../../store/user/user-api-actions';
 import { getError } from '../../store/selectors';
 import BackgroundLogo from '../../components/background-logo/background-logo';
 
@@ -58,7 +58,6 @@ export default function SignIn(): JSX.Element {
                         <input
                           ref={passwordRef}
                           type="password"
-                          placeholder="••••••••••••"
                           id="passwordLogin"
                           name="password"
                           autoComplete="off"

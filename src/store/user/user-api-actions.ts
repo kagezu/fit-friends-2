@@ -8,7 +8,7 @@ import { AuthData } from '../../types/auth-data';
 import { UserData } from '../../types/user-data';
 import { KeyName, saveItem } from '../../services/token';
 import axios from 'axios';
-import { responseError } from '../error-process/error-process';
+import { responseError } from '../error/error-process';
 import { RegistrationData } from '../../types/registration-data';
 import { parseError } from '../../utils/parse-error';
 import { QuestionnaireData } from '../../types/questionnaire-data';
