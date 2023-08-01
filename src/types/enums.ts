@@ -31,6 +31,12 @@ export enum Role {
   Unknown = 'unknown'
 }
 
+export enum Gender {
+  Male = 'мужской',
+  Female = 'женский',
+  Unknown = 'неважно'
+}
+
 export enum TrainingLevel {
   Beginner = 'новичок',
   Amateur = 'любитель',
