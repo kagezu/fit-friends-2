@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useEffect } from 'react';
+import { useState, ChangeEvent, useEffect, useRef, SyntheticEvent } from 'react';
 import { MAX_TRAINING_TYPE, STATIC_PATH } from '../../const';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { responseError } from '../../store/error/error-process';
@@ -11,6 +11,7 @@ import { locations } from '../../types/arrays';
 import { userInfoEditAction } from '../../store/user/user-api-actions';
 
 export default function UserInfoEdit(): JSX.Element {
+  const avatarRef = useRef<HTMLImageElement>(null);
   const errors = useAppSelector(getError);
   const user = useAppSelector(getUser);
   const [request, setRequest] = useState<QuestionnaireData>({
@@ -59,6 +60,28 @@ export default function UserInfoEdit(): JSX.Element {
     dispatch(userInfoEditAction({ ...request, trainingTypes: trainingTypes.join(',') }));
   };
 
+  const handleAvatarChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    if (evt.target.files && avatarRef.current) {
+      const file = evt.target.files[0];
+      setRequest({ ...request, avatar: file });
+      avatarRef.current.src = URL.createObjectURL(file);
+    }
+  };
+
+  const handleAvatarUpdateClick = (evt: SyntheticEvent<HTMLButtonElement>) => {
+    if (avatarRef.current) {
+      setRequest({ ...request, avatar: undefined });
+      avatarRef.current.src = user.avatar ? `${STATIC_PATH}${user.avatar}` : '';
+    }
+  };
+
+  const handleAvatarDeleteClick = (evt: SyntheticEvent<HTMLButtonElement>) => {
+    if (avatarRef.current) {
+      setRequest({ ...request, avatar: '' });
+      avatarRef.current.src = '';
+    }
+  };
+
   useEffect(() => {
     if (!errors.error) {
       setIsEdit(false);
@@ -70,11 +93,19 @@ export default function UserInfoEdit(): JSX.Element {
       <div className="user-info-edit__header">
         <div className="input-load-avatar">
           <label>
-            <input className="visually-hidden" type="file" name="user-photo-1" accept="image/png, image/jpeg" />
+            <input
+              className="visually-hidden"
+              type="file"
+              name="avatar"
+              accept="image/png, image/jpeg"
+              onChange={handleAvatarChange}
+              disabled={!isEdit}
+            />
             <span className="input-load-avatar__avatar">
               <img
-                src={`${STATIC_PATH}${user.avatar ?? ''}`}
-                srcSet="img/content/user-photo-1@2x.png 2x"
+                ref={avatarRef}
+                src={user.avatar ? `${STATIC_PATH}${user.avatar}` : ''}
+                // srcSet="img/content/user-photo-1@2x.png 2x"
                 width="98" height="98" alt="user"
               />
             </span>
@@ -83,12 +114,12 @@ export default function UserInfoEdit(): JSX.Element {
         {
           isEdit ?
             <div className="user-info-edit__controls">
-              <button className="user-info-edit__control-btn" aria-label="обновить">
+              <button onClick={handleAvatarUpdateClick} className="user-info-edit__control-btn" aria-label="обновить">
                 <svg width="16" height="16" aria-hidden="true">
                   <use xlinkHref="#icon-change"></use>
                 </svg>
               </button>
-              <button className="user-info-edit__control-btn" aria-label="удалить">
+              <button onClick={handleAvatarDeleteClick} className="user-info-edit__control-btn" aria-label="удалить">
                 <svg width="14" height="16" aria-hidden="true">
                   <use xlinkHref="#icon-trash"></use>
                 </svg>

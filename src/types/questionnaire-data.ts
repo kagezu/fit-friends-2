@@ -1,7 +1,7 @@
 export type QuestionnaireData = {
   name?: string;
   description?: string;
-  avatar?: string;
+  avatar?: File | string;
   gender?: string;
   location?: string;
 
