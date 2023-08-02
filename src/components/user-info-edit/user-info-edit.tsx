@@ -1,5 +1,5 @@
-import { useState, ChangeEvent, FormEvent } from 'react';
-import { MAX_TRAINING_TYPE } from '../../const';
+import { useState, ChangeEvent, useEffect } from 'react';
+import { MAX_TRAINING_TYPE, STATIC_PATH } from '../../const';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { responseError } from '../../store/error/error-process';
 import { getError, getUser } from '../../store/selectors';
@@ -8,6 +8,7 @@ import { QuestionnaireData } from '../../types/questionnaire-data';
 import { toUpperCaseFirst } from '../../utils/util';
 import Select from '../select/select';
 import { locations } from '../../types/arrays';
+import { userInfoEditAction } from '../../store/user/user-api-actions';
 
 export default function UserInfoEdit(): JSX.Element {
   const errors = useAppSelector(getError);
@@ -15,7 +16,6 @@ export default function UserInfoEdit(): JSX.Element {
   const [request, setRequest] = useState<QuestionnaireData>({
     name: user.name,
     description: user.description ?? '',
-    // avatar: string,
     gender: user.gender,
     location: user.location,
     trainingLevel: user.trainingLevel,
@@ -24,8 +24,8 @@ export default function UserInfoEdit(): JSX.Element {
   const [trainingTypes, setTrainingTypes] = useState<string[]>(user.trainingTypes ?? []);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-
   const isTrainingTypes = (value: string) => trainingTypes.some((item) => item === value);
+
   const handleFormDataChange = (evt: ChangeEvent<HTMLInputElement> & ChangeEvent<HTMLTextAreaElement>) => {
     const name = evt.target.name;
     setRequest({ ...request, [name]: evt.target.value });
@@ -33,6 +33,7 @@ export default function UserInfoEdit(): JSX.Element {
       dispatch(responseError({ ...errors, [name]: '' }));
     }
   };
+
   const handleSelectUpdate = (name: string, value: string) => {
     setRequest({ ...request, [name]: value });
   };
@@ -41,7 +42,6 @@ export default function UserInfoEdit(): JSX.Element {
     const name = evt.target.name;
     setRequest({ ...request, [name]: evt.target.checked });
   };
-
 
   const handleTrainingTypeChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const value = evt.target.value;
@@ -55,25 +55,15 @@ export default function UserInfoEdit(): JSX.Element {
     }
   };
 
-
-  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
-    /*
-    if (request && submitRef.current) {
-      submitRef.current.disabled = true;
-      dispatch(questionnaireAction({
-        request: { ...request, trainingTypes: trainingTypes.join(',') },
-        target: AppRoute.QuestionnaireCoach,
-        navigate
-      }))
-        .finally(() => {
-          if (submitRef.current) {
-            submitRef.current.disabled = false;
-          }
-        });
-    }
-    */
+  const handleSubmit = () => {
+    dispatch(userInfoEditAction({ ...request, trainingTypes: trainingTypes.join(',') }));
   };
+
+  useEffect(() => {
+    if (!errors.error) {
+      setIsEdit(false);
+    }
+  }, [dispatch, errors]);
 
   return (
     <section className="user-info-edit">
@@ -82,7 +72,11 @@ export default function UserInfoEdit(): JSX.Element {
           <label>
             <input className="visually-hidden" type="file" name="user-photo-1" accept="image/png, image/jpeg" />
             <span className="input-load-avatar__avatar">
-              <img src="img/content/user-photo-1.png" srcSet="img/content/user-photo-1@2x.png 2x" width="98" height="98" alt="user" />
+              <img
+                src={`${STATIC_PATH}${user.avatar ?? ''}`}
+                srcSet="img/content/user-photo-1@2x.png 2x"
+                width="98" height="98" alt="user"
+              />
             </span>
           </label>
         </div>
@@ -106,7 +100,7 @@ export default function UserInfoEdit(): JSX.Element {
       <form className="user-info-edit__form" action="#" method="post" onSubmit={handleSubmit}>
         {
           isEdit ?
-            <button className="btn-flat btn-flat--underlined user-info-edit__save-button" type="submit" aria-label="Сохранить">
+            <button onClick={handleSubmit} className="btn-flat btn-flat--underlined user-info-edit__save-button" type="button" aria-label="Сохранить">
               <svg width="12" height="12" aria-hidden="true">
                 <use xlinkHref="#icon-edit"></use>
               </svg><span>Сохранить</span>
@@ -133,6 +127,7 @@ export default function UserInfoEdit(): JSX.Element {
               </span>
             </label>
           </div>
+          {errors.name ? <span className="custom-input__error" style={{ opacity: 1 }}>{errors.name}</span> : ''}
           <div className="custom-textarea user-info-edit__textarea">
             <label>
               <span className="custom-textarea__label">Описание</span>
@@ -145,6 +140,7 @@ export default function UserInfoEdit(): JSX.Element {
               </textarea>
             </label>
           </div>
+          {errors.description ? <span className="custom-input__error" style={{ opacity: 1 }}>{errors.description}</span> : ''}
         </div>
         <div className="user-info-edit__section user-info-edit__section--status">
           <h2 className="user-info-edit__title user-info-edit__title--status">Статус</h2>
@@ -189,8 +185,8 @@ export default function UserInfoEdit(): JSX.Element {
                   </div>
                 ))
             }
-            {errors.trainingTypes ? <span className="custom-input__error" style={{ opacity: 1 }}>{errors.trainingTypes}</span> : ''}
           </div>
+          {errors.trainingTypes ? <span className="custom-input__error" style={{ opacity: 1 }}>{errors.trainingTypes}</span> : ''}
         </div>
         <Select
           text={'Локация'}

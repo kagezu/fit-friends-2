@@ -101,3 +101,25 @@ export const questionnaireAction = createAsyncThunk(
     }
   }
 );
+
+export const userInfoEditAction = createAsyncThunk(
+  'user/register',
+  async (request: QuestionnaireData, { dispatch }) => {
+    try {
+      const { data }: { data: User } = await Axios.patch<User>(
+        APIRoute.UpdateUser,
+        request,
+        { headers: { 'Content-Type': 'multipart/form-data' } }
+      );
+      dispatch(requireAuthorization(data));
+      dispatch(responseError({}));
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        const errors = parseError(err);
+        if (errors) {
+          dispatch(responseError(errors));
+        }
+      }
+    }
+  }
+);

@@ -9,10 +9,7 @@ export const errorProcess = createSlice({
   initialState: userInitialState,
   reducers: {
     responseError:
-      (state, action: PayloadAction<ErrorList>) => {
-        Object.assign(state, action.payload);
-
-      }
+      (state, action: PayloadAction<ErrorList>) => action.payload
   }
 });
 
