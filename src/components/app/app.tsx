@@ -68,9 +68,9 @@ export default function App(): JSX.Element {
         <Route
           path={AppRoute.Index}
           element={
-            <PrivateRoute role={role} roles={[Role.User]}>
+            <RedirectRoute target={role} routes={[redirectUnknown, redirectCoach]}>
               <Index />
-            </PrivateRoute>
+            </RedirectRoute>
           }
         />
 
