@@ -1,7 +1,7 @@
 import Header from '../../components/header/header';
 import UserInfoEdit from '../../components/user-info-edit/user-info-edit';
 import CoachNavigation from '../../components/coach-navigation/coach-navigation';
-import Certificate from '../../components/certificate/certificate';
+import CertificateList from '../../components/certificate-list/certificate-list';
 
 export default function PersonalAccountCoach(): JSX.Element {
   return (
@@ -16,7 +16,7 @@ export default function PersonalAccountCoach(): JSX.Element {
               <div className="inner-page__content">
                 <div className="personal-account-coach">
                   <CoachNavigation />
-                  <Certificate />
+                  <CertificateList />
                 </div>
               </div>
             </div>

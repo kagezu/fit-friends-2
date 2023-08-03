@@ -138,7 +138,7 @@ export default function QuestionnaireCoach(): JSX.Element {
                       <div className="drag-and-drop questionnaire-coach__drag-and-drop">
                         <label>
                           <span ref={certificateRef} className="drag-and-drop__label" tabIndex={0}>
-                            {user.certificate ?? 'Загрузите сюда файлы формата PDF, JPG или PNG'}
+                            Загрузите сюда файлы формата PDF, JPG или PNG
                             <svg width="20" height="20" aria-hidden="true">
                               <use xlinkHref="#icon-import"></use>
                             </svg>

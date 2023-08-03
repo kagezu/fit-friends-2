@@ -7,6 +7,11 @@ export enum AppRoute {
   QuestionnaireUser = '/questionnaire-user',
   PersonalAccountCoach = '/personal-account-coach',
   PersonalAccountUser = '/personal-account-user',
+  MyTrainings = '/my-trainings',
+  CreateTraining = '/create-training',
+  FriendsListCoach = '/friends-list-coach',
+  FriendsListUser = '/friends-list-user',
+  MyOrders = '/my-orders',
 
   Error404 = '*',
 }

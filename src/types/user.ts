@@ -21,7 +21,11 @@ export type User = {
   caloriesPerDay?: number;
   readyForTraining?: boolean;
 
-  certificate?: string;
+  certificate?: {
+    id: string;
+    path: string;
+  }[];
+
   resume?: string;
   readyForIndividualTraining?: boolean;
 };

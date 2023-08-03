@@ -6,11 +6,11 @@ import { store } from './store';
 import { Provider } from 'react-redux';
 import { getNotifyIndexAction } from './store/notify/notify-api-actions';
 
-store.dispatch(checkAuthAction())
-  .then(() => {
-    store.dispatch(getNotifyIndexAction());
-  })
-  .finally(() => {
+const main = async () => {
+  try {
+    await store.dispatch(checkAuthAction());
+    await store.dispatch(getNotifyIndexAction());
+  } finally {
     const root = ReactDOM.createRoot(
       document.getElementById('root') as HTMLElement,
     );
@@ -21,4 +21,7 @@ store.dispatch(checkAuthAction())
         </Provider>
       </React.StrictMode>
     );
-  });
+  }
+};
+
+main();

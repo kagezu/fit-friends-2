@@ -13,6 +13,8 @@ import PersonalAccountCoach from '../../pages/personal-account-coach/personal-ac
 import QuestionnaireUser from '../../pages/questionnaire-user/questionnaire-user';
 import QuestionnaireCoach from '../../pages/questionnaire-coach/questionnaire-coach';
 import PersonalAccountUser from '../../pages/personal-account-user/personal-account-user';
+import FriendsListUser from '../../pages/friends-list-user/friends-list-user';
+import FriendsListCoach from '../../pages/friends-list-coach/friends-list-coach';
 
 const redirectUser: Redirect = {
   trigger: Role.User,
@@ -22,6 +24,11 @@ const redirectUser: Redirect = {
 const redirectCoach: Redirect = {
   trigger: Role.Coach,
   redirect: AppRoute.PersonalAccountCoach
+};
+
+const redirectFriendsCoach: Redirect = {
+  trigger: Role.Coach,
+  redirect: AppRoute.FriendsListCoach
 };
 
 const redirectUnknown: Redirect = {
@@ -83,6 +90,26 @@ export default function App(): JSX.Element {
           element={
             <PrivateRoute role={role} roles={[Role.Coach]}>
               <PersonalAccountCoach />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Список друзей пользователя */}
+        <Route
+          path={AppRoute.FriendsListUser}
+          element={
+            <RedirectRoute target={role} routes={[redirectUnknown, redirectFriendsCoach]}>
+              <FriendsListUser />
+            </RedirectRoute>
+          }
+        />
+
+        {/* Список друзей тренера */}
+        <Route
+          path={AppRoute.FriendsListCoach}
+          element={
+            <PrivateRoute role={role} roles={[Role.Coach]}>
+              <FriendsListCoach />
             </PrivateRoute>
           }
         />

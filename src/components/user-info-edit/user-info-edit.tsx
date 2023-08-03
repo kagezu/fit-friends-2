@@ -105,7 +105,6 @@ export default function UserInfoEdit(): JSX.Element {
               <img
                 ref={avatarRef}
                 src={user.avatar ? `${STATIC_PATH}${user.avatar}` : ''}
-                // srcSet="img/content/user-photo-1@2x.png 2x"
                 width="98" height="98" alt="user"
               />
             </span>

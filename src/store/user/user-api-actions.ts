@@ -12,6 +12,7 @@ import { responseError } from '../error/error-process';
 import { RegistrationData } from '../../types/registration-data';
 import { parseError } from '../../utils/parse-error';
 import { QuestionnaireData } from '../../types/questionnaire-data';
+import { getNotifyIndexAction } from '../notify/notify-api-actions';
 
 export const checkAuthAction = createAsyncThunk(
   'user/checkAuth',
@@ -34,6 +35,7 @@ export const loginAction = createAsyncThunk(
       saveItem(KeyName.RefreshToken, refreshToken);
       dispatch(requireAuthorization(user));
       dispatch(responseError({}));
+      dispatch(getNotifyIndexAction());
     } catch (err) {
       if (axios.isAxiosError(err)) {
         const errors = parseError(err);
@@ -43,7 +45,7 @@ export const loginAction = createAsyncThunk(
         }
       }
     }
-    navigate(AppRoute.SignIn);
+    navigate(AppRoute.SignUp);
   }
 );
 
