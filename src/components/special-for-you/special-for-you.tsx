@@ -1,6 +1,28 @@
-import { Link } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getTrainingSpecial, getUser } from '../../store/selectors';
+import { useEffect, useState } from 'react';
+import SpecialForYouItem from '../special-for-you-item/special-for-you-item';
+import { trainingSpecialAction } from '../../store/training/training-api-actions';
+
+const MAX_COUNT_ELEMENT = 3;
+const MAX_COUNT_SPECIAL_CARD = 9;
 
 export default function SpecialForYou(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(getUser);
+  const trainings = useAppSelector(getTrainingSpecial);
+  const [position, setPosition] = useState<number>(0);
+  const handleRightClick = () => setPosition(position + 1);
+  const handleLeftClick = () => setPosition(position - 1);
+
+  useEffect(() => {
+    dispatch(trainingSpecialAction({
+      trainingType: user.trainingTypes?.join(','),
+      trainingLevel: user.trainingLevel,
+      limit: MAX_COUNT_SPECIAL_CARD
+    }));
+  }, [dispatch, user]);
+
   return (
     <section className="special-for-you">
       <div className="container">
@@ -8,12 +30,24 @@ export default function SpecialForYou(): JSX.Element {
           <div className="special-for-you__title-wrapper">
             <h2 className="special-for-you__title">Специально подобрано для вас</h2>
             <div className="special-for-you__controls">
-              <button className="btn-icon special-for-you__control" type="button" aria-label="previous">
+              <button
+                onClick={handleLeftClick}
+                className="btn-icon special-for-you__control"
+                type="button"
+                aria-label="previous"
+                disabled={!position}
+              >
                 <svg width="16" height="14" aria-hidden="true">
                   <use xlinkHref="#arrow-left"></use>
                 </svg>
               </button>
-              <button className="btn-icon special-for-you__control" type="button" aria-label="next">
+              <button
+                onClick={handleRightClick}
+                className="btn-icon special-for-you__control"
+                type="button"
+                aria-label="next"
+                disabled={trainings?.length ? (position >= trainings?.length - MAX_COUNT_ELEMENT) : true}
+              >
                 <svg width="16" height="14" aria-hidden="true">
                   <use xlinkHref="#arrow-right"></use>
                 </svg>
@@ -21,51 +55,16 @@ export default function SpecialForYou(): JSX.Element {
             </div>
           </div>
           <ul className="special-for-you__list">
-            <li className="special-for-you__item">
-              <div className="thumbnail-preview">
-                <div className="thumbnail-preview__image">
-                  <picture>
-                    <source type="image/webp" srcSet="img/content/thumbnails/preview-03.webp, img/content/thumbnails/preview-03@2x.webp 2x" /><img src="img/content/thumbnails/preview-03.jpg" srcSet="img/content/thumbnails/preview-03@2x.jpg 2x" width="452" height="191" alt="" />
-                  </picture>
-                </div>
-                <div className="thumbnail-preview__inner">
-                  <h3 className="thumbnail-preview__title">crossfit</h3>
-                  <div className="thumbnail-preview__button-wrapper">
-                    <Link className="btn btn--small thumbnail-preview__button" to="#">Подробнее</Link>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li className="special-for-you__item">
-              <div className="thumbnail-preview">
-                <div className="thumbnail-preview__image">
-                  <picture>
-                    <source type="image/webp" srcSet="img/content/thumbnails/preview-02.webp, img/content/thumbnails/preview-02@2x.webp 2x" /><img src="img/content/thumbnails/preview-02.jpg" srcSet="img/content/thumbnails/preview-02@2x.jpg 2x" width="452" height="191" alt="" />
-                  </picture>
-                </div>
-                <div className="thumbnail-preview__inner">
-                  <h3 className="thumbnail-preview__title">power</h3>
-                  <div className="thumbnail-preview__button-wrapper">
-                    <Link className="btn btn--small thumbnail-preview__button" to="#">Подробнее</Link>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li className="special-for-you__item">
-              <div className="thumbnail-preview">
-                <div className="thumbnail-preview__image">
-                  <picture>
-                    <source type="image/webp" srcSet="img/content/thumbnails/preview-01.webp, img/content/thumbnails/preview-01@2x.webp 2x" /><img src="img/content/thumbnails/preview-01.jpg" srcSet="img/content/thumbnails/preview-01@2x.jpg 2x" width="452" height="191" alt="" />
-                  </picture>
-                </div>
-                <div className="thumbnail-preview__inner">
-                  <h3 className="thumbnail-preview__title">boxing</h3>
-                  <div className="thumbnail-preview__button-wrapper">
-                    <Link className="btn btn--small thumbnail-preview__button" to="#">Подробнее</Link>
-                  </div>
-                </div>
-              </div>
-            </li>
+            {
+              trainings
+                .slice(position, position + MAX_COUNT_ELEMENT)
+                .map((training) => (
+                  <SpecialForYouItem
+                    key={`special-${training.id}`}
+                    training={training}
+                  />
+                ))
+            }
           </ul>
         </div>
       </div>

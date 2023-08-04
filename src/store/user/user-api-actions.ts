@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { APIRoute, AppRoute, Role } from '../../types/enums';
+import { APIRoute, AppRoute, Role } from '../../const';
 import { Axios } from '../../services/api';
 import { requireAuthorization, userInitialState } from './user-process';
 import { User } from '../../types/user';
@@ -36,6 +36,7 @@ export const loginAction = createAsyncThunk(
       dispatch(requireAuthorization(user));
       dispatch(responseError({}));
       dispatch(getNotifyIndexAction());
+      navigate(AppRoute.SignUp);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         const errors = parseError(err);
@@ -45,7 +46,6 @@ export const loginAction = createAsyncThunk(
         }
       }
     }
-    navigate(AppRoute.SignUp);
   }
 );
 

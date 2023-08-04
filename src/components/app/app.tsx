@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AppRoute, Role } from '../../types/enums';
+import { AppRoute, Role } from '../../const';
 import Intro from '../../pages/intro/intro';
 import SignIn from '../../pages/sign-in/sign-in';
 import SignUp from '../../pages/sign-up/sign-up';

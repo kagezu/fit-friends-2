@@ -1,7 +1,7 @@
 import { useState, useRef, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BackgroundLogo from '../../components/background-logo/background-logo';
-import { TrainingLevel, AppRoute, TrainingType, ResumeLimit } from '../../types/enums';
+import { TrainingLevel, AppRoute, TrainingType, ResumeLimit } from '../../const';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { responseError } from '../../store/error/error-process';
 import { getError, getUser } from '../../store/selectors';

@@ -3,7 +3,7 @@ import { MAX_TRAINING_TYPE, STATIC_PATH } from '../../const';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { responseError } from '../../store/error/error-process';
 import { getError, getUser } from '../../store/selectors';
-import { Gender, TrainingLevel, TrainingType } from '../../types/enums';
+import { Gender, TrainingLevel, TrainingType } from '../../const';
 import { QuestionnaireData } from '../../types/questionnaire-data';
 import { toUpperCaseFirst } from '../../utils/util';
 import Select from '../select/select';

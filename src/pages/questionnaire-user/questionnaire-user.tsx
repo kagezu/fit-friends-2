@@ -8,7 +8,7 @@ import { QuestionnaireData } from '../../types/questionnaire-data';
 import { questionnaireAction } from '../../store/user/user-api-actions';
 import { toUpperCaseFirst } from '../../utils/util';
 import { MAX_TRAINING_TYPE } from '../../const';
-import { TrainingLevel, Intervals, CaloriesToBurnLimit, CaloriesPerDayLimit, AppRoute, TrainingType } from '../../types/enums';
+import { TrainingLevel, Intervals, CaloriesToBurnLimit, CaloriesPerDayLimit, AppRoute, TrainingType } from '../../const';
 
 export default function QuestionnaireUser(): JSX.Element {
   const errors = useAppSelector(getError);

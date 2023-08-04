@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NameSpace, Role } from '../../types/enums';
+import { NameSpace, Role } from '../../const';
 import { User } from '../../types/user';
 
 export const userInitialState: User = {

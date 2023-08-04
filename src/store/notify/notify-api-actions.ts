@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { APIRoute } from '../../types/enums';
+import { APIRoute } from '../../const';
 import { Axios } from '../../services/api';
 import { Notify } from '../../types/notify';
 import { notifyDelete, notifyUpdate } from './notify-process';

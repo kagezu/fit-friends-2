@@ -1,24 +1,59 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import LookForCompanyItem from '../look-for-company-item/look-for-company-item';
+import { useAppSelector } from '../../hooks';
+import { getUser } from '../../store/selectors';
+// import { useAppDispatch } from '../../hooks';
+
+// const MAX_COUNT_ELEMENT = 4;
+// const MAX_COUNT_CARD = 8;
 
 export default function LookForCompany(): JSX.Element {
+  const user = useAppSelector(getUser);
+  // const dispatch = useAppDispatch();
+  const [position, setPosition] = useState<number>(0);
+  const handleRightClick = () => setPosition(position + 1);
+  const handleLeftClick = () => setPosition(position - 1);
+
+  // useEffect(() => {
+  //   dispatch(trainingPopularAction({
+  //     category: 'rating',
+  //     limit: MAX_COUNT_SPECIAL_CARD
+  //   }));
+  // }, [dispatch]);
+
   return (
     <section className="look-for-company">
       <div className="container">
         <div className="look-for-company__wrapper">
           <div className="look-for-company__title-wrapper">
             <h2 className="look-for-company__title">Ищут компанию для тренировки</h2>
-            <button className="btn-flat btn-flat--light look-for-company__button" type="button"><span>Смотреть все</span>
+            <Link className="btn-flat btn-flat--light look-for-company__button" to={AppRoute.UsersCatalog}>
+              <span>Смотреть все</span>
               <svg width="14" height="10" aria-hidden="true">
                 <use xlinkHref="#arrow-right"></use>
               </svg>
-            </button>
+            </Link>
             <div className="look-for-company__controls">
-              <button className="btn-icon btn-icon--outlined look-for-company__control" type="button" aria-label="previous">
+              <button
+                className="btn-icon btn-icon--outlined look-for-company__control"
+                type="button"
+                aria-label="previous"
+                onClick={handleLeftClick}
+                disabled={!position}
+              >
                 <svg width="16" height="14" aria-hidden="true">
                   <use xlinkHref="#arrow-left"></use>
                 </svg>
               </button>
-              <button className="btn-icon btn-icon--outlined look-for-company__control" type="button" aria-label="next">
+              <button
+                className="btn-icon btn-icon--outlined look-for-company__control"
+                type="button"
+                aria-label="next"
+                onClick={handleRightClick}
+              // disabled={trainings?.length ? (position >= trainings?.length - MAX_COUNT_ELEMENT) : true}
+              >
                 <svg width="16" height="14" aria-hidden="true">
                   <use xlinkHref="#arrow-right"></use>
                 </svg>
@@ -26,112 +61,17 @@ export default function LookForCompany(): JSX.Element {
             </div>
           </div>
           <ul className="look-for-company__list">
-            <li className="look-for-company__item">
-              <div className="thumbnail-user thumbnail-user--role-user thumbnail-user--dark">
-                <div className="thumbnail-user__image">
-                  <picture>
-                    <source type="image/webp" srcSet="img/content/thumbnails/user-04.webp, img/content/thumbnails/user-04@2x.webp 2x" /><img src="img/content/thumbnails/user-04.jpg" srcSet="img/content/thumbnails/user-04@2x.jpg 2x" width="82" height="82" alt="" />
-                  </picture>
-                </div>
-                <div className="thumbnail-user__top-status thumbnail-user__top-status--role-user">
-                  <svg width="12" height="12" aria-hidden="true">
-                    <use xlinkHref="#icon-crown"></use>
-                  </svg>
-                </div>
-                <div className="thumbnail-user__header">
-                  <h3 className="thumbnail-user__name">Диана</h3>
-                  <div className="thumbnail-user__location">
-                    <svg width="14" height="16" aria-hidden="true">
-                      <use xlinkHref="#icon-location"></use>
-                    </svg>
-                    <address className="thumbnail-user__location-address">Невский проспект</address>
-                  </div>
-                </div>
-                <ul className="thumbnail-user__hashtags-list">
-                  <li className="thumbnail-user__hashtags-item">
-                    <div className="hashtag thumbnail-user__hashtag"><span>#пилатес</span></div>
-                  </li>
-                </ul>
-                <Link className="btn btn--outlined btn--dark-bg btn--medium thumbnail-user__button" to="#">Подробнее</Link>
-              </div>
-            </li>
-            <li className="look-for-company__item">
-              <div className="thumbnail-user thumbnail-user--role-user thumbnail-user--dark">
-                <div className="thumbnail-user__image">
-                  <picture>
-                    <source type="image/webp" srcSet="img/content/thumbnails/user-05.webp, img/content/thumbnails/user-05@2x.webp 2x" /><img src="img/content/thumbnails/user-05.jpg" srcSet="img/content/thumbnails/user-05@2x.jpg 2x" width="82" height="82" alt="" />
-                  </picture>
-                </div>
-                <div className="thumbnail-user__header">
-                  <h3 className="thumbnail-user__name">Константин</h3>
-                  <div className="thumbnail-user__location">
-                    <svg width="14" height="16" aria-hidden="true">
-                      <use xlinkHref="#icon-location"></use>
-                    </svg>
-                    <address className="thumbnail-user__location-address">Комендантский проспект</address>
-                  </div>
-                </div>
-                <ul className="thumbnail-user__hashtags-list">
-                  <li className="thumbnail-user__hashtags-item">
-                    <div className="hashtag thumbnail-user__hashtag"><span>#силовые</span></div>
-                  </li>
-                </ul>
-                <Link className="btn btn--outlined btn--dark-bg btn--medium thumbnail-user__button" to="#">Подробнее</Link>
-              </div>
-            </li>
-            <li className="look-for-company__item">
-              <div className="thumbnail-user thumbnail-user--role-user thumbnail-user--dark">
-                <div className="thumbnail-user__image">
-                  <picture>
-                    <source type="image/webp" srcSet="img/content/thumbnails/user-06.webp, img/content/thumbnails/user-06@2x.webp 2x" /><img src="img/content/thumbnails/user-06.jpg" srcSet="img/content/thumbnails/user-06@2x.jpg 2x" width="82" height="82" alt="" />
-                  </picture>
-                </div>
-                <div className="thumbnail-user__header">
-                  <h3 className="thumbnail-user__name">Иван</h3>
-                  <div className="thumbnail-user__location">
-                    <svg width="14" height="16" aria-hidden="true">
-                      <use xlinkHref="#icon-location"></use>
-                    </svg>
-                    <address className="thumbnail-user__location-address">Чёрная речка</address>
-                  </div>
-                </div>
-                <ul className="thumbnail-user__hashtags-list">
-                  <li className="thumbnail-user__hashtags-item">
-                    <div className="hashtag thumbnail-user__hashtag"><span>#бег</span></div>
-                  </li>
-                </ul>
-                <Link className="btn btn--outlined btn--dark-bg btn--medium thumbnail-user__button" to="#">Подробнее</Link>
-              </div>
-            </li>
-            <li className="look-for-company__item">
-              <div className="thumbnail-user thumbnail-user--role-user thumbnail-user--dark">
-                <div className="thumbnail-user__image">
-                  <picture>
-                    <source type="image/webp" srcSet="img/content/thumbnails/user-07.webp, img/content/thumbnails/user-07@2x.webp 2x" /><img src="img/content/thumbnails/user-07.jpg" srcSet="img/content/thumbnails/user-07@2x.jpg 2x" width="82" height="82" alt="" />
-                  </picture>
-                </div>
-                <div className="thumbnail-user__top-status thumbnail-user__top-status--role-user">
-                  <svg width="12" height="12" aria-hidden="true">
-                    <use xlinkHref="#icon-crown"></use>
-                  </svg>
-                </div>
-                <div className="thumbnail-user__header">
-                  <h3 className="thumbnail-user__name">Яна</h3>
-                  <div className="thumbnail-user__location">
-                    <svg width="14" height="16" aria-hidden="true">
-                      <use xlinkHref="#icon-location"></use>
-                    </svg>
-                    <address className="thumbnail-user__location-address">Крестовский остров</address>
-                  </div>
-                </div>
-                <ul className="thumbnail-user__hashtags-list">
-                  <li className="thumbnail-user__hashtags-item">
-                    <div className="hashtag thumbnail-user__hashtag"><span>#пилатес</span></div>
-                  </li>
-                </ul>
-                <Link className="btn btn--outlined btn--dark-bg btn--medium thumbnail-user__button" to="#">Подробнее</Link>
-              </div>
-            </li>
+            <LookForCompanyItem user={user} />
+            {/* {
+              trainings
+                .slice(position, position + MAX_COUNT_ELEMENT)
+                .map((training) => (
+                  <PopularTrainingsItem
+                    key={`popular-${training.id}`}
+                    training={training}
+                  />
+                ))
+            } */}
           </ul>
         </div>
       </div>

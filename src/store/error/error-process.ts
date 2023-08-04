@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NameSpace } from '../../types/enums';
+import { NameSpace } from '../../const';
 import { ErrorList } from '../../utils/parse-error';
 
 export const userInitialState = {};

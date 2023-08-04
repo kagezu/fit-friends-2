@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NameSpace } from '../../types/enums';
+import { NameSpace } from '../../const';
 import { Notify } from '../../types/notify';
 
 export const userInitialState: Notify[] = [];

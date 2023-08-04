@@ -1,5 +1,5 @@
 import { Navigate } from 'react-router-dom';
-import { AppRoute, Role } from '../../types/enums';
+import { AppRoute, Role } from '../../const';
 
 type PrivateRouteProps = {
   role: Role;
