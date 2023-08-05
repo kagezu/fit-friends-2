@@ -1,7 +1,21 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import NotificationList from '../notification-list/notification-list';
+import { useAppSelector } from '../../hooks';
+import { getNotify } from '../../store/selectors';
+import { AppRoute } from '../../const';
 
 export default function Header(): JSX.Element {
+  const { pathname } = useLocation();
+  const notifications = useAppSelector(getNotify);
+  const notificationClass = `main-nav__item main-nav__item--notifications
+  ${notifications.length ? ' is-notifications' : ''}`;
+  const mainLinkClass = pathname === AppRoute.Index || pathname === AppRoute.PersonalAccountCoach ?
+    'main-nav__link is-active' : 'main-nav__link';
+  const accountLinkClass = pathname === AppRoute.PersonalAccountUser ?
+    'main-nav__link is-active' : 'main-nav__link';
+  const friendsLinkClass = pathname === AppRoute.FriendsListUser || pathname === AppRoute.FriendsListCoach ?
+    'main-nav__link is-active' : 'main-nav__link';
+
   return (
     <header className="header">
       <div className="container">
@@ -13,33 +27,33 @@ export default function Header(): JSX.Element {
         <nav className="main-nav">
           <ul className="main-nav__list">
             <li className="main-nav__item">
-              <Link className="main-nav__link is-active" to="#" aria-label="На главную">
+              <Link className={mainLinkClass} to={AppRoute.Index} aria-label="На главную">
                 <svg width="18" height="18" aria-hidden="true">
                   <use xlinkHref="#icon-home"></use>
                 </svg>
               </Link>
             </li>
             <li className="main-nav__item">
-              <Link className="main-nav__link" to="#" aria-label="Личный кабинет">
+              <Link className={accountLinkClass} to={AppRoute.PersonalAccountUser} aria-label="Личный кабинет">
                 <svg width="16" height="18" aria-hidden="true">
                   <use xlinkHref="#icon-user"></use>
                 </svg>
               </Link>
             </li>
             <li className="main-nav__item">
-              <Link className="main-nav__link" to="#" aria-label="Друзья">
+              <Link className={friendsLinkClass} to={AppRoute.FriendsListUser} aria-label="Друзья">
                 <svg width="22" height="16" aria-hidden="true">
                   <use xlinkHref="#icon-friends"></use>
                 </svg>
               </Link>
             </li>
-            <li className="main-nav__item main-nav__item--notifications">
+            <li className={notificationClass}>
               <Link className="main-nav__link" to="#" aria-label="Уведомления">
                 <svg width="14" height="18" aria-hidden="true">
                   <use xlinkHref="#icon-notification"></use>
                 </svg>
               </Link>
-              <NotificationList />
+              <NotificationList notifications={notifications} />
             </li>
           </ul>
         </nav>
@@ -51,21 +65,6 @@ export default function Header(): JSX.Element {
                 <use xlinkHref="#icon-search"></use>
               </svg>
             </label>
-            <ul className="search__list">
-              <li className="search__item"><Link className="search__link" to="#">Бокс</Link></li>
-              <li className="search__item"><Link className="search__link is-active" to="#">Бег</Link></li>
-              <li className="search__item"><Link className="search__link" to="#">Аэробика</Link></li>
-              <li className="search__item"><Link className="search__link" to="#">Text</Link></li>
-              <li className="search__item"><Link className="search__link" to="#">Text</Link></li>
-              <li className="search__item"><Link className="search__link" to="#">Text</Link></li>
-              <li className="search__item"><Link className="search__link" to="#">Text</Link></li>
-              <li className="search__item"><Link className="search__link" to="#">Text</Link></li>
-              <li className="search__item"><Link className="search__link" to="#">Text</Link></li>
-              <li className="search__item"><Link className="search__link" to="#">Text</Link></li>
-              <li className="search__item"><Link className="search__link" to="#">Text</Link></li>
-              <li className="search__item"><Link className="search__link" to="#">Text</Link></li>
-              <li className="search__item"><Link className="search__link" to="#">Text</Link></li>
-            </ul>
           </form>
         </div>
       </div>

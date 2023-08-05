@@ -1,11 +1,10 @@
-import { useAppSelector, useAppDispatch } from '../../hooks';
-import { getNotify } from '../../store/selectors';
+import { useAppDispatch } from '../../hooks';
 import { deleteNotifyAction } from '../../store/notify/notify-api-actions';
+import { Notify } from '../../types/notify';
 
 const MAX_COUNT_NOTIFY = 5;
 
-export default function NotificationList(): JSX.Element {
-  const notifications = useAppSelector(getNotify);
+export default function NotificationList({ notifications }: { notifications: Notify[] }): JSX.Element {
   const dispatch = useAppDispatch();
   return (
     <div className="main-nav__dropdown">
