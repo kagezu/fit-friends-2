@@ -7,6 +7,7 @@ import { Training } from '../types/training';
 
 export const getRole = (state: StoreType): Role => state.User.role;
 export const getUser = (state: StoreType): User => state.User;
+export const getUsersForCompany = (state: StoreType): User[] => state.UsersForCompany;
 export const getError = (state: StoreType): ErrorList => state.Error;
 export const getNotify = (state: StoreType): Notify[] => state.Notify;
 export const getTrainingSpecial = (state: StoreType): Training[] => state.TrainingSpecial;

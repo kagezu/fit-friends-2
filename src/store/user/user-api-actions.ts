@@ -1,7 +1,7 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import { PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { APIRoute, AppRoute, Role } from '../../const';
 import { Axios } from '../../services/api';
-import { requireAuthorization, userInitialState } from './user-process';
+import { requireAuthorization, userInitialState } from './user-slice';
 import { User } from '../../types/user';
 import { NavigateFunction } from 'react-router-dom';
 import { AuthData } from '../../types/auth-data';
@@ -13,6 +13,7 @@ import { RegistrationData } from '../../types/registration-data';
 import { parseError } from '../../utils/parse-error';
 import { QuestionnaireData } from '../../types/questionnaire-data';
 import { getNotifyIndexAction } from '../notify/notify-api-actions';
+import { UserQuery } from '../../types/user-query';
 
 export const checkAuthAction = createAsyncThunk(
   'user/checkAuth',
@@ -23,6 +24,14 @@ export const checkAuthAction = createAsyncThunk(
     } catch {
       dispatch(requireAuthorization(userInitialState));
     }
+  },
+);
+
+export const getUsersAction = createAsyncThunk(
+  'user/checkAuth',
+  async ({ params, usersAction }: { params: UserQuery; usersAction: (argument: User[]) => PayloadAction<User[]> }, { dispatch }) => {
+    const { data }: { data: User[] } = await Axios.get<User[]>(APIRoute.UserIndex, { params });
+    dispatch(usersAction(data));
   },
 );
 

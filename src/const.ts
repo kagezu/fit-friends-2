@@ -20,6 +20,7 @@ export enum AppRoute {
   TrainingCatalog = 'training-catalog',
 
   UsersCatalog = '/users-catalog',
+  UserCardUser = '/user-card-user/:id',
 
   Error404 = '*',
 }
@@ -29,6 +30,7 @@ export enum APIRoute {
   SignIn = 'auth/login',
   SignUp = 'auth/register',
   UpdateUser = 'user/update',
+  UserIndex = 'user/index',
   Notify = '/notify',
   Training = '/training',
   MyTraining = '/training/my',
@@ -36,6 +38,7 @@ export enum APIRoute {
 
 export enum NameSpace {
   User = 'User',
+  UsersForCompany = 'UsersForCompany',
   Error = 'Error',
   Notify = 'Notify',
   TrainingSpecial = 'TrainingSpecial',

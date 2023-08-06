@@ -4,6 +4,7 @@ import { User } from '../../types/user';
 
 export const userInitialState: User = {
   role: Role.Unknown,
+  id: '',
   name: '',
   email: '',
   gender: '',
@@ -15,10 +16,19 @@ export const userProcess = createSlice({
   initialState: userInitialState,
   reducers: {
     requireAuthorization:
-      (state, action: PayloadAction<User>) => {
-        Object.assign(state, action.payload);
-      }
+      (state, action: PayloadAction<User>) => action.payload
+  },
+});
+
+
+export const usersForCompanySlice = createSlice({
+  name: NameSpace.UsersForCompany,
+  initialState: [] as User[],
+  reducers: {
+    usersForCompany:
+      (state, action: PayloadAction<User[]>) => action.payload
   },
 });
 
 export const { requireAuthorization } = userProcess.actions;
+export const { usersForCompany } = usersForCompanySlice.actions;

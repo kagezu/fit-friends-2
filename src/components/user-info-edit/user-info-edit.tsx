@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, useEffect, useRef, SyntheticEvent } from 'react';
-import { MAX_TRAINING_TYPE, STATIC_PATH } from '../../const';
+import { MAX_TRAINING_TYPE, Role, STATIC_PATH } from '../../const';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { responseError } from '../../store/error/error-process';
 import { getError, getUser } from '../../store/selectors';
@@ -20,7 +20,8 @@ export default function UserInfoEdit(): JSX.Element {
     gender: user.gender,
     location: user.location,
     trainingLevel: user.trainingLevel,
-    readyForIndividualTraining: user.readyForIndividualTraining
+    readyForIndividualTraining: user.readyForIndividualTraining,
+    readyForTraining: user.readyForTraining,
   });
   const [trainingTypes, setTrainingTypes] = useState<string[]>(user.trainingTypes ?? []);
   const [isEdit, setIsEdit] = useState<boolean>(false);
@@ -175,21 +176,42 @@ export default function UserInfoEdit(): JSX.Element {
         <div className="user-info-edit__section user-info-edit__section--status">
           <h2 className="user-info-edit__title user-info-edit__title--status">Статус</h2>
           <div className="custom-toggle custom-toggle--switch user-info-edit__toggle">
-            <label>
-              <input
-                onChange={handleCheckedChange}
-                type="checkbox"
-                name="readyForIndividualTraining"
-                checked={request.readyForIndividualTraining}
-                disabled={!isEdit}
-              />
-              <span className="custom-toggle__icon">
-                <svg width="9" height="6" aria-hidden="true">
-                  <use xlinkHref="#arrow-check"></use>
-                </svg>
-              </span>
-              <span className="custom-toggle__label">Готов тренировать</span>
-            </label>
+            {
+              user.role === Role.Coach ?
+                (
+                  <label>
+                    <input
+                      onChange={handleCheckedChange}
+                      type="checkbox"
+                      name="readyForIndividualTraining"
+                      checked={request.readyForIndividualTraining}
+                      disabled={!isEdit}
+                    />
+                    <span className="custom-toggle__icon">
+                      <svg width="9" height="6" aria-hidden="true">
+                        <use xlinkHref="#arrow-check"></use>
+                      </svg>
+                    </span>
+                    <span className="custom-toggle__label">Готов к тренировать индивидуально.</span>
+                  </label>
+                ) : (
+                  <label>
+                    <input
+                      onChange={handleCheckedChange}
+                      type="checkbox"
+                      name="readyForIndividualTraining"
+                      checked={request.readyForTraining}
+                      disabled={!isEdit}
+                    />
+                    <span className="custom-toggle__icon">
+                      <svg width="9" height="6" aria-hidden="true">
+                        <use xlinkHref="#arrow-check"></use>
+                      </svg>
+                    </span>
+                    <span className="custom-toggle__label">Готов к совместным тренировкам.</span>
+                  </label>
+                )
+            }
           </div>
         </div>
         <div className="user-info-edit__section">

@@ -1,27 +1,34 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import LookForCompanyItem from '../look-for-company-item/look-for-company-item';
 import { useAppSelector } from '../../hooks';
-import { getUser } from '../../store/selectors';
-// import { useAppDispatch } from '../../hooks';
+import { getUser, getUsersForCompany } from '../../store/selectors';
+import { useAppDispatch } from '../../hooks';
+import { getUsersAction } from '../../store/user/user-api-actions';
+import { usersForCompany } from '../../store/user/user-slice';
 
-// const MAX_COUNT_ELEMENT = 4;
-// const MAX_COUNT_CARD = 8;
+const MAX_COUNT_ELEMENT = 4;
+const MAX_COUNT_USER = 8;
 
 export default function LookForCompany(): JSX.Element {
   const user = useAppSelector(getUser);
-  // const dispatch = useAppDispatch();
+  const users = useAppSelector(getUsersForCompany);
   const [position, setPosition] = useState<number>(0);
+  const dispatch = useAppDispatch();
   const handleRightClick = () => setPosition(position + 1);
   const handleLeftClick = () => setPosition(position - 1);
 
-  // useEffect(() => {
-  //   dispatch(trainingPopularAction({
-  //     category: 'rating',
-  //     limit: MAX_COUNT_SPECIAL_CARD
-  //   }));
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(getUsersAction({
+      params: {
+        trainingTypes: user.trainingTypes?.join(','),
+        readyForTraining: true,
+        limit: MAX_COUNT_USER,
+      },
+      usersAction: usersForCompany
+    }));
+  }, [dispatch, user]);
 
   return (
     <section className="look-for-company">
@@ -52,7 +59,7 @@ export default function LookForCompany(): JSX.Element {
                 type="button"
                 aria-label="next"
                 onClick={handleRightClick}
-              // disabled={trainings?.length ? (position >= trainings?.length - MAX_COUNT_ELEMENT) : true}
+                disabled={users?.length ? (position >= users?.length - MAX_COUNT_ELEMENT) : true}
               >
                 <svg width="16" height="14" aria-hidden="true">
                   <use xlinkHref="#arrow-right"></use>
@@ -61,17 +68,16 @@ export default function LookForCompany(): JSX.Element {
             </div>
           </div>
           <ul className="look-for-company__list">
-            <LookForCompanyItem user={user} />
-            {/* {
-              trainings
+            {
+              users
                 .slice(position, position + MAX_COUNT_ELEMENT)
-                .map((training) => (
-                  <PopularTrainingsItem
-                    key={`popular-${training.id}`}
-                    training={training}
+                .map((item) => (
+                  <LookForCompanyItem
+                    key={`company-${item.id}`}
+                    user={item}
                   />
                 ))
-            } */}
+            }
           </ul>
         </div>
       </div>

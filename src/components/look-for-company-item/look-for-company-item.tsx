@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { User } from '../../types/user';
-import { STATIC_PATH } from '../../const';
+import { AppRoute, STATIC_PATH } from '../../const';
 
 export default function LookForCompanyItem({ user }: { user: User }): JSX.Element {
   return (
@@ -28,7 +28,7 @@ export default function LookForCompanyItem({ user }: { user: User }): JSX.Elemen
         <ul className="thumbnail-user__hashtags-list">
           {
             user.trainingTypes?.map((hashtag) => (
-              <li key={user.id} className="thumbnail-user__hashtags-item">
+              <li key={`${hashtag}-${user.id}`} className="thumbnail-user__hashtags-item">
                 <div className="hashtag thumbnail-user__hashtag">
                   <span>#{hashtag}</span>
                 </div>
@@ -36,7 +36,11 @@ export default function LookForCompanyItem({ user }: { user: User }): JSX.Elemen
             ))
           }
         </ul>
-        <Link className="btn btn--outlined btn--dark-bg btn--medium thumbnail-user__button" to="#">Подробнее</Link>
+        <Link
+          className="btn btn--outlined btn--dark-bg btn--medium thumbnail-user__button"
+          to={`${AppRoute.UserCardUser}/${user.id}`}
+        >Подробнее
+        </Link>
       </div>
     </li>
   );
