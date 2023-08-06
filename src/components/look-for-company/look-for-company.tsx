@@ -35,7 +35,9 @@ export default function LookForCompany(): JSX.Element {
       <div className="container">
         <div className="look-for-company__wrapper">
           <div className="look-for-company__title-wrapper">
-            <h2 className="look-for-company__title">Ищут компанию для тренировки</h2>
+            <h2 className="look-for-company__title">
+              {users.length ? 'Популярные тренировки' : 'Скоро здесь появится что - то полезное'}
+            </h2>
             <Link className="btn-flat btn-flat--light look-for-company__button" to={AppRoute.UsersCatalog}>
               <span>Смотреть все</span>
               <svg width="14" height="10" aria-hidden="true">

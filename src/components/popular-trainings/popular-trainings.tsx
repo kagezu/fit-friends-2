@@ -4,7 +4,8 @@ import { getTrainingPopular } from '../../store/selectors';
 import PopularTrainingsItem from '../popular-trainings-item/popular-trainings-item';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { trainingPopularAction } from '../../store/training/training-api-actions';
+import { getTrainingsAction } from '../../store/training/training-api-actions';
+import { trainingPopular } from '../../store/training/training-slice';
 
 const MAX_COUNT_ELEMENT = 4;
 const MAX_COUNT_CARD = 9;
@@ -17,9 +18,12 @@ export default function PopularTrainings(): JSX.Element {
   const handleLeftClick = () => setPosition(position - 1);
 
   useEffect(() => {
-    dispatch(trainingPopularAction({
-      category: 'rating',
-      limit: MAX_COUNT_CARD
+    dispatch(getTrainingsAction({
+      params: {
+        category: 'rating',
+        limit: MAX_COUNT_CARD
+      },
+      trainingsAction: trainingPopular
     }));
   }, [dispatch]);
 
@@ -28,7 +32,9 @@ export default function PopularTrainings(): JSX.Element {
       <div className="container">
         <div className="popular-trainings__wrapper">
           <div className="popular-trainings__title-wrapper">
-            <h2 className="popular-trainings__title">Популярные тренировки</h2>
+            <h2 className="popular-trainings__title">
+              {trainings.length ? 'Популярные тренировки' : 'Скоро здесь появится что - то полезное'}
+            </h2>
             <Link className="btn-flat popular-trainings__button" to={AppRoute.TrainingCatalog}>
               <span>Смотреть все</span>
               <svg width="14" height="10" aria-hidden="true">

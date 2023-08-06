@@ -13,4 +13,5 @@ export type TrainingQuery = {
   category?: string;
   trainingType?: string;
   trainingLevel?: string;
+  specialOffer?: boolean;
 };
