@@ -9,9 +9,7 @@ export const trainingSpecialSlice = createSlice({
   initialState: trainingInitialState,
   reducers: {
     trainingSpecialForYou:
-      (state, action: PayloadAction<Training[]>) => {
-        Object.assign(state, action.payload);
-      }
+      (state, action: PayloadAction<Training[]>) => action.payload
   },
 });
 
@@ -20,9 +18,7 @@ export const trainingPopularSlice = createSlice({
   initialState: trainingInitialState,
   reducers: {
     trainingPopular:
-      (state, action: PayloadAction<Training[]>) => {
-        Object.assign(state, action.payload);
-      }
+      (state, action: PayloadAction<Training[]>) => action.payload
   },
 });
 
@@ -31,12 +27,20 @@ export const trainingOffersSlice = createSlice({
   initialState: trainingInitialState,
   reducers: {
     trainingOffers:
-      (state, action: PayloadAction<Training[]>) => {
-        Object.assign(state, action.payload);
-      }
+      (state, action: PayloadAction<Training[]>) => action.payload
+  },
+});
+
+export const trainingFiltredSlice = createSlice({
+  name: NameSpace.TrainingFiltred,
+  initialState: trainingInitialState,
+  reducers: {
+    trainingFiltred:
+      (state, action: PayloadAction<Training[]>) => action.payload
   },
 });
 
 export const { trainingSpecialForYou } = trainingSpecialSlice.actions;
 export const { trainingPopular } = trainingPopularSlice.actions;
 export const { trainingOffers } = trainingOffersSlice.actions;
+export const { trainingFiltred } = trainingFiltredSlice.actions;

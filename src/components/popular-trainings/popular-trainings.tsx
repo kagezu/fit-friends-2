@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getTrainingPopular } from '../../store/selectors';
-import PopularTrainingsItem from '../popular-trainings-item/popular-trainings-item';
+import TrainingCard from '../training-card/training-card';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { getTrainingsAction } from '../../store/training/training-api-actions';
@@ -71,10 +71,14 @@ export default function PopularTrainings(): JSX.Element {
               trainings
                 .slice(position, position + MAX_COUNT_ELEMENT)
                 .map((training) => (
-                  <PopularTrainingsItem
+                  <li
                     key={`popular-${training.id}`}
-                    training={training}
-                  />
+                    className="popular-trainings__item"
+                  >
+                    <TrainingCard
+                      training={training}
+                    />
+                  </li>
                 ))
             }
           </ul>

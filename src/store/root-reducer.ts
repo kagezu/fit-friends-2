@@ -3,7 +3,7 @@ import { NameSpace } from '../const';
 import { userProcess, usersForCompanySlice } from './user/user-slice';
 import { errorProcess } from './error/error-process';
 import { notifyProcess } from './notify/notify-process';
-import { trainingSpecialSlice, trainingPopularSlice, trainingOffersSlice } from './training/training-slice';
+import { trainingSpecialSlice, trainingPopularSlice, trainingOffersSlice, trainingFiltredSlice } from './training/training-slice';
 
 export const rootReducer = combineReducers({
   [NameSpace.User]: userProcess.reducer,
@@ -13,4 +13,5 @@ export const rootReducer = combineReducers({
   [NameSpace.TrainingSpecial]: trainingSpecialSlice.reducer,
   [NameSpace.TrainingPopular]: trainingPopularSlice.reducer,
   [NameSpace.TrainingOffers]: trainingOffersSlice.reducer,
+  [NameSpace.TrainingFiltred]: trainingFiltredSlice.reducer,
 });

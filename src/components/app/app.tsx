@@ -15,23 +15,24 @@ import QuestionnaireCoach from '../../pages/questionnaire-coach/questionnaire-co
 import PersonalAccountUser from '../../pages/personal-account-user/personal-account-user';
 import FriendsListUser from '../../pages/friends-list-user/friends-list-user';
 import FriendsListCoach from '../../pages/friends-list-coach/friends-list-coach';
+import TrainingCatalog from '../../pages/training-catalog/training-catalog';
 
-const redirectUser: Redirect = {
+const redirectUserIndex: Redirect = {
   trigger: Role.User,
   redirect: AppRoute.Index
 };
 
-const redirectCoach: Redirect = {
+const redirectPersonalAccountCoach: Redirect = {
   trigger: Role.Coach,
   redirect: AppRoute.PersonalAccountCoach
 };
 
-const redirectFriendsCoach: Redirect = {
+const redirectFriendsListCoach: Redirect = {
   trigger: Role.Coach,
   redirect: AppRoute.FriendsListCoach
 };
 
-const redirectUnknown: Redirect = {
+const redirectSignIn: Redirect = {
   trigger: Role.Unknown,
   redirect: AppRoute.SignIn
 };
@@ -44,47 +45,62 @@ export default function App(): JSX.Element {
         {/* Разводящая */}
         <Route path={AppRoute.Intro} element={<Intro />} />
 
-        {/* Вход */}
+        {/* Вход (роль: unknown) */}
         <Route
           path={AppRoute.SignIn}
           element={
-            <RedirectRoute target={role} routes={[redirectUser, redirectCoach]}>
+            <RedirectRoute target={role} routes={[
+              redirectUserIndex,
+              redirectPersonalAccountCoach
+            ]}
+            >
               <SignIn />
             </RedirectRoute>
           }
         />
 
-        {/* Регистрация */}
+        {/* Регистрация (роль: unknown) */}
         <Route
           path={AppRoute.SignUp}
           element={
-            <RedirectRoute target={role} routes={[redirectUser, redirectCoach]}>
+            <RedirectRoute target={role} routes={[
+              redirectUserIndex,
+              redirectPersonalAccountCoach
+            ]}
+            >
               <SignUp />
             </RedirectRoute>
           }
         />
 
-        {/*  Главная */}
+        {/*  Главная (роль: user) */}
         <Route
           path={AppRoute.Index}
           element={
-            <RedirectRoute target={role} routes={[redirectUnknown, redirectCoach]}>
+            <RedirectRoute target={role} routes={[
+              redirectSignIn, redirectPersonalAccountCoach
+            ]}
+            >
               <Index />
             </RedirectRoute>
           }
         />
 
-        {/* Личный кабинет пользователя */}
+        {/* Личный кабинет пользователя (роль: user) */}
         <Route
           path={AppRoute.PersonalAccountUser}
           element={
-            <RedirectRoute target={role} routes={[redirectUnknown, redirectCoach]}>
+            <RedirectRoute target={role} routes={[
+              redirectSignIn,
+              redirectPersonalAccountCoach
+            ]}
+            >
               <PersonalAccountUser />
             </RedirectRoute>
           }
         />
 
-        {/* Личный кабинет тренера */}
+        {/* Личный кабинет тренера (роль: coach) */}
         <Route
           path={AppRoute.PersonalAccountCoach}
           element={
@@ -94,17 +110,21 @@ export default function App(): JSX.Element {
           }
         />
 
-        {/* Список друзей пользователя */}
+        {/* Список друзей пользователя (роль: user) */}
         <Route
           path={AppRoute.FriendsListUser}
           element={
-            <RedirectRoute target={role} routes={[redirectUnknown, redirectFriendsCoach]}>
+            <RedirectRoute target={role} routes={[
+              redirectSignIn,
+              redirectFriendsListCoach
+            ]}
+            >
               <FriendsListUser />
             </RedirectRoute>
           }
         />
 
-        {/* Список друзей тренера */}
+        {/* Список друзей тренера (роль: coach) */}
         <Route
           path={AppRoute.FriendsListCoach}
           element={
@@ -114,7 +134,7 @@ export default function App(): JSX.Element {
           }
         />
 
-        {/* Опросник пользователя */}
+        {/* Опросник пользователя (роль: user) */}
         <Route
           path={AppRoute.QuestionnaireUser}
           element={
@@ -124,7 +144,7 @@ export default function App(): JSX.Element {
           }
         />
 
-        {/* Опросник тренера */}
+        {/* Опросник тренера (роль: coach) */}
         <Route
           path={AppRoute.QuestionnaireCoach}
           element={
@@ -134,7 +154,21 @@ export default function App(): JSX.Element {
           }
         />
 
-        {/* Запрошенная страница не существует */}
+        {/* Каталог тренировок (роль: user) */}
+        <Route
+          path={AppRoute.TrainingCatalog}
+          element={
+            <RedirectRoute target={role} routes={[
+              redirectSignIn,
+              redirectPersonalAccountCoach
+            ]}
+            >
+              <TrainingCatalog />
+            </RedirectRoute>
+          }
+        />
+
+        {/* Запрошенная страница не существует (роль: user,coach) */}
         <Route
           path={AppRoute.Error404}
           element={

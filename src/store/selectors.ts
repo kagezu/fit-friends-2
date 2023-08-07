@@ -13,3 +13,4 @@ export const getNotify = (state: StoreType): Notify[] => state.Notify;
 export const getTrainingSpecial = (state: StoreType): Training[] => state.TrainingSpecial;
 export const getTrainingPopular = (state: StoreType): Training[] => state.TrainingPopular;
 export const getTrainingOffers = (state: StoreType): Training[] => state.TrainingOffers;
+export const getTrainingFiltred = (state: StoreType): Training[] => state.TrainingFiltred;
