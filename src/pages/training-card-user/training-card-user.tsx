@@ -1,7 +1,31 @@
+/* eslint-disable */
+import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../../components/header/header';
+import { useAppSelector, useAppDispatch } from '../../hooks';
+import { getTraining } from '../../store/selectors';
+import { useEffect, useState } from 'react';
+import { getTrainingAction } from '../../store/training/training-api-actions';
+import FeedbackList from '../../components/feedback-list/feedback-list';
+import { STATIC_PATH } from '../../const';
+import PopupBuy from '../../components/popup-buy/popup-buy';
 
 export default function TrainingCardUser(): JSX.Element {
-  return (
+  const [isViewPopup, setIsViewPopup] = useState<boolean>(false);
+  const { id } = useParams();
+  const training = useAppSelector(getTraining);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (id) {
+      dispatch(getTrainingAction({ id, navigate }));
+    }
+  }, [dispatch, navigate, id]);
+
+  if (!id || !training) {
+    return <div></div>;
+  }
+  return isViewPopup ? (<PopupBuy training={training} />) : (
     <>
       <Header />
       <main>
@@ -9,54 +33,7 @@ export default function TrainingCardUser(): JSX.Element {
           <div className="container">
             <div className="inner-page__wrapper">
               <h1 className="visually-hidden">Карточка тренировки</h1>
-              <aside className="reviews-side-bar">
-                <button className="btn-flat btn-flat--underlined reviews-side-bar__back" type="button">
-                  <svg width="14" height="10" aria-hidden="true">
-                    <use xlinkHref="#arrow-left"></use>
-                  </svg><span>Назад</span>
-                </button>
-                <h2 className="reviews-side-bar__title">Отзывы</h2>
-                <ul className="reviews-side-bar__list">
-                  <li className="reviews-side-bar__item">
-                    <div className="review">
-                      <div className="review__user-info">
-                        <div className="review__user-photo">
-                          <picture>
-                            <source type="image/webp" srcSet="img/content/avatars/users/photo-1.webp, img/content/avatars/users//photo-1@2x.webp 2x" />
-                            <img src="img/content/avatars/users//photo-1.png" srcSet="img/content/avatars/users//photo-1@2x.png 2x" width="64" height="64" alt="Изображение пользователя" />
-                          </picture>
-                        </div>
-                        <span className="review__user-name">Никита</span>
-                        <div className="review__rating">
-                          <svg width="16" height="16" aria-hidden="true">
-                            <use xlinkHref="#icon-star"></use>
-                          </svg><span>5</span>
-                        </div>
-                      </div>
-                      <p className="review__comment">Эта тренировка для меня зарядка по&nbsp;утрам, помогает проснуться.</p>
-                    </div>
-                  </li>
-                  <li className="reviews-side-bar__item">
-                    <div className="review">
-                      <div className="review__user-info">
-                        <div className="review__user-photo">
-                          <picture>
-                            <source type="image/webp" srcSet="img/content/avatars/users//photo-2.webp, img/content/avatars/users//photo-2@2x.webp 2x" />
-                            <img src="img/content/avatars/users//photo-2.png" srcSet="img/content/avatars/users//photo-2@2x.png 2x" width="64" height="64" alt="Изображение пользователя" />
-                          </picture>
-                        </div><span className="review__user-name">Дарья</span>
-                        <div className="review__rating">
-                          <svg width="16" height="16" aria-hidden="true">
-                            <use xlinkHref="#icon-star"></use>
-                          </svg><span>5</span>
-                        </div>
-                      </div>
-                      <p className="review__comment">Спасибо, классная тренировка! Понятная и&nbsp;интересная, с&nbsp;акцентом на&nbsp;правильную технику, как я&nbsp;люблю.</p>
-                    </div>
-                  </li>
-                </ul>
-                <button className="btn btn--medium reviews-side-bar__button" type="button">Оставить отзыв</button>
-              </aside>
+              <FeedbackList trainingId={id} />
               <div className="training-card">
                 <div className="training-info">
                   <h2 className="visually-hidden">Информация о тренировке</h2>
@@ -64,11 +41,12 @@ export default function TrainingCardUser(): JSX.Element {
                     <div className="training-info__coach">
                       <div className="training-info__photo">
                         <picture>
-                          <source type="image/webp" srcSet="img/content/avatars/coaches//photo-1.webp, img/content/avatars/coaches//photo-1@2x.webp 2x" />
-                          <img src="img/content/avatars/coaches//photo-1.png" srcSet="img/content/avatars/coaches//photo-1@2x.png 2x" width="64" height="64" alt="Изображение тренера" />
+                          <img src={training.coach?.avatar ? `${STATIC_PATH}${training.coach?.avatar}` : ''} width="64" height="64" alt="Изображение тренера" />
                         </picture>
                       </div>
-                      <div className="training-info__coach-info"><span className="training-info__label">Тренер</span><span className="training-info__name">Валерия</span></div>
+                      <div className="training-info__coach-info"><span className="training-info__label">Тренер</span>
+                        <span className="training-info__name">{training.coach?.name}</span>
+                      </div>
                     </div>
                   </div>
                   <div className="training-info__main-content">
@@ -77,13 +55,13 @@ export default function TrainingCardUser(): JSX.Element {
                         <div className="training-info__info-wrapper">
                           <div className="training-info__input training-info__input--training">
                             <label><span className="training-info__label">Название тренировки</span>
-                              <input type="text" name="training" value="energy" disabled />
+                              <input type="text" name="training" value={training.title} disabled />
                             </label>
                             <div className="training-info__error">Обязательное поле</div>
                           </div>
                           <div className="training-info__textarea">
                             <label><span className="training-info__label">Описание тренировки</span>
-                              <textarea name="description" disabled>Упражнения укрепляют мышечный корсет, делают суставы более гибкими, улучшают осанку и&nbsp;координацию.</textarea>
+                              <textarea name="description" value={training.description} readOnly />
                             </label>
                           </div>
                         </div>
@@ -95,32 +73,31 @@ export default function TrainingCardUser(): JSX.Element {
                                   <use xlinkHref="#icon-star"></use>
                                 </svg>
                               </span>
-                              <input type="number" name="rating" value="4" disabled />
+                              <input type="number" name="rating" value={training.rating.toFixed()} disabled />
                             </label>
                           </div>
                           <ul className="training-info__list">
                             <li className="training-info__item">
-                              <div className="hashtag hashtag--white"><span>#пилатес</span></div>
+                              <div className="hashtag hashtag--white"><span>#{training.trainingType}</span></div>
                             </li>
                             <li className="training-info__item">
-                              <div className="hashtag hashtag--white"><span>#для_всех</span></div>
+                              <div className="hashtag hashtag--white"><span>#{training.usersGender}</span></div>
                             </li>
                             <li className="training-info__item">
-                              <div className="hashtag hashtag--white"><span>#320ккал</span></div>
+                              <div className="hashtag hashtag--white"><span>#{training.caloriesToBurn}ккал</span></div>
                             </li>
                             <li className="training-info__item">
-                              <div className="hashtag hashtag--white"><span>#30_50минут</span></div>
+                              <div className="hashtag hashtag--white"><span>#{training.interval}</span></div>
                             </li>
                           </ul>
                         </div>
                         <div className="training-info__price-wrapper">
                           <div className="training-info__input training-info__input--price">
                             <label><span className="training-info__label">Стоимость</span>
-                              <input type="text" name="price" value="800 ₽" disabled />
+                              <input type="text" name="price" value={`${training.price} ₽`} disabled />
                             </label>
-                            <div className="training-info__error">Введите число</div>
                           </div>
-                          <button className="btn training-info__buy" type="button">Купить</button>
+                          <button onClick={() => setIsViewPopup(true)} className="btn training-info__buy" type="button">Купить</button>
                         </div>
                       </div>
                     </form>
@@ -131,8 +108,8 @@ export default function TrainingCardUser(): JSX.Element {
                   <div className="training-video__video">
                     <div className="training-video__thumbnail">
                       <picture>
-                        <source type="image/webp" srcSet="img/content/training-video/video-thumbnail.webp, img/content/training-video/video-thumbnail@2x.webp 2x" />
-                        <img src="img/content/training-video/video-thumbnail.png" srcSet="img/content/training-video/video-thumbnail@2x.png 2x" width="922" height="566" alt="Обложка видео" />
+                        <source type="image/webp" srcSet="/img/content/training-video/video-thumbnail.webp, /img/content/training-video/video-thumbnail@2x.webp 2x" />
+                        <img src="/img/content/training-video/video-thumbnail.png" srcSet="/img/content/training-video/video-thumbnail@2x.png 2x" width="922" height="566" alt="Обложка видео" />
                       </picture>
                     </div>
                     <button className="training-video__play-button btn-reset">

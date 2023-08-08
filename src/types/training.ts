@@ -1,6 +1,9 @@
+import { User } from './user';
+
 export type Training = {
   id: string;
-  coachId: string;
+  coachId?: string;
+  coach?: User;
   demoVideo: string;
   rating: number;
   title: string;

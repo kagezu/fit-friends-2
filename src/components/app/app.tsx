@@ -16,6 +16,8 @@ import PersonalAccountUser from '../../pages/personal-account-user/personal-acco
 import FriendsListUser from '../../pages/friends-list-user/friends-list-user';
 import FriendsListCoach from '../../pages/friends-list-coach/friends-list-coach';
 import TrainingCatalog from '../../pages/training-catalog/training-catalog';
+import TrainingCardUser from '../../pages/training-card-user/training-card-user';
+import TrainingCardCoach from '../../pages/training-card-coach/training-card-coach';
 
 const redirectUserIndex: Redirect = {
   trigger: Role.User,
@@ -30,6 +32,16 @@ const redirectPersonalAccountCoach: Redirect = {
 const redirectFriendsListCoach: Redirect = {
   trigger: Role.Coach,
   redirect: AppRoute.FriendsListCoach
+};
+
+const redirectTrainingCardCoach: Redirect = {
+  trigger: Role.Coach,
+  redirect: AppRoute.TrainingCardCoach
+};
+
+const redirectTrainingCardUser: Redirect = {
+  trigger: Role.User,
+  redirect: AppRoute.TrainingCardUser
 };
 
 const redirectSignIn: Redirect = {
@@ -164,6 +176,34 @@ export default function App(): JSX.Element {
             ]}
             >
               <TrainingCatalog />
+            </RedirectRoute>
+          }
+        />
+
+        {/* Карточка тренировки (роль: user) */}
+        <Route
+          path={`${AppRoute.TrainingCardUser}/:id`}
+          element={
+            <RedirectRoute target={role} routes={[
+              redirectSignIn,
+              redirectTrainingCardCoach
+            ]}
+            >
+              <TrainingCardUser />
+            </RedirectRoute>
+          }
+        />
+
+        {/* Карточка тренировки (роль: coach) */}
+        <Route
+          path={`${AppRoute.TrainingCardCoach}/:id`}
+          element={
+            <RedirectRoute target={role} routes={[
+              redirectSignIn,
+              redirectTrainingCardUser
+            ]}
+            >
+              <TrainingCardCoach />
             </RedirectRoute>
           }
         />

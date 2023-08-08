@@ -1,12 +1,32 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { Training } from '../../types/training';
+import { userInitialState } from '../user/user-slice';
 
-export const trainingInitialState: Training[] = [];
+export const trainingsInitialState: Training[] = [];
+export const trainingInitialState: Training = {
+  id: '',
+  coachId: '',
+  coach: userInitialState,
+  demoVideo: '',
+  rating: 0,
+  title: '',
+  trainingLevel: '',
+  trainingType: '',
+  interval: '',
+  price: 0,
+  caloriesToBurn: 0,
+  description: '',
+  usersGender: '',
+  specialOffer: false,
+  background: '',
+  totalSale: 0,
+  totalAmount: 0
+};
 
 export const trainingSpecialSlice = createSlice({
   name: NameSpace.TrainingSpecial,
-  initialState: trainingInitialState,
+  initialState: trainingsInitialState,
   reducers: {
     trainingSpecialForYou:
       (state, action: PayloadAction<Training[]>) => action.payload
@@ -15,7 +35,7 @@ export const trainingSpecialSlice = createSlice({
 
 export const trainingPopularSlice = createSlice({
   name: NameSpace.TrainingPopular,
-  initialState: trainingInitialState,
+  initialState: trainingsInitialState,
   reducers: {
     trainingPopular:
       (state, action: PayloadAction<Training[]>) => action.payload
@@ -24,7 +44,7 @@ export const trainingPopularSlice = createSlice({
 
 export const trainingOffersSlice = createSlice({
   name: NameSpace.TrainingOffers,
-  initialState: trainingInitialState,
+  initialState: trainingsInitialState,
   reducers: {
     trainingOffers:
       (state, action: PayloadAction<Training[]>) => action.payload
@@ -33,10 +53,19 @@ export const trainingOffersSlice = createSlice({
 
 export const trainingFiltredSlice = createSlice({
   name: NameSpace.TrainingFiltred,
-  initialState: trainingInitialState,
+  initialState: trainingsInitialState,
   reducers: {
     trainingFiltred:
       (state, action: PayloadAction<Training[]>) => action.payload
+  },
+});
+
+export const trainingSlice = createSlice({
+  name: NameSpace.Training,
+  initialState: trainingInitialState,
+  reducers: {
+    trainingAction:
+      (state, action: PayloadAction<Training>) => action.payload
   },
 });
 
@@ -44,3 +73,4 @@ export const { trainingSpecialForYou } = trainingSpecialSlice.actions;
 export const { trainingPopular } = trainingPopularSlice.actions;
 export const { trainingOffers } = trainingOffersSlice.actions;
 export const { trainingFiltred } = trainingFiltredSlice.actions;
+export const { trainingAction } = trainingSlice.actions;

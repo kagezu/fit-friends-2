@@ -47,11 +47,11 @@ export default function TrainingCard({ training }: { training: Training }): JSX.
         </div>
         <div className="thumbnail-training__button-wrapper">
           <Link className="btn btn--small thumbnail-training__button-catalog"
-            to={`../${AppRoute.TrainingCardUser}?id=${training.id}`}
+            to={`../${AppRoute.TrainingCardUser}/${training.id}`}
           >Подробнее
           </Link>
           <Link className="btn btn--small btn--outlined thumbnail-training__button-catalog"
-            to={`../${AppRoute.TrainingCardUser}?id=${training.id}`}
+            to={`../${AppRoute.TrainingCardUser}/${training.id}`}
           >Отзывы
           </Link>
         </div>
