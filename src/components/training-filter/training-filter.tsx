@@ -2,7 +2,8 @@ import { Slider } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
 import { sliderSlotProps, sliderStyle } from './slider-style';
 import { TrainingQuery } from '../../types/training-query';
-import { TrainingType } from '../../const';
+import { AppRoute, TrainingType } from '../../const';
+import { Link } from 'react-router-dom';
 
 enum Index {
   Min = 0,
@@ -12,41 +13,38 @@ enum Index {
 enum PriceCount {
   Min = 0,
   Max = 5000,
-  Step = 100,
-  MinDefault = 0,
-  MaxDefault = 3200,
+  Step = 100
 }
 
 enum CaloriesCount {
   Min = 1000,
   Max = 5000,
-  Step = 100,
-  MinDefault = 1000,
-  MaxDefault = 3200,
+  Step = 100
 }
 
 enum RankingCount {
   Min = 0,
   Max = 5,
-  Step = 1,
-  MinDefault = 0,
-  MaxDefault = 5,
+  Step = 1
 }
 
 enum Sort {
   Desc = 'desc',
-  Asc = 'asc'
+  Asc = 'asc',
+  Free = 'free'
 }
 
+let trainingTypes: string[] = [];
+let sort: Sort;
+const setTrainingTypes = (value: string[]) => { trainingTypes = value; };
+
 export default function TrainingFilter({ onChange }: { onChange: (params: TrainingQuery) => void }): JSX.Element {
-  const [sort, setSort] = useState<Sort>();
-  const [prices, setPrices] = useState<number[]>([PriceCount.MinDefault, PriceCount.MaxDefault]);
-  const [calories, setCalories] = useState<number[]>([CaloriesCount.MinDefault, CaloriesCount.MaxDefault]);
-  const [rankings, setRankings] = useState<number[]>([RankingCount.MinDefault, RankingCount.MaxDefault]);
-  const [trainingTypes, setTrainingTypes] = useState<string[]>([]);
+  const [prices, setPrices] = useState<number[]>([PriceCount.Min, PriceCount.Max]);
+  const [calories, setCalories] = useState<number[]>([CaloriesCount.Min, CaloriesCount.Max]);
+  const [rankings, setRankings] = useState<number[]>([RankingCount.Min, RankingCount.Max]);
 
   const handleMinPriceChange = (evt: ChangeEvent<HTMLInputElement>) => setPrices([+evt.target.value, prices[Index.Max]]);
-  const handleMaxPriceChange = (evt: ChangeEvent<HTMLInputElement>) => setPrices([prices[Index.Max], +evt.target.value]);
+  const handleMaxPriceChange = (evt: ChangeEvent<HTMLInputElement>) => setPrices([prices[Index.Min], +evt.target.value]);
   const handlePriceChange = (event: Event, value: number | number[]) => {
     const [min, max] = value as number[];
     if (min < max) {
@@ -78,19 +76,20 @@ export default function TrainingFilter({ onChange }: { onChange: (params: Traini
     } else {
       setTrainingTypes(trainingTypes.filter((item) => item !== value));
     }
+    handleUpdate();
   };
 
   const handleUpdate = () => {
     const trainingType = trainingTypes.join(',');
     onChange(Object.assign({
-      priceFrom: prices[Index.Min],
-      priceTo: prices[Index.Max],
+      priceFrom: sort === Sort.Free ? 0 : prices[Index.Min],
+      priceTo: sort === Sort.Free ? 0 : prices[Index.Max],
       caloriesFrom: calories[Index.Min],
       caloriesTo: calories[Index.Max],
       ratingFrom: rankings[Index.Min],
       ratingTo: rankings[Index.Max]
     }, trainingType ? { trainingType } : {
-    }, sort ? {
+    }, sort && sort !== Sort.Free ? {
       sortDirection: sort,
       category: 'price'
     } : {}
@@ -101,11 +100,11 @@ export default function TrainingFilter({ onChange }: { onChange: (params: Traini
     <div className="gym-catalog-form">
       <h2 className="visually-hidden">Мои тренировки Фильтр</h2>
       <div className="gym-catalog-form__wrapper">
-        <button className="btn-flat btn-flat--underlined gym-catalog-form__btnback" type="button">
+        <Link to={AppRoute.Index} className="btn-flat btn-flat--underlined gym-catalog-form__btnback" type="button">
           <svg width="14" height="10" aria-hidden="true">
             <use xlinkHref="#arrow-left"></use>
           </svg><span>Назад</span>
-        </button>
+        </Link>
         <h3 className="gym-catalog-form__title">Фильтры</h3>
         <form className="gym-catalog-form__form">
           <div className="gym-catalog-form__block gym-catalog-form__block--price">
@@ -221,15 +220,15 @@ export default function TrainingFilter({ onChange }: { onChange: (params: Traini
             <h4 className="gym-catalog-form__title gym-catalog-form__title--sort">Сортировка</h4>
             <div className="btn-radio-sort gym-catalog-form__radio">
               <label>
-                <input onChange={() => { setSort(Sort.Desc); handleUpdate(); }} type="radio" name="sort" />
+                <input onChange={() => { sort = Sort.Asc; handleUpdate(); }} type="radio" name="sort" />
                 <span className="btn-radio-sort__label">Дешевле</span>
               </label>
               <label>
-                <input onChange={() => { setSort(Sort.Asc); handleUpdate(); }} type="radio" name="sort" />
+                <input onChange={() => { sort = Sort.Desc; handleUpdate(); }} type="radio" name="sort" />
                 <span className="btn-radio-sort__label">Дороже</span>
               </label>
               <label>
-                <input onChange={() => { setPrices([0, 0]); handleUpdate(); }} type="radio" name="sort" />
+                <input onChange={() => { sort = Sort.Free; handleUpdate(); }} type="radio" name="sort" />
                 <span className="btn-radio-sort__label">Бесплатные</span>
               </label>
             </div>
