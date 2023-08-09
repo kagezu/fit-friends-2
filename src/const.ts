@@ -1,5 +1,6 @@
 export const MAX_TRAINING_TYPE = 3;
 export const STATIC_PATH = 'http://localhost:3333/static/';
+export const ESCAPE_KEY = 'Escape';
 
 export enum AppRoute {
   Intro = '/',
@@ -36,7 +37,10 @@ export enum APIRoute {
   Training = '/training',
   TrainingDetail = '/training/detail',
   MyTraining = '/training/my',
-  Review = '/review'
+  Review = '/review',
+  Balance = '/balance/info',
+  BalanceDecrease = '/balance/dec',
+  Order = '/order',
 }
 
 export enum NameSpace {
@@ -49,7 +53,8 @@ export enum NameSpace {
   TrainingOffers = 'TrainingOffers',
   TrainingFiltred = 'TrainingFiltred',
   Training = 'Training',
-  Reviews = 'Reviews'
+  Reviews = 'Reviews',
+  Balance = 'Balance',
 }
 
 export enum Role {
@@ -86,6 +91,12 @@ export enum TrainingType {
   Aerobics = 'аэробика',
   Pilates = 'пилатес',
   Strength = 'силовые'
+}
+
+export enum PaymentMethod {
+  Visa = 'visa',
+  Mir = 'mir',
+  Umoney = 'umoney'
 }
 
 export enum CaloriesToBurnLimit {

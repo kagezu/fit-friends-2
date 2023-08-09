@@ -156,7 +156,10 @@ export default function QuestionnaireCoach(): JSX.Element {
                     </div>
                     <div className="questionnaire-coach__block">
                       <span className="questionnaire-coach__legend">Расскажите о своём опыте, который мы сможем проверить</span>
-                      <div className="custom-textarea questionnaire-coach__textarea {errors.resume ? 'custom-textarea__error' : ''}">
+                      <div className={errors.resume ?
+                        'custom-textarea questionnaire-coach__textarea custom-textarea__error' :
+                        'custom-textarea questionnaire-coach__textarea'}
+                      >
                         <label>
                           <textarea
                             onChange={handleFormDataChange}

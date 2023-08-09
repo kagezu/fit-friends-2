@@ -5,6 +5,7 @@ import { ErrorList } from '../utils/parse-error';
 import { Notify } from '../types/notify';
 import { Training } from '../types/training';
 import { Review } from '../types/review';
+import { Balance } from '../types/balance';
 
 export const getRole = (state: StoreType): Role => state.User.role;
 export const getUser = (state: StoreType): User => state.User;
@@ -17,3 +18,4 @@ export const getTrainingOffers = (state: StoreType): Training[] => state.Trainin
 export const getTrainingFiltred = (state: StoreType): Training[] => state.TrainingFiltred;
 export const getTraining = (state: StoreType): Training => state.Training;
 export const getReviews = (state: StoreType): Review[] => state.Reviews;
+export const getBalance = (state: StoreType): Balance => state.Balance;

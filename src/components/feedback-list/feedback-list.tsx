@@ -1,20 +1,24 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { getReviews } from '../../store/selectors';
 import { getReviewsAction } from '../../store/review/review-api-actions';
 import { STATIC_PATH } from '../../const';
+import PopupFeedback from '../popup-feedback/popup-feedback';
+import { responseError } from '../../store/error/error-process';
 
-export default function FeedbackList({ trainingId }: { trainingId: string }): JSX.Element {
+export default function FeedbackList({ trainingId, count }: { trainingId: string; count: number }): JSX.Element {
+  const [isViewPopup, setIsViewPopup] = useState<boolean>(false);
   const reviews = useAppSelector(getReviews);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (trainingId) {
+    if (trainingId && !isViewPopup) {
       dispatch(getReviewsAction(trainingId));
+      dispatch(responseError({}));
     }
-  }, [dispatch, trainingId]);
+  }, [dispatch, trainingId, isViewPopup]);
 
-  return (
+  return isViewPopup ? (<PopupFeedback trainingId={trainingId} onClose={() => setIsViewPopup(false)} />) : (
     <aside className="reviews-side-bar">
       <button className="btn-flat btn-flat--underlined reviews-side-bar__back" type="button">
         <svg width="14" height="10" aria-hidden="true">
@@ -48,7 +52,7 @@ export default function FeedbackList({ trainingId }: { trainingId: string }): JS
             ))
         }
       </ul>
-      <button className="btn btn--medium reviews-side-bar__button" type="button">Оставить отзыв</button>
+      <button onClick={() => setIsViewPopup(true)} className="btn btn--medium reviews-side-bar__button" type="button" disabled={!count}>Оставить отзыв</button>
     </aside>
   );
 }

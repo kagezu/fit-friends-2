@@ -1,31 +1,48 @@
-/* eslint-disable */
 import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../../components/header/header';
 import { useAppSelector, useAppDispatch } from '../../hooks';
-import { getTraining } from '../../store/selectors';
+import { getBalance, getTraining } from '../../store/selectors';
 import { useEffect, useState } from 'react';
 import { getTrainingAction } from '../../store/training/training-api-actions';
 import FeedbackList from '../../components/feedback-list/feedback-list';
 import { STATIC_PATH } from '../../const';
 import PopupBuy from '../../components/popup-buy/popup-buy';
+import { decreaseBalanceAction, getBalanceAction } from '../../store/balance/balance-api-actions';
+import VideoPlayer from '../../components/video-player/video-player';
 
 export default function TrainingCardUser(): JSX.Element {
+  const [isPlaying, setIsPlaying] = useState(false);
   const [isViewPopup, setIsViewPopup] = useState<boolean>(false);
+  const [isActiveTraining, setIsActiveTraining] = useState<boolean>(false);
   const { id } = useParams();
   const training = useAppSelector(getTraining);
+  const { count } = useAppSelector(getBalance);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const handleActivateTrainingClick = () => {
+    if (id) {
+      setIsActiveTraining(true);
+      dispatch(decreaseBalanceAction(id));
+    }
+  };
+  const handleStopTrainingClick = () => {
+    setIsActiveTraining(false);
+    setIsPlaying(false);
+  };
 
   useEffect(() => {
     if (id) {
       dispatch(getTrainingAction({ id, navigate }));
+      dispatch(getBalanceAction(id));
     }
   }, [dispatch, navigate, id]);
 
   if (!id || !training) {
     return <div></div>;
   }
-  return isViewPopup ? (<PopupBuy training={training} />) : (
+
+  return isViewPopup ? (<PopupBuy training={training} onClose={() => setIsViewPopup(false)} />) : (
     <>
       <Header />
       <main>
@@ -33,7 +50,7 @@ export default function TrainingCardUser(): JSX.Element {
           <div className="container">
             <div className="inner-page__wrapper">
               <h1 className="visually-hidden">Карточка тренировки</h1>
-              <FeedbackList trainingId={id} />
+              <FeedbackList trainingId={id} count={count} />
               <div className="training-card">
                 <div className="training-info">
                   <h2 className="visually-hidden">Информация о тренировке</h2>
@@ -107,27 +124,53 @@ export default function TrainingCardUser(): JSX.Element {
                   <h2 className="training-video__title">Видео</h2>
                   <div className="training-video__video">
                     <div className="training-video__thumbnail">
-                      <picture>
-                        <source type="image/webp" srcSet="/img/content/training-video/video-thumbnail.webp, /img/content/training-video/video-thumbnail@2x.webp 2x" />
-                        <img src="/img/content/training-video/video-thumbnail.png" srcSet="/img/content/training-video/video-thumbnail@2x.png 2x" width="922" height="566" alt="Обложка видео" />
-                      </picture>
+                      <VideoPlayer
+                        isPlaying={isPlaying}
+                        src={`${STATIC_PATH}${training.demoVideo}`}
+                        previewImage={`${STATIC_PATH}${training.background}`}
+                        width={922}
+                        height={566}
+                      />
                     </div>
-                    <button className="training-video__play-button btn-reset">
-                      <svg width="18" height="30" aria-hidden="true">
-                        <use xlinkHref="#icon-arrow"></use>
-                      </svg>
-                    </button>
+                    {
+                      isPlaying ? (<div></div>) :
+                        (
+                          <button
+                            className="training-video__play-button btn-reset"
+                            disabled={!isActiveTraining}
+                            onClick={() => setIsPlaying(true)}
+                          >
+                            <svg width="18" height="30" aria-hidden="true">
+                              <use xlinkHref="#icon-arrow"></use>
+                            </svg>
+                          </button>)
+                    }
                   </div>
                   <div className="training-video__buttons-wrapper">
-                    <button className="btn training-video__button training-video__button--start" type="button" disabled>Приступить</button>
-                    <button className="btn training-video__button training-video__button--stop" type="button">Закончить</button>
+                    {
+                      isActiveTraining ?
+                        (
+                          <button
+                            className="btn training-video__button training-video__button--start" type="button"
+                            onClick={handleStopTrainingClick}
+                          >Закончить
+                          </button>
+                        ) : (
+                          <button
+                            className="btn training-video__button training-video__button--start" type="button"
+                            disabled={!count}
+                            onClick={handleActivateTrainingClick}
+                          >Приступить
+                          </button>
+                        )
+                    }
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </section>
-      </main>
+      </main >
     </>
   );
 }

@@ -22,7 +22,7 @@ export default function SpecialForYouItem({ training }: { training: Training }):
           <div className="thumbnail-preview__button-wrapper">
             <Link
               className="btn btn--small thumbnail-preview__button"
-              to={`../${AppRoute.TrainingCardUser}?id=${training.id}`}
+              to={`../${AppRoute.TrainingCardUser}/${training.id}`}
             >Подробнее
             </Link>
           </div>

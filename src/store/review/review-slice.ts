@@ -9,8 +9,10 @@ export const reviewsSlice = createSlice({
   initialState: reviewsInitialState,
   reducers: {
     reviewsAction:
-      (state, action: PayloadAction<Review[]>) => action.payload
+      (state, action: PayloadAction<Review[]>) => action.payload,
+    reviewAction:
+      (state, action: PayloadAction<Review>) => [action.payload, ...state]
   }
 });
 
-export const { reviewsAction } = reviewsSlice.actions;
+export const { reviewsAction, reviewAction } = reviewsSlice.actions;

@@ -5,6 +5,7 @@ import { errorProcess } from './error/error-process';
 import { notifyProcess } from './notify/notify-process';
 import { trainingSpecialSlice, trainingPopularSlice, trainingOffersSlice, trainingFiltredSlice, trainingSlice } from './training/training-slice';
 import { reviewsSlice } from './review/review-slice';
+import { balanceSlice } from './balance/balance-slice';
 
 export const rootReducer = combineReducers({
   [NameSpace.User]: userProcess.reducer,
@@ -17,4 +18,5 @@ export const rootReducer = combineReducers({
   [NameSpace.TrainingFiltred]: trainingFiltredSlice.reducer,
   [NameSpace.Training]: trainingSlice.reducer,
   [NameSpace.Reviews]: reviewsSlice.reducer,
+  [NameSpace.Balance]: balanceSlice.reducer,
 });
