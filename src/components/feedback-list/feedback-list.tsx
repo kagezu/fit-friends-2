@@ -52,7 +52,10 @@ export default function FeedbackList({ trainingId, count }: { trainingId: string
             ))
         }
       </ul>
-      {count === undefined ? (<button onClick={() => setIsViewPopup(true)} className="btn btn--medium reviews-side-bar__button" type="button" disabled={!count}>Оставить отзыв</button>) : (<div></div>)}
+      <button onClick={() => setIsViewPopup(true)}
+        className="btn btn--medium reviews-side-bar__button" type="button" disabled={!count}
+      >Оставить отзыв
+      </button>
     </aside>
   );
 }

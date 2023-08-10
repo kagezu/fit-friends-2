@@ -42,13 +42,34 @@ export const createTrainingAction = createAsyncThunk(
   'training/create',
   async ({ request, navigate }: { request: TrainingData; navigate: NavigateFunction }, { dispatch }) => {
     try {
-      const { data } = await Axios.post<Training>(APIRoute.Training,
+      const { data } = await Axios.post<Training>(APIRoute.TrainingCreate,
         request,
         { headers: { 'Content-Type': 'multipart/form-data' } }
       );
       dispatch(trainingAction(data));
       dispatch(responseError({}));
       navigate(`${AppRoute.TrainingCardUser}/${data.id}`);
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        const errors = parseError(err);
+        if (errors) {
+          dispatch(responseError(errors));
+        }
+      }
+    }
+  }
+);
+
+export const updateTrainingAction = createAsyncThunk(
+  'training/update',
+  async ({ request, id }: { request: TrainingData; id: string }, { dispatch }) => {
+    try {
+      const { data } = await Axios.patch<Training>(`${APIRoute.TrainingCreate}/${id}`,
+        request,
+        { headers: { 'Content-Type': 'multipart/form-data' } }
+      );
+      dispatch(trainingAction(data));
+      dispatch(responseError({}));
     } catch (err) {
       if (axios.isAxiosError(err)) {
         const errors = parseError(err);

@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
 export type Redirect = {
@@ -13,10 +13,12 @@ type RedirectRouteProps = {
 }
 
 export default function RedirectRoute({ target, children, routes }: RedirectRouteProps): JSX.Element {
+  const { id } = useParams();
   const route = routes.filter(({ trigger }: Redirect) => target === trigger)[0];
+
   return (
     route
-      ? <Navigate to={route.redirect} />
+      ? <Navigate to={id ? `${route.redirect}/${id}` : route.redirect} />
       : children
   );
 }
