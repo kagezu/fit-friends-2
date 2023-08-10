@@ -6,7 +6,7 @@ import { STATIC_PATH } from '../../const';
 import PopupFeedback from '../popup-feedback/popup-feedback';
 import { responseError } from '../../store/error/error-process';
 
-export default function FeedbackList({ trainingId, count }: { trainingId: string; count: number }): JSX.Element {
+export default function FeedbackList({ trainingId, count }: { trainingId: string; count?: number }): JSX.Element {
   const [isViewPopup, setIsViewPopup] = useState<boolean>(false);
   const reviews = useAppSelector(getReviews);
   const dispatch = useAppDispatch();
@@ -52,7 +52,7 @@ export default function FeedbackList({ trainingId, count }: { trainingId: string
             ))
         }
       </ul>
-      <button onClick={() => setIsViewPopup(true)} className="btn btn--medium reviews-side-bar__button" type="button" disabled={!count}>Оставить отзыв</button>
+      {count === undefined ? (<button onClick={() => setIsViewPopup(true)} className="btn btn--medium reviews-side-bar__button" type="button" disabled={!count}>Оставить отзыв</button>) : (<div></div>)}
     </aside>
   );
 }

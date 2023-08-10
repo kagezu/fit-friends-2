@@ -34,7 +34,7 @@ export enum APIRoute {
   UpdateUser = 'user/update',
   UserIndex = 'user/index',
   Notify = '/notify',
-  Training = '/training',
+  Training = '/training/index',
   TrainingDetail = '/training/detail',
   MyTraining = '/training/my',
   Review = '/review',

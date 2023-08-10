@@ -18,6 +18,8 @@ import FriendsListCoach from '../../pages/friends-list-coach/friends-list-coach'
 import TrainingCatalog from '../../pages/training-catalog/training-catalog';
 import TrainingCardUser from '../../pages/training-card-user/training-card-user';
 import TrainingCardCoach from '../../pages/training-card-coach/training-card-coach';
+import CreateTraining from '../../pages/create-training/create-training';
+import MyTrainings from '../../pages/my-trainings/my-trainings';
 
 const redirectUserIndex: Redirect = {
   trigger: Role.User,
@@ -205,6 +207,26 @@ export default function App(): JSX.Element {
             >
               <TrainingCardCoach />
             </RedirectRoute>
+          }
+        />
+
+        {/* Создание новой тренировки (роль: coach) */}
+        <Route
+          path={AppRoute.CreateTraining}
+          element={
+            <PrivateRoute role={role} roles={[Role.Coach]}>
+              <CreateTraining />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Мои тренировки (роль: coach) */}
+        <Route
+          path={AppRoute.MyTrainings}
+          element={
+            <PrivateRoute role={role} roles={[Role.Coach]}>
+              <MyTrainings />
+            </PrivateRoute>
           }
         />
 
