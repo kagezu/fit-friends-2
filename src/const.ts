@@ -24,6 +24,7 @@ export enum AppRoute {
   UserCardUser = '/user-card-user',
   UserCardCoach = '/user-card-coach',
 
+  Error401 = '/error-401',
   Error404 = '/*',
 }
 
@@ -46,7 +47,7 @@ export enum APIRoute {
 
 export enum NameSpace {
   User = 'User',
-  UsersForCompany = 'UsersForCompany',
+  Users = 'Users',
   Error = 'Error',
   Notify = 'Notify',
   TrainingSpecial = 'TrainingSpecial',
@@ -113,4 +114,10 @@ export enum CaloriesPerDayLimit {
 export enum ResumeLimit {
   Max = 10,
   Min = 140
+}
+
+export enum Sort {
+  Desc = 'desc',
+  Asc = 'asc',
+  Free = 'free'
 }

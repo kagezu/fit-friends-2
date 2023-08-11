@@ -11,6 +11,6 @@ export default function PrivateRoute({ role, roles, children }: PrivateRouteProp
   return (
     roles.some((allowed) => allowed === role)
       ? children
-      : <Navigate to={AppRoute.SignIn} />
+      : <Navigate to={AppRoute.Error401} />
   );
 }

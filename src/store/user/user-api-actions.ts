@@ -1,7 +1,7 @@
-import { PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { APIRoute, AppRoute, Role } from '../../const';
 import { Axios } from '../../services/api';
-import { requireAuthorization, userInitialState } from './user-slice';
+import { requireAuthorization, userInitialState, usersAction } from './user-slice';
 import { User } from '../../types/user';
 import { NavigateFunction } from 'react-router-dom';
 import { AuthData } from '../../types/auth-data';
@@ -29,7 +29,7 @@ export const checkAuthAction = createAsyncThunk(
 
 export const getUsersAction = createAsyncThunk(
   'user/checkAuth',
-  async ({ params, usersAction }: { params: UserQuery; usersAction: (argument: User[]) => PayloadAction<User[]> }, { dispatch }) => {
+  async (params: UserQuery, { dispatch }) => {
     const { data }: { data: User[] } = await Axios.get<User[]>(APIRoute.UserIndex, { params });
     dispatch(usersAction(data));
   },

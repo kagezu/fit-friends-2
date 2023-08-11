@@ -9,7 +9,7 @@ import { Balance } from '../types/balance';
 
 export const getRole = (state: StoreType): Role => state.User.role;
 export const getUser = (state: StoreType): User => state.User;
-export const getUsersForCompany = (state: StoreType): User[] => state.UsersForCompany;
+export const getUsers = (state: StoreType): User[] => state.Users;
 export const getError = (state: StoreType): ErrorList => state.Error;
 export const getNotify = (state: StoreType): Notify[] => state.Notify;
 export const getTrainingSpecial = (state: StoreType): Training[] => state.TrainingSpecial;

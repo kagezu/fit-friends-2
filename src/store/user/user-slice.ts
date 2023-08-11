@@ -21,14 +21,14 @@ export const userProcess = createSlice({
 });
 
 
-export const usersForCompanySlice = createSlice({
-  name: NameSpace.UsersForCompany,
+export const usersSlice = createSlice({
+  name: NameSpace.Users,
   initialState: [] as User[],
   reducers: {
-    usersForCompany:
+    usersAction:
       (state, action: PayloadAction<User[]>) => action.payload
   },
 });
 
 export const { requireAuthorization } = userProcess.actions;
-export const { usersForCompany } = usersForCompanySlice.actions;
+export const { usersAction } = usersSlice.actions;

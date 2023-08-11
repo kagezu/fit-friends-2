@@ -1,6 +1,6 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import { NameSpace } from '../const';
-import { userProcess, usersForCompanySlice } from './user/user-slice';
+import { userProcess, usersSlice } from './user/user-slice';
 import { errorProcess } from './error/error-process';
 import { notifyProcess } from './notify/notify-process';
 import { trainingSpecialSlice, trainingPopularSlice, trainingOffersSlice, trainingFiltredSlice, trainingSlice } from './training/training-slice';
@@ -9,7 +9,7 @@ import { balanceSlice } from './balance/balance-slice';
 
 export const rootReducer = combineReducers({
   [NameSpace.User]: userProcess.reducer,
-  [NameSpace.UsersForCompany]: usersForCompanySlice.reducer,
+  [NameSpace.Users]: usersSlice.reducer,
   [NameSpace.Error]: errorProcess.reducer,
   [NameSpace.Notify]: notifyProcess.reducer,
   [NameSpace.TrainingSpecial]: trainingSpecialSlice.reducer,

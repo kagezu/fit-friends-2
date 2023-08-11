@@ -20,6 +20,8 @@ import TrainingCardUser from '../../pages/training-card-user/training-card-user'
 import TrainingCardCoach from '../../pages/training-card-coach/training-card-coach';
 import CreateTraining from '../../pages/create-training/create-training';
 import MyTrainings from '../../pages/my-trainings/my-trainings';
+import UsersCatalog from '../../pages/users-catalog/users-catalog';
+import Error401 from '../../pages/error-401/error-401';
 
 const redirectUserIndex: Redirect = {
   trigger: Role.User,
@@ -228,6 +230,22 @@ export default function App(): JSX.Element {
               <MyTrainings />
             </PrivateRoute>
           }
+        />
+
+        {/* Каталог пользователей (роль: user) */}
+        <Route
+          path={AppRoute.UsersCatalog}
+          element={
+            <PrivateRoute role={role} roles={[Role.User]}>
+              <UsersCatalog />
+            </PrivateRoute>
+          }
+        />
+
+        {/* недостаточно прав */}
+        <Route
+          path={AppRoute.Error401}
+          element={<Error401 />}
         />
 
         {/* Запрошенная страница не существует (роль: user,coach) */}

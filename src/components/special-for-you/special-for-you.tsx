@@ -33,7 +33,7 @@ export default function SpecialForYou(): JSX.Element {
         <div className="special-for-you__wrapper">
           <div className="special-for-you__title-wrapper">
             <h2 className="special-for-you__title">
-              {trainings.length ? 'Популярные тренировки' : 'Скоро здесь появится что - то полезное'}
+              {trainings.length ? 'Специально подобрано для вас' : 'Скоро здесь появится что - то полезное'}
             </h2>
             <div className="special-for-you__controls">
               <button

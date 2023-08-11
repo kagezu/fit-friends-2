@@ -8,7 +8,7 @@ import { getTrainingsAction } from '../../store/training/training-api-actions';
 import { trainingFiltred } from '../../store/training/training-slice';
 import { TrainingQuery } from '../../types/training-query';
 
-const MAX_COUNT_CARD_ON_PAGE = 12;
+const MAX_COUNT_CARD_ON_PAGE = 6;
 
 export default function TrainingCatalog(): JSX.Element {
   const dispatch = useAppDispatch();

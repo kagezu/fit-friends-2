@@ -3,17 +3,16 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import LookForCompanyItem from '../look-for-company-item/look-for-company-item';
 import { useAppSelector } from '../../hooks';
-import { getUser, getUsersForCompany } from '../../store/selectors';
+import { getUser, getUsers } from '../../store/selectors';
 import { useAppDispatch } from '../../hooks';
 import { getUsersAction } from '../../store/user/user-api-actions';
-import { usersForCompany } from '../../store/user/user-slice';
 
 const MAX_COUNT_ELEMENT = 4;
 const MAX_COUNT_USER = 8;
 
 export default function LookForCompany(): JSX.Element {
   const user = useAppSelector(getUser);
-  const users = useAppSelector(getUsersForCompany);
+  const users = useAppSelector(getUsers);
   const [position, setPosition] = useState<number>(0);
   const dispatch = useAppDispatch();
   const handleRightClick = () => setPosition(position + 1);
@@ -21,12 +20,9 @@ export default function LookForCompany(): JSX.Element {
 
   useEffect(() => {
     dispatch(getUsersAction({
-      params: {
-        trainingTypes: user.trainingTypes?.join(','),
-        readyForTraining: true,
-        limit: MAX_COUNT_USER,
-      },
-      usersAction: usersForCompany
+      trainingTypes: user.trainingTypes?.join(','),
+      readyForTraining: true,
+      limit: MAX_COUNT_USER
     }));
   }, [dispatch, user]);
 
@@ -36,7 +32,7 @@ export default function LookForCompany(): JSX.Element {
         <div className="look-for-company__wrapper">
           <div className="look-for-company__title-wrapper">
             <h2 className="look-for-company__title">
-              {users.length ? 'Популярные тренировки' : 'Скоро здесь появится что - то полезное'}
+              {users.length ? 'Ищут компанию для тренировки' : 'Скоро здесь появится что - то полезное'}
             </h2>
             <Link className="btn-flat btn-flat--light look-for-company__button" to={AppRoute.UsersCatalog}>
               <span>Смотреть все</span>

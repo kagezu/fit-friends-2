@@ -2,7 +2,7 @@ import { Slider } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
 import { sliderSlotProps, sliderStyle } from './slider-style';
 import { TrainingQuery } from '../../types/training-query';
-import { AppRoute, TrainingType } from '../../const';
+import { AppRoute, Sort, TrainingType } from '../../const';
 import { Link } from 'react-router-dom';
 
 enum Index {
@@ -26,12 +26,6 @@ enum RankingCount {
   Min = 0,
   Max = 5,
   Step = 1
-}
-
-enum Sort {
-  Desc = 'desc',
-  Asc = 'asc',
-  Free = 'free'
 }
 
 let trainingTypes: string[] = [];
