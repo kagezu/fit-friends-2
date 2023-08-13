@@ -22,6 +22,7 @@ import CreateTraining from '../../pages/create-training/create-training';
 import MyTrainings from '../../pages/my-trainings/my-trainings';
 import UsersCatalog from '../../pages/users-catalog/users-catalog';
 import Error401 from '../../pages/error-401/error-401';
+import UserCardDetail from '../../pages/user-card-detail/user-card-detail';
 
 const redirectUserIndex: Redirect = {
   trigger: Role.User,
@@ -238,6 +239,16 @@ export default function App(): JSX.Element {
           element={
             <PrivateRoute role={role} roles={[Role.User]}>
               <UsersCatalog />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Карточка пользователя */}
+        <Route
+          path={`${AppRoute.UserCardDetail}/:id`}
+          element={
+            <PrivateRoute role={role} roles={[Role.Coach, Role.User]}>
+              <UserCardDetail />
             </PrivateRoute>
           }
         />

@@ -33,7 +33,7 @@ export default function UserCard({ user }: { user: User }): JSX.Element {
         </ul>
         <Link
           className={`btn btn--outlined btn--medium thumbnail-user__button ${user.role === Role.User ? '' : 'btn--dark-bg'}`}
-          to={`${AppRoute.UserCardUser}/${user.id}`}
+          to={`${AppRoute.UserCardDetail}/${user.id}`}
         >Подробнее
         </Link>
       </div>

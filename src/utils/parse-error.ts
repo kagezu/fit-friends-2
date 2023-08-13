@@ -16,6 +16,7 @@ export const parseError = (err: AxiosError) => {
       message.forEach(parseMessageString);
     } else {
       parseMessageString(message);
+      errors['message'] = message;
     }
     return errors;
   }

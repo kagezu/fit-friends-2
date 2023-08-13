@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../../hooks';
 import { getReviews } from '../../store/selectors';
 import { getReviewsAction } from '../../store/review/review-api-actions';
-import { STATIC_PATH } from '../../const';
+import { AppRoute, STATIC_PATH } from '../../const';
 import PopupFeedback from '../popup-feedback/popup-feedback';
 import { responseError } from '../../store/error/error-process';
+import { Link } from 'react-router-dom';
 
 export default function FeedbackList({ trainingId, count }: { trainingId: string; count?: number }): JSX.Element {
   const [isViewPopup, setIsViewPopup] = useState<boolean>(false);
@@ -20,11 +21,11 @@ export default function FeedbackList({ trainingId, count }: { trainingId: string
 
   return isViewPopup ? (<PopupFeedback trainingId={trainingId} onClose={() => setIsViewPopup(false)} />) : (
     <aside className="reviews-side-bar">
-      <button className="btn-flat btn-flat--underlined reviews-side-bar__back" type="button">
+      <Link className="btn-flat btn-flat--underlined user-catalog-form__btnback" to={AppRoute.TrainingCatalog}>
         <svg width="14" height="10" aria-hidden="true">
           <use xlinkHref="#arrow-left"></use>
         </svg><span>Назад</span>
-      </button>
+      </Link>
       <h2 className="reviews-side-bar__title">Отзывы</h2>
       <ul className="reviews-side-bar__list">
         {

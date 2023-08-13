@@ -38,7 +38,7 @@ export default function LookForCompanyItem({ user }: { user: User }): JSX.Elemen
         </ul>
         <Link
           className="btn btn--outlined btn--dark-bg btn--medium thumbnail-user__button"
-          to={`${AppRoute.UserCardUser}/${user.id}`}
+          to={`${AppRoute.UserCardDetail}/${user.id}`}
         >Подробнее
         </Link>
       </div>

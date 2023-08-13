@@ -1,22 +1,23 @@
-export { };
-/*
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
-import { Balance } from '../../types/balance';
+import { PersonalOrder } from '../../types/personal-order';
 
-export const balanceInitialState: Balance = {
-  training: '',
-  count: 0
+export const initialPersonalOrder: PersonalOrder = {
+  id: '',
+  initiator: '',
+  user: '',
+  createdAt: '',
+  updatedAt: '',
+  orderStatus: '',
 };
 
-export const balanceSlice = createSlice({
-  name: NameSpace.Balance,
-  initialState: balanceInitialState,
+export const personalOrderSlice = createSlice({
+  name: NameSpace.PersonalOrder,
+  initialState: initialPersonalOrder,
   reducers: {
-    balanceAction:
-      (state, action: PayloadAction<Balance>) => action.payload
+    personalOrderAction:
+      (state, action: PayloadAction<PersonalOrder>) => action.payload
   }
 });
 
-export const { balanceAction } = balanceSlice.actions;
-*/
+export const { personalOrderAction } = personalOrderSlice.actions;

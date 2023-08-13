@@ -21,8 +21,7 @@ export enum AppRoute {
   TrainingCardCoach = '/training-card-coach',
   TrainingCatalog = '/training-catalog',
   UsersCatalog = '/users-catalog',
-  UserCardUser = '/user-card-user',
-  UserCardCoach = '/user-card-coach',
+  UserCardDetail = '/user-card',
 
   Error401 = '/error-401',
   Error404 = '/*',
@@ -34,6 +33,7 @@ export enum APIRoute {
   SignUp = 'auth/register',
   UpdateUser = 'user/update',
   UserIndex = 'user/index',
+  UserInfo = 'user/info',
   Notify = '/notify',
   Training = '/training/index',
   TrainingCreate = '/training',
@@ -43,20 +43,28 @@ export enum APIRoute {
   Balance = '/balance/info',
   BalanceDecrease = '/balance/dec',
   Order = '/order',
+  PersonalOrder = '/personal-order',
+  Friend = '/friend',
+  FriendIndex = '/friend/index',
+  Subscribe = 'subscribe',
 }
 
 export enum NameSpace {
   User = 'User',
+  UserInfo = 'UserInfo',
   Users = 'Users',
   Error = 'Error',
   Notify = 'Notify',
   TrainingSpecial = 'TrainingSpecial',
-  TrainingPopular = 'TrainingPopular',
+  Trainings = 'Trainings',
   TrainingOffers = 'TrainingOffers',
   TrainingFiltred = 'TrainingFiltred',
   Training = 'Training',
   Reviews = 'Reviews',
   Balance = 'Balance',
+  Friends = 'Friends',
+  Friend = 'Friend',
+  PersonalOrder = 'PersonalOrder',
 }
 
 export enum Role {

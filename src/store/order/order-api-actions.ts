@@ -7,6 +7,8 @@ import { OrderData } from '../../types/order-data';
 import { parseError } from '../../utils/parse-error';
 import { responseError } from '../error/error-process';
 import { balanceAction } from '../balance/balance-slice';
+import { PersonalOrder } from '../../types/personal-order';
+import { personalOrderAction } from './order-slice';
 
 export const createNewOrderAction = createAsyncThunk(
   'order/create',
@@ -24,5 +26,21 @@ export const createNewOrderAction = createAsyncThunk(
         }
       }
     }
+  }
+);
+
+export const getPersonalOrderAction = createAsyncThunk(
+  'personal-order/get',
+  async (id: string, { dispatch }) => {
+    const { data } = await Axios.get<PersonalOrder>(`${APIRoute.PersonalOrder}/${id}`);
+    dispatch(personalOrderAction(data));
+  }
+);
+
+export const createPersonalOrderAction = createAsyncThunk(
+  'personal-order/create',
+  async (id: string, { dispatch }) => {
+    const { data } = await Axios.post<PersonalOrder>(`${APIRoute.PersonalOrder}/${id}`);
+    dispatch(personalOrderAction(data));
   }
 );

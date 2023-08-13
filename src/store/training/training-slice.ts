@@ -33,11 +33,11 @@ export const trainingSpecialSlice = createSlice({
   },
 });
 
-export const trainingPopularSlice = createSlice({
-  name: NameSpace.TrainingPopular,
+export const trainingsSlice = createSlice({
+  name: NameSpace.Trainings,
   initialState: trainingsInitialState,
   reducers: {
-    trainingPopular:
+    trainingsAction:
       (state, action: PayloadAction<Training[]>) => action.payload
   },
 });
@@ -70,7 +70,7 @@ export const trainingSlice = createSlice({
 });
 
 export const { trainingSpecialForYou } = trainingSpecialSlice.actions;
-export const { trainingPopular } = trainingPopularSlice.actions;
+export const { trainingsAction } = trainingsSlice.actions;
 export const { trainingOffers } = trainingOffersSlice.actions;
 export const { trainingFiltred } = trainingFiltredSlice.actions;
 export const { trainingAction } = trainingSlice.actions;

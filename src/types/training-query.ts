@@ -1,4 +1,5 @@
 export type TrainingQuery = {
+  coachId?: string;
   limit?: number;
   sortDirection?: 'desc' | 'asc';
   page?: number;

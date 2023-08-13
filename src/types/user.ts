@@ -28,4 +28,7 @@ export type User = {
 
   resume?: string;
   readyForIndividualTraining?: boolean;
+
+  friend?: boolean;
+  subscribed?: boolean;
 };

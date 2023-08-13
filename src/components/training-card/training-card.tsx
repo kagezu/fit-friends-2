@@ -12,9 +12,9 @@ export default function TrainingCard({ training }: { training: Training }): JSX.
           <picture>
             <source
               type="image/webp"
-              srcSet={`img/content/thumbnails/${training.background ?? ''}.webp, img/content/thumbnails/${training.background ?? ''}@2x.webp 2x`}
+              srcSet={`/img/content/thumbnails/${training.background ?? ''}.webp, /img/content/thumbnails/${training.background ?? ''}@2x.webp 2x`}
             />
-            <img src={`img/content/thumbnails/${training.background ?? ''}.jpg`} srcSet={`img/content/thumbnails/${training.background ?? ''}@2x.jpg 2x`}
+            <img src={`/img/content/thumbnails/${training.background ?? ''}.jpg`} srcSet={`/img/content/thumbnails/${training.background ?? ''}@2x.jpg 2x`}
               width="330" height="190" alt=""
             />
           </picture>

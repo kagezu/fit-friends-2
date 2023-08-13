@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { APIRoute, AppRoute, Role } from '../../const';
 import { Axios } from '../../services/api';
-import { requireAuthorization, userInitialState, usersAction } from './user-slice';
+import { requireAuthorization, userInfoAction, userInitialState, userSubscribedAction, usersAction } from './user-slice';
 import { User } from '../../types/user';
 import { NavigateFunction } from 'react-router-dom';
 import { AuthData } from '../../types/auth-data';
@@ -28,10 +28,22 @@ export const checkAuthAction = createAsyncThunk(
 );
 
 export const getUsersAction = createAsyncThunk(
-  'user/checkAuth',
+  'user/index',
   async (params: UserQuery, { dispatch }) => {
     const { data }: { data: User[] } = await Axios.get<User[]>(APIRoute.UserIndex, { params });
     dispatch(usersAction(data));
+  },
+);
+
+export const getUserInfoAction = createAsyncThunk(
+  'user/info',
+  async ({ id, navigate }: { id: string; navigate: NavigateFunction }, { dispatch }) => {
+    try {
+      const { data }: { data: User } = await Axios.get<User>(`${APIRoute.UserInfo}/${id}`);
+      dispatch(userInfoAction(data));
+    } catch {
+      navigate(AppRoute.Error404);
+    }
   },
 );
 
@@ -133,4 +145,28 @@ export const userInfoEditAction = createAsyncThunk(
       }
     }
   }
+);
+
+export const getSubscribedAction = createAsyncThunk(
+  'subscribe/info',
+  async (id: string, { dispatch }) => {
+    const { data } = await Axios.get<{ coach: string }>(`${APIRoute.Subscribe}/${id}`);
+    dispatch(userSubscribedAction(!!data.coach));
+  },
+);
+
+export const newSubscribeAction = createAsyncThunk(
+  'subscribe/new',
+  async (id: string, { dispatch }) => {
+    const { data } = await Axios.post<{ coach: string }>(`${APIRoute.Subscribe}/${id}`);
+    dispatch(userSubscribedAction(!!data.coach));
+  },
+);
+
+export const deleteSubscribeAction = createAsyncThunk(
+  'subscribe/delete',
+  async (id: string, { dispatch }) => {
+    const { data } = await Axios.delete<{ coach: string }>(`${APIRoute.Subscribe}/${id}`);
+    dispatch(userSubscribedAction(!!data.coach));
+  },
 );

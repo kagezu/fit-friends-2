@@ -30,5 +30,19 @@ export const usersSlice = createSlice({
   },
 });
 
+export const userInfoSlice = createSlice({
+  name: NameSpace.UserInfo,
+  initialState: userInitialState,
+  reducers: {
+    userInfoAction:
+      (state, action: PayloadAction<User>) => action.payload,
+    userInfoFriendAction:
+      (state, action: PayloadAction<boolean>) => ({ ...state, friend: action.payload }),
+    userSubscribedAction:
+      (state, action: PayloadAction<boolean>) => ({ ...state, subscribed: action.payload })
+  },
+});
+
 export const { requireAuthorization } = userProcess.actions;
 export const { usersAction } = usersSlice.actions;
+export const { userInfoAction, userInfoFriendAction, userSubscribedAction } = userInfoSlice.actions;
