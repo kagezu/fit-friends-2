@@ -7,7 +7,7 @@ import { trainingSpecialSlice, trainingOffersSlice, trainingFiltredSlice, traini
 import { reviewsSlice } from './review/review-slice';
 import { balanceSlice } from './balance/balance-slice';
 import { friendsSlice } from './friend/friend-slice';
-import { personalOrderSlice } from './order/order-slice';
+import { personalOrderSlice, personalOrdersSlice } from './order/order-slice';
 
 export const rootReducer = combineReducers({
   [NameSpace.User]: userProcess.reducer,
@@ -24,4 +24,5 @@ export const rootReducer = combineReducers({
   [NameSpace.Balance]: balanceSlice.reducer,
   [NameSpace.Friends]: friendsSlice.reducer,
   [NameSpace.PersonalOrder]: personalOrderSlice.reducer,
+  [NameSpace.PersonalOrders]: personalOrdersSlice.reducer,
 });

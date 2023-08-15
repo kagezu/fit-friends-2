@@ -3,7 +3,7 @@ import { APIRoute, AppRoute } from '../../const';
 import { Axios } from '../../services/api';
 import { Training } from '../../types/training';
 import { TrainingQuery } from '../../types/training-query';
-import { trainingAction } from './training-slice';
+import { trainingAction, trainingFiltred } from './training-slice';
 import { NavigateFunction } from 'react-router-dom';
 import { TrainingData } from '../../types/training-data';
 import axios from 'axios';
@@ -23,6 +23,14 @@ export const getMyTrainingsAction = createAsyncThunk(
   async ({ params, trainingsAction }: { params: TrainingQuery; trainingsAction: (argument: Training[]) => PayloadAction<Training[]> }, { dispatch }) => {
     const { data } = await Axios.get<Training[]>(APIRoute.MyTraining, { params });
     dispatch(trainingsAction(data));
+  }
+);
+
+export const getMyBuyTrainingsAction = createAsyncThunk(
+  'balance/index',
+  async (_, { dispatch }) => {
+    const { data } = await Axios.get<Training[]>(APIRoute.TrainingBuy);
+    dispatch(trainingFiltred(data));
   }
 );
 

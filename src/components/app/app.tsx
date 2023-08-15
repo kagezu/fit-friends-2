@@ -23,6 +23,8 @@ import MyTrainings from '../../pages/my-trainings/my-trainings';
 import UsersCatalog from '../../pages/users-catalog/users-catalog';
 import Error401 from '../../pages/error-401/error-401';
 import UserCardDetail from '../../pages/user-card-detail/user-card-detail';
+import MyPurchases from '../../pages/my-purchases/my-purchases';
+import MyOrders from '../../pages/my-orders/my-orders';
 
 const redirectUserIndex: Redirect = {
   trigger: Role.User,
@@ -223,6 +225,16 @@ export default function App(): JSX.Element {
           }
         />
 
+        {/* Мои заказы (роль: coach) */}
+        <Route
+          path={AppRoute.MyOrders}
+          element={
+            <PrivateRoute role={role} roles={[Role.Coach]}>
+              <MyOrders />
+            </PrivateRoute>
+          }
+        />
+
         {/* Мои тренировки (роль: coach) */}
         <Route
           path={AppRoute.MyTrainings}
@@ -253,7 +265,17 @@ export default function App(): JSX.Element {
           }
         />
 
-        {/* недостаточно прав */}
+        {/* Мои покупки (роль: user) */}
+        <Route
+          path={AppRoute.MyPurchases}
+          element={
+            <PrivateRoute role={role} roles={[Role.User]}>
+              <MyPurchases />
+            </PrivateRoute>
+          }
+        />
+
+        {/* Недостаточно прав */}
         <Route
           path={AppRoute.Error401}
           element={<Error401 />}

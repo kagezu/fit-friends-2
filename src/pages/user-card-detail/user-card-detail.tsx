@@ -1,18 +1,20 @@
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Header from '../../components/header/header';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getError, getPersonalOrder, getUserInfo } from '../../store/selectors';
-import { ChangeEvent, useEffect } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { deleteSubscribeAction, getSubscribedAction, getUserInfoAction, newSubscribeAction } from '../../store/user/user-api-actions';
 import { AppRoute, Role } from '../../const';
 import { addFriendAction, deleteFriendAction, getFriendAction } from '../../store/friend/friend-api-actions';
 import Trainings from '../../components/trainings/trainings';
 import { createPersonalOrderAction, getPersonalOrderAction } from '../../store/order/order-api-actions';
+import PopupUserMap from '../../components/popup-user-map/popup-user-map';
 
 export default function UserCardDetail(): JSX.Element {
   const user = useAppSelector(getUserInfo);
   const errors = useAppSelector(getError);
   const personalOrder = useAppSelector(getPersonalOrder);
+  const [isViewPopup, setIsViewPopup] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -42,6 +44,7 @@ export default function UserCardDetail(): JSX.Element {
 
   return (
     <>
+      {isViewPopup ? <PopupUserMap user={user} onClose={() => setIsViewPopup(false)} /> : null}
       <Header />
       <main>
         <div className="inner-page inner-page--no-sidebar">
@@ -62,12 +65,12 @@ export default function UserCardDetail(): JSX.Element {
                           <h2 className="user-card__title">{user.name}</h2>
                         </div>
                         <div className="user-card__label">
-                          <Link to="">
+                          <button onClick={() => setIsViewPopup(true)} className="btn-flat inner-page__back">
                             <svg className="user-card-coach__icon-location" width="12" height="14" aria-hidden="true">
                               <use xlinkHref="#icon-location"></use>
                             </svg>
                             <span>{user.location}</span>
-                          </Link>
+                          </button>
                         </div>
                         <div className="user-card-coach__status-container">
                           {

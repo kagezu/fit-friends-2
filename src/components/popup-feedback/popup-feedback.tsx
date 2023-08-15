@@ -40,7 +40,11 @@ export default function PopupFeedback({ trainingId, onClose }: { trainingId: str
 
   useEffect(() => {
     document.addEventListener('keydown', handleEscapeKeydown);
-    return () => window.removeEventListener('keydown', handleEscapeKeydown);
+    document.body.classList.add('scroll-lock-ios');
+    return () => {
+      document.removeEventListener('keydown', handleEscapeKeydown);
+      document.body.classList.remove('scroll-lock-ios');
+    };
   });
 
   return (

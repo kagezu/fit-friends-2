@@ -1,7 +1,9 @@
+import { Sort } from '../const';
+
 export type TrainingQuery = {
   coachId?: string;
   limit?: number;
-  sortDirection?: 'desc' | 'asc';
+  sortDirection?: Sort;
   page?: number;
   priceFrom?: number;
   priceTo?: number;

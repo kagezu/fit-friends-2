@@ -44,7 +44,11 @@ export default function PopupBuy({ training, onClose }: { training: Training; on
 
   useEffect(() => {
     document.addEventListener('keydown', handleEscapeKeydown);
-    return () => window.removeEventListener('keydown', handleEscapeKeydown);
+    document.body.classList.add('scroll-lock-ios');
+    return () => {
+      document.removeEventListener('keydown', handleEscapeKeydown);
+      document.body.classList.remove('scroll-lock-ios');
+    };
   });
 
   return (

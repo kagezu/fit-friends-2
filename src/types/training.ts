@@ -19,4 +19,6 @@ export type Training = {
   background: string;
   totalSale: number;
   totalAmount: number;
+
+  count?: number;
 }

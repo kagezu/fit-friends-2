@@ -15,7 +15,7 @@ export enum AppRoute {
   FriendsListUser = '/friends-list-user',
   MyOrders = '/my-orders',
   MyTrainings = '/my-trainings',
-  MyPurchases = 'my-purchases',
+  MyPurchases = '/my-purchases',
   CreateTraining = '/create-training',
   TrainingCardUser = '/training-card-user',
   TrainingCardCoach = '/training-card-coach',
@@ -41,9 +41,11 @@ export enum APIRoute {
   MyTraining = '/training/my',
   Review = '/review',
   Balance = '/balance/info',
+  TrainingBuy = '/balance/index',
   BalanceDecrease = '/balance/dec',
   Order = '/order',
-  PersonalOrder = '/personal-order',
+  PersonalOrder = '/personal-order/user',
+  PersonalOrders = '/personal-order/index',
   Friend = '/friend',
   FriendIndex = '/friend/index',
   Subscribe = 'subscribe',
@@ -65,6 +67,7 @@ export enum NameSpace {
   Friends = 'Friends',
   Friend = 'Friend',
   PersonalOrder = 'PersonalOrder',
+  PersonalOrders = 'PersonalOrders',
 }
 
 export enum Role {

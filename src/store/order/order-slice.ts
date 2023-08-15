@@ -20,4 +20,14 @@ export const personalOrderSlice = createSlice({
   }
 });
 
+export const personalOrdersSlice = createSlice({
+  name: NameSpace.PersonalOrder,
+  initialState: [] as PersonalOrder[],
+  reducers: {
+    personalOrdersAction:
+      (state, action: PayloadAction<PersonalOrder[]>) => action.payload
+  }
+});
+
 export const { personalOrderAction } = personalOrderSlice.actions;
+export const { personalOrdersAction } = personalOrdersSlice.actions;

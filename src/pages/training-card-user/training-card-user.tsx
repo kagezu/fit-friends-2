@@ -42,8 +42,9 @@ export default function TrainingCardUser(): JSX.Element {
     return <div></div>;
   }
 
-  return isViewPopup ? (<PopupBuy training={training} onClose={() => setIsViewPopup(false)} />) : (
+  return (
     <>
+      {isViewPopup ? <PopupBuy training={training} onClose={() => setIsViewPopup(false)} /> : null}
       <Header />
       <main>
         <section className="inner-page">
@@ -78,7 +79,7 @@ export default function TrainingCardUser(): JSX.Element {
                           </div>
                           <div className="training-info__textarea">
                             <label><span className="training-info__label">Описание тренировки</span>
-                              <textarea name="description" value={training.description} readOnly />
+                              <textarea name="description" value={training.description} readOnly disabled={isViewPopup} />
                             </label>
                           </div>
                         </div>
@@ -114,7 +115,7 @@ export default function TrainingCardUser(): JSX.Element {
                               <input type="text" name="price" value={`${training.price} ₽`} disabled />
                             </label>
                           </div>
-                          <button onClick={() => setIsViewPopup(true)} className="btn training-info__buy" type="button">Купить</button>
+                          <button disabled={isViewPopup} onClick={() => setIsViewPopup(true)} className="btn training-info__buy" type="button">Купить</button>
                         </div>
                       </div>
                     </form>
@@ -137,7 +138,7 @@ export default function TrainingCardUser(): JSX.Element {
                         (
                           <button
                             className="training-video__play-button btn-reset"
-                            disabled={!isActiveTraining}
+                            disabled={!isActiveTraining || isViewPopup}
                             onClick={() => setIsPlaying(true)}
                           >
                             <svg width="18" height="30" aria-hidden="true">
@@ -151,6 +152,7 @@ export default function TrainingCardUser(): JSX.Element {
                       isActiveTraining ?
                         (
                           <button
+                            disabled={isViewPopup}
                             className="btn training-video__button training-video__button--start" type="button"
                             onClick={handleStopTrainingClick}
                           >Закончить
@@ -158,7 +160,7 @@ export default function TrainingCardUser(): JSX.Element {
                         ) : (
                           <button
                             className="btn training-video__button training-video__button--start" type="button"
-                            disabled={!count}
+                            disabled={!count || isViewPopup}
                             onClick={handleActivateTrainingClick}
                           >Приступить
                           </button>

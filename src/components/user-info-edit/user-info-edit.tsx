@@ -192,14 +192,14 @@ export default function UserInfoEdit(): JSX.Element {
                         <use xlinkHref="#arrow-check"></use>
                       </svg>
                     </span>
-                    <span className="custom-toggle__label">Готов к тренировать индивидуально.</span>
+                    <span className="custom-toggle__label">Готов к тренировать.</span>
                   </label>
                 ) : (
                   <label>
                     <input
                       onChange={handleCheckedChange}
                       type="checkbox"
-                      name="readyForIndividualTraining"
+                      name="readyForTraining"
                       checked={request.readyForTraining}
                       disabled={!isEdit}
                     />
@@ -208,7 +208,7 @@ export default function UserInfoEdit(): JSX.Element {
                         <use xlinkHref="#arrow-check"></use>
                       </svg>
                     </span>
-                    <span className="custom-toggle__label">Готов к совместным тренировкам.</span>
+                    <span className="custom-toggle__label">Готов к тренировкам.</span>
                   </label>
                 )
             }

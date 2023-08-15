@@ -8,7 +8,8 @@ import { parseError } from '../../utils/parse-error';
 import { responseError } from '../error/error-process';
 import { balanceAction } from '../balance/balance-slice';
 import { PersonalOrder } from '../../types/personal-order';
-import { personalOrderAction } from './order-slice';
+import { personalOrderAction, personalOrdersAction } from './order-slice';
+import { OrderStatus } from '../../types/order-tatus';
 
 export const createNewOrderAction = createAsyncThunk(
   'order/create',
@@ -37,10 +38,34 @@ export const getPersonalOrderAction = createAsyncThunk(
   }
 );
 
+export const getPersonalOrdersAction = createAsyncThunk(
+  'personal-order/index',
+  async (_, { dispatch }) => {
+    const { data } = await Axios.get<PersonalOrder[]>(APIRoute.PersonalOrders);
+    dispatch(personalOrdersAction(data));
+  }
+);
+
 export const createPersonalOrderAction = createAsyncThunk(
   'personal-order/create',
   async (id: string, { dispatch }) => {
     const { data } = await Axios.post<PersonalOrder>(`${APIRoute.PersonalOrder}/${id}`);
+    dispatch(personalOrderAction(data));
+  }
+);
+
+export const acceptPersonalOrderAction = createAsyncThunk(
+  'personal-order/patch',
+  async (id: string, { dispatch }) => {
+    const { data } = await Axios.patch<PersonalOrder>(`${APIRoute.PersonalOrder}/${id}`, { orderStatus: OrderStatus.Accepted });
+    dispatch(personalOrderAction(data));
+  }
+);
+
+export const rejectPersonalOrderAction = createAsyncThunk(
+  'personal-order/patch',
+  async (id: string, { dispatch }) => {
+    const { data } = await Axios.patch<PersonalOrder>(`${APIRoute.PersonalOrder}/${id}`, { orderStatus: OrderStatus.Rejected });
     dispatch(personalOrderAction(data));
   }
 );

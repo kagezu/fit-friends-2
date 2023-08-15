@@ -1,220 +1,90 @@
+import { Link } from 'react-router-dom';
+import Header from '../../components/header/header';
+import { AppRoute } from '../../const';
+import TrainingCard from '../../components/training-card/training-card';
+import { useState, useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getTrainingFiltred } from '../../store/selectors';
+import { getMyBuyTrainingsAction } from '../../store/training/training-api-actions';
+import { Training } from '../../types/training';
+
+const MAX_COUNT_CARD_ON_PAGE = 4;
+
 export default function MyPurchases(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const trainings = useAppSelector(getTrainingFiltred) as unknown as { training: Training; count: number }[];
+  const [page, setPage] = useState<number>(0);
+  const [isActive, setIsActive] = useState<boolean>(false);
+  const viewTrainings = trainings.filter(({ count }) => (count || !isActive))
+    .slice(0, (page + 1) * MAX_COUNT_CARD_ON_PAGE)
+    .map(({ training }) => training);
+
+  const handleNextClick = () => {
+    setPage(page + 1);
+  };
+
+  const handleBeginClick = () => {
+    setPage(0);
+    window.scrollTo(0, 0);
+  };
+
+  useEffect(() => {
+    dispatch(getMyBuyTrainingsAction());
+  }, [dispatch]);
+
   return (
-    <>!{/*
-      <header className="header">
-        <div className="container"><a className="header__logo" href="index.html" aria-label="Переход на главную">
-          <svg width="187" height="70" aria-hidden="true">
-            <use xlinkHref="#logo"></use>
-          </svg></a>
-          <nav className="main-nav">
-            <ul className="main-nav__list">
-              <li className="main-nav__item"><a className="main-nav__link is-active" href="#" aria-label="На главную">
-                <svg width="18" height="18" aria-hidden="true">
-                  <use xlinkHref="#icon-home"></use>
-                </svg></a></li>
-              <li className="main-nav__item"><a className="main-nav__link" href="#" aria-label="Личный кабинет">
-                <svg width="16" height="18" aria-hidden="true">
-                  <use xlinkHref="#icon-user"></use>
-                </svg></a></li>
-              <li className="main-nav__item"><a className="main-nav__link" href="#" aria-label="Друзья">
-                <svg width="22" height="16" aria-hidden="true">
-                  <use xlinkHref="#icon-friends"></use>
-                </svg></a></li>
-              <li className="main-nav__item main-nav__item--notifications"><a className="main-nav__link" href="#" aria-label="Уведомления">
-                <svg width="14" height="18" aria-hidden="true">
-                  <use xlinkHref="#icon-notification"></use>
-                </svg></a>
-                <div className="main-nav__dropdown">
-                  <p className="main-nav__label">Оповещения</p>
-                  <ul className="main-nav__sublist">
-                    <li className="main-nav__subitem"><a className="notification is-active" href="#">
-                      <p className="notification__text">Катерина пригласила вас на&nbsp;тренировку</p>
-                      <time className="notification__time" datetime="2023-12-23 12:35">23 декабря, 12:35</time></a>
-                    </li>
-                    <li className="main-nav__subitem"><a className="notification is-active" href="#">
-                      <p className="notification__text">Никита отклонил приглашение на&nbsp;совместную тренировку</p>
-                      <time className="notification__time" datetime="2023-12-22 09:22">22 декабря, 09:22</time></a>
-                    </li>
-                    <li className="main-nav__subitem"><a className="notification is-active" href="#">
-                      <p className="notification__text">Татьяна добавила вас в&nbsp;друзья</p>
-                      <time className="notification__time" datetime="2023-12-18 18:50">18 декабря, 18:50</time></a>
-                    </li>
-                    <!--<li className="main-nav__subitem"><a className="notification" href="#">
-                      <p className="notification__text">Наталья приняла приглашение на&nbsp;совместную тренировку</p>
-                      <time className="notification__time" datetime="2023-12-14 08:15">14 декабря, 08:15</time></a>
-                    </li>-->
-                  </ul>
-                </div>
-              </li>
-            </ul>
-          </nav>
-          <div className="search">
-            <form action="#" method="get">
-              <label><span className="search__label">Поиск</span>
-                <input type="search" name="search">
-                  <svg className="search__icon" width="20" height="20" aria-hidden="true">
-                    <use xlinkHref="#icon-search"></use>
-                  </svg>
-              </label>
-              <ul className="search__list">
-                <li className="search__item"><a className="search__link" href="#">Бокс</a></li>
-                <li className="search__item"><a className="search__link is-active" href="#">Бег</a></li>
-                <li className="search__item"><a className="search__link" href="#">Аэробика</a></li>
-                <li className="search__item"><a className="search__link" href="#">Text</a></li>
-                <li className="search__item"><a className="search__link" href="#">Text</a></li>
-                <li className="search__item"><a className="search__link" href="#">Text</a></li>
-                <li className="search__item"><a className="search__link" href="#">Text</a></li>
-                <li className="search__item"><a className="search__link" href="#">Text</a></li>
-                <li className="search__item"><a className="search__link" href="#">Text</a></li>
-                <li className="search__item"><a className="search__link" href="#">Text</a></li>
-                <li className="search__item"><a className="search__link" href="#">Text</a></li>
-                <li className="search__item"><a className="search__link" href="#">Text</a></li>
-                <li className="search__item"><a className="search__link" href="#">Text</a></li>
-              </ul>
-            </form>
-          </div>
-        </div>
-      </header>
+    <>
+      <Header />
       <main>
         <section className="my-purchases">
           <div className="container">
             <div className="my-purchases__wrapper">
-              <button className="btn-flat my-purchases__back" type="button">
+              <Link className="btn-flat my-purchases__back" to={AppRoute.PersonalAccountUser}>
                 <svg width="14" height="10" aria-hidden="true">
                   <use xlinkHref="#arrow-left"></use>
                 </svg><span>Назад</span>
-              </button>
+              </Link>
               <div className="my-purchases__title-wrapper">
                 <h1 className="my-purchases__title">Мои покупки</h1>
                 <div className="my-purchases__controls">
                   <div className="custom-toggle custom-toggle--switch custom-toggle--switch-right my-purchases__switch" data-validate-type="checkbox">
                     <label>
-                      <input type="checkbox" value="user-agreement-1" name="user-agreement"><span className="custom-toggle__icon">
+                      <input onChange={() => setIsActive(!isActive)} type="checkbox" value="user-agreement-1" name="user-agreement" />
+                      <span className="custom-toggle__icon">
                         <svg width="9" height="6" aria-hidden="true">
                           <use xlinkHref="#arrow-check"></use>
-                        </svg></span><span className="custom-toggle__label">Только активные</span>
+                        </svg>
+                      </span><span className="custom-toggle__label">Только активные</span>
                     </label>
                   </div>
                 </div>
               </div>
               <ul className="my-purchases__list">
-                <li className="my-purchases__item">
-                  <div className="thumbnail-training">
-                    <div className="thumbnail-training__inner">
-                      <div className="thumbnail-training__image">
-                        <picture>
-                          <source type="image/webp" srcSet="img/content/thumbnails/training-01.webp, img/content/thumbnails/training-01@2x.webp 2x"><img src="img/content/thumbnails/training-01.jpg" srcSet="img/content/thumbnails/training-01@2x.jpg 2x" width="330" height="190" alt="">
-                          </picture>
-                          </div>
-                          <p className="thumbnail-training__price"><span className="thumbnail-training__price-value">800</span><span>₽</span>
-                          </p>
-                          <h2 className="thumbnail-training__title">energy</h2>
-                          <div className="thumbnail-training__info">
-                            <ul className="thumbnail-training__hashtags-list">
-                              <li className="thumbnail-training__hashtags-item">
-                                <div className="hashtag thumbnail-training__hashtag"><span>#пилатес</span></div>
-                              </li>
-                              <li className="thumbnail-training__hashtags-item">
-                                <div className="hashtag thumbnail-training__hashtag"><span>#320ккал</span></div>
-                              </li>
-                            </ul>
-                            <div className="thumbnail-training__rate">
-                              <svg width="16" height="16" aria-hidden="true">
-                                <use xlinkHref="#icon-star"></use>
-                              </svg><span className="thumbnail-training__rate-value">4</span>
-                            </div>
-                          </div>
-                          <div className="thumbnail-training__text-wrapper">
-                            <p className="thumbnail-training__text">Упражнения укрепляют мышечный корсет, делают суставы более гибкими, улучшают осанку и&nbsp;координацию.</p>
-                          </div>
-                          <div className="thumbnail-training__button-wrapper">
-                            <a className="btn btn--small thumbnail-training__button-catalog" href="#">Подробнее</a>
-                            <a className="btn btn--small btn--outlined thumbnail-training__button-catalog" href="#">Отзывы</a>
-                          </div>
-                      </div>
-                    </div>
-                </li>
-                <li className="my-purchases__item">
-                  <div className="thumbnail-training">
-                    <div className="thumbnail-training__inner">
-                      <div className="thumbnail-training__image">
-                        <picture>
-                          <source type="image/webp" srcSet="img/content/thumbnails/training-03.webp, img/content/thumbnails/training-03@2x.webp 2x"><img src="img/content/thumbnails/training-03.jpg" srcSet="img/content/thumbnails/training-03@2x.jpg 2x" width="330" height="190" alt="">
-                          </picture>
-                          </div>
-                          <p className="thumbnail-training__price"><span className="thumbnail-training__price-value">1000</span><span>₽</span>
-                          </p>
-                          <h2 className="thumbnail-training__title">boxing</h2>
-                          <div className="thumbnail-training__info">
-                            <ul className="thumbnail-training__hashtags-list">
-                              <li className="thumbnail-training__hashtags-item">
-                                <div className="hashtag thumbnail-training__hashtag"><span>#бокс</span></div>
-                              </li>
-                              <li className="thumbnail-training__hashtags-item">
-                                <div className="hashtag thumbnail-training__hashtag"><span>#800ккал</span></div>
-                              </li>
-                            </ul>
-                            <div className="thumbnail-training__rate">
-                              <svg width="16" height="16" aria-hidden="true">
-                                <use xlinkHref="#icon-star"></use>
-                              </svg><span className="thumbnail-training__rate-value">5</span>
-                            </div>
-                          </div>
-                          <div className="thumbnail-training__text-wrapper">
-                            <p className="thumbnail-training__text">Тренировка на&nbsp;отработку правильных ударов, координации и&nbsp;оптимальной механики защитных движений.</p>
-                          </div>
-                          <div className="thumbnail-training__button-wrapper">
-                            <a className="btn btn--small thumbnail-training__button-catalog" href="#">Подробнее</a>
-                            <a className="btn btn--small btn--outlined thumbnail-training__button-catalog" href="#">Отзывы</a>
-                          </div>
-                      </div>
-                    </div>
-                </li>
-                <li className="my-purchases__item">
-                  <div className="thumbnail-training">
-                    <div className="thumbnail-training__inner">
-                      <div className="thumbnail-training__image">
-                        <picture>
-                          <source type="image/webp" srcSet="img/content/thumbnails/training-06.webp, img/content/thumbnails/training-06@2x.webp 2x"><img src="img/content/thumbnails/training-06.jpg" srcSet="img/content/thumbnails/training-06@2x.jpg 2x" width="330" height="190" alt="">
-                          </picture>
-                          </div>
-                          <p className="thumbnail-training__price"><span className="thumbnail-training__price-value">1600</span><span>₽</span>
-                          </p>
-                          <h2 className="thumbnail-training__title">run, forrest, run</h2>
-                          <div className="thumbnail-training__info">
-                            <ul className="thumbnail-training__hashtags-list">
-                              <li className="thumbnail-training__hashtags-item">
-                                <div className="hashtag thumbnail-training__hashtag"><span>#бег</span></div>
-                              </li>
-                              <li className="thumbnail-training__hashtags-item">
-                                <div className="hashtag thumbnail-training__hashtag"><span>#500ккал</span></div>
-                              </li>
-                            </ul>
-                            <div className="thumbnail-training__rate">
-                              <svg width="16" height="16" aria-hidden="true">
-                                <use xlinkHref="#icon-star"></use>
-                              </svg><span className="thumbnail-training__rate-value">5</span>
-                            </div>
-                          </div>
-                          <div className="thumbnail-training__text-wrapper">
-                            <p className="thumbnail-training__text">Узнайте правильную технику бега, развивайте выносливость и&nbsp;откройте для себя все секреты длительных пробежек.</p>
-                          </div>
-                          <div className="thumbnail-training__button-wrapper">
-                            <a className="btn btn--small thumbnail-training__button-catalog" href="#">Подробнее</a>
-                            <a className="btn btn--small btn--outlined thumbnail-training__button-catalog" href="#">Отзывы</a>
-                          </div>
-                      </div>
-                    </div>
-                </li>
+                {
+                  viewTrainings
+                    .map((training) => (
+                      <li
+                        key={`catalog-${training.id}`}
+                        className="my-purchases__item"
+                      >
+                        <TrainingCard
+                          training={training}
+                        />
+                      </li>
+                    ))
+                }
               </ul>
               <div className="show-more my-purchases__show-more">
-                <button className="btn show-more__button show-more__button--more" type="button">Показать еще</button>
-                <button className="btn show-more__button show-more__button--to-top" type="button">Вернуться в начало</button>
+                {
+                  viewTrainings.length === MAX_COUNT_CARD_ON_PAGE ?
+                    (<button onClick={handleNextClick} className="btn show-more__button show-more__button--more" type="button">Показать еще</button>) :
+                    (<button onClick={handleBeginClick} className="btn show-more__button show-more__button--more" type="button">Вернуться в начало</button>)
+                }
               </div>
             </div>
           </div>
         </section>
-      </main>*/}
+      </main>
     </>
   );
 }

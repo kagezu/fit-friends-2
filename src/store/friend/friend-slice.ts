@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
-import { User } from '../../types/user';
+import { Friend } from '../../types/friend';
 
 export const friendsSlice = createSlice({
   name: NameSpace.Friends,
-  initialState: [] as User[],
+  initialState: [] as Friend[],
   reducers: {
     friendsAction:
-      (state, action: PayloadAction<User[]>) => action.payload
+      (state, action: PayloadAction<Friend[]>) => action.payload
   }
 });
 
