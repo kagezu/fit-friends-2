@@ -39,7 +39,7 @@ export default function UserCardDetail(): JSX.Element {
   }, [dispatch, navigate, id]);
 
   if (!id || !user.id) {
-    return null;
+    return <div></div>;
   }
 
   return (

@@ -19,9 +19,7 @@ export const getNotifyIndexAction = createAsyncThunk(
 export const deleteNotifyAction = createAsyncThunk(
   'notify/delete',
   async ({ id, index }: { id: string; index: number }, { dispatch }) => {
-    try {
-      await Axios.delete(`${APIRoute.Notify}/${id}`);
-      dispatch(notifyDelete(index));
-    } catch { /* empty */ }
+    await Axios.delete(`${APIRoute.Notify}/${id}`);
+    dispatch(notifyDelete(index));
   },
 );

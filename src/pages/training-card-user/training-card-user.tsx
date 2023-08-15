@@ -39,7 +39,7 @@ export default function TrainingCardUser(): JSX.Element {
   }, [dispatch, navigate, id]);
 
   if (!id || !training) {
-    return null;
+    return <div></div>;
   }
 
   return (

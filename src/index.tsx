@@ -15,11 +15,9 @@ const main = async () => {
       document.getElementById('root') as HTMLElement,
     );
     root.render(
-      // <React.StrictMode>
       <Provider store={store} >
         <App />
       </Provider>
-      // </React.StrictMode>
     );
   }
 };
