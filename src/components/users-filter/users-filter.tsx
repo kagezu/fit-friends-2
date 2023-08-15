@@ -94,7 +94,7 @@ export default function UsersFilter({ onChange, params }: { onChange: (params: U
                   <svg className="btn-show-more__icon" width="10" height="4" aria-hidden="true">
                     <use xlinkHref="#arrow-down"></use>
                   </svg>
-                </button> : <div></div>
+                </button> : null
             }
           </div>
           <div className="user-catalog-form__block user-catalog-form__block--spezialization">
@@ -134,7 +134,7 @@ export default function UsersFilter({ onChange, params }: { onChange: (params: U
                   <svg className="btn-show-more__icon" width="10" height="4" aria-hidden="true">
                     <use xlinkHref="#arrow-down"></use>
                   </svg>
-                </button> : <div></div>
+                </button> : null
             }
           </div>
           <div className="user-catalog-form__block user-catalog-form__block--level">

@@ -39,7 +39,7 @@ export default function UserCardDetail(): JSX.Element {
   }, [dispatch, navigate, id]);
 
   if (!id || !user.id) {
-    return <div></div>;
+    return null;
   }
 
   return (
@@ -74,7 +74,7 @@ export default function UserCardDetail(): JSX.Element {
                         </div>
                         <div className="user-card-coach__status-container">
                           {
-                            user.role === Role.User ? <div></div> :
+                            user.role === Role.User ? null :
                               <div className="user-card-coach__status user-card-coach__status--tag">
                                 <svg className="user-card-coach__icon-cup" width="12" height="13" aria-hidden="true">
                                   <use xlinkHref="#icon-cup"></use>
@@ -152,7 +152,7 @@ export default function UserCardDetail(): JSX.Element {
                                   className="btn user-card-coach__btn-training" type="button"
                                 >Хочу персональную тренировку
                                 </button> :
-                                <div></div>
+                                null
                             }
                             <div className="user-card-coach__training-check">
                               <div className="custom-toggle custom-toggle--checkbox">
@@ -168,7 +168,7 @@ export default function UserCardDetail(): JSX.Element {
                               </div>
                             </div>
                           </form>
-                        </div> : <div></div>
+                        </div> : null
                     }
                   </div>
                 </section>

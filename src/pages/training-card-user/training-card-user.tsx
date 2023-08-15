@@ -39,7 +39,7 @@ export default function TrainingCardUser(): JSX.Element {
   }, [dispatch, navigate, id]);
 
   if (!id || !training) {
-    return <div></div>;
+    return null;
   }
 
   return (
@@ -134,7 +134,7 @@ export default function TrainingCardUser(): JSX.Element {
                       />
                     </div>
                     {
-                      isPlaying ? (<div></div>) :
+                      isPlaying ? (null) :
                         (
                           <button
                             className="training-video__play-button btn-reset"

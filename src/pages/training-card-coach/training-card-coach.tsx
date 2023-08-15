@@ -79,7 +79,7 @@ export default function TrainingCardCoach(): JSX.Element {
   }, [dispatch, navigate, id]);
 
   if (!id || !training.id) {
-    return <div></div>;
+    return null;
   }
   return (
     <>

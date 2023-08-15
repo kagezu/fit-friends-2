@@ -71,7 +71,7 @@ export default function SpecialOffers(): JSX.Element {
                     </div>
                   </aside>
                 </li>
-              </ul>) : <div></div>
+              </ul>) : null
           }
           <div className="thumbnail-spec-gym">
             <div className="thumbnail-spec-gym__image">

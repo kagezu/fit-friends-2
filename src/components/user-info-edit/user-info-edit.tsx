@@ -125,7 +125,7 @@ export default function UserInfoEdit(): JSX.Element {
                 </svg>
               </button>
             </div> :
-            <div></div>
+            null
         }
       </div>
       <form className="user-info-edit__form" action="#" method="post" onSubmit={handleSubmit}>
