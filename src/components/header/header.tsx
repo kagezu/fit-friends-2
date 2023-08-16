@@ -1,12 +1,15 @@
 import { Link, useLocation } from 'react-router-dom';
 import NotificationList from '../notification-list/notification-list';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getNotify } from '../../store/selectors';
 import { AppRoute } from '../../const';
+import { getNotifyIndexAction } from '../../store/notify/notify-api-actions';
+import { useEffect } from 'react';
 
 export default function Header({ disabled }: { disabled?: boolean }): JSX.Element {
   const { pathname } = useLocation();
   const notifications = useAppSelector(getNotify);
+  const dispatch = useAppDispatch();
   const notificationClass = `main-nav__item main-nav__item--notifications
   ${notifications.length ? ' is-notifications' : ''}`;
   const mainLinkClass = pathname === AppRoute.Index || pathname === AppRoute.PersonalAccountCoach ?
@@ -15,6 +18,10 @@ export default function Header({ disabled }: { disabled?: boolean }): JSX.Elemen
     'main-nav__link is-active' : 'main-nav__link';
   const friendsLinkClass = pathname === AppRoute.FriendsListUser || pathname === AppRoute.FriendsListCoach ?
     'main-nav__link is-active' : 'main-nav__link';
+
+  useEffect(() => {
+    dispatch(getNotifyIndexAction());
+  }, [dispatch]);
 
   return (
     <header className="header">
