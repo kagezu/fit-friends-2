@@ -49,7 +49,7 @@ export default function PopupFeedback({ trainingId, onClose }: { trainingId: str
 
   return (
     <main>
-      <div className="popup-form popup-form--feedback">
+      <div className="popup-form">
         <section className="popup">
           <div className="popup__wrapper">
             <div className="popup-head">

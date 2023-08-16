@@ -85,6 +85,7 @@ export default function CertificateList(): JSX.Element {
                   id={id}
                   path={path}
                   onDelete={handleCertificateDelete}
+                  editable
                 />)) : ''
         }
       </ul>

@@ -52,7 +52,7 @@ export default function PopupBuy({ training, onClose }: { training: Training; on
   });
 
   return (
-    <div className="popup-form popup-form--buy">
+    <div className="popup-form">
       <section className="popup">
         <div className="popup__wrapper">
           <div className="popup-head">

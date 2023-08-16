@@ -9,12 +9,14 @@ import { addFriendAction, deleteFriendAction, getFriendAction } from '../../stor
 import Trainings from '../../components/trainings/trainings';
 import { createPersonalOrderAction, getPersonalOrderAction } from '../../store/order/order-api-actions';
 import PopupUserMap from '../../components/popup-user-map/popup-user-map';
+import PopupCertificates from '../../components/popup-certificates/popup-certificates';
 
 export default function UserCardDetail(): JSX.Element {
   const user = useAppSelector(getUserInfo);
   const errors = useAppSelector(getError);
   const personalOrder = useAppSelector(getPersonalOrder);
   const [isViewPopup, setIsViewPopup] = useState<boolean>(false);
+  const [isViewPopupCertificates, setIsViewPopupCertificates] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -45,6 +47,7 @@ export default function UserCardDetail(): JSX.Element {
   return (
     <>
       {isViewPopup ? <PopupUserMap user={user} onClose={() => setIsViewPopup(false)} /> : null}
+      {isViewPopupCertificates ? <PopupCertificates user={user} onClose={() => setIsViewPopupCertificates(false)} /> : null}
       <Header />
       <main>
         <div className="inner-page inner-page--no-sidebar">
@@ -60,7 +63,7 @@ export default function UserCardDetail(): JSX.Element {
                   <h1 className="visually-hidden">Карточка пользователя</h1>
                   <div className="user-card-coach__wrapper">
                     <div className="user-card-coach__card">
-                      <div className="user-card__content">
+                      <div className="user-card-coach__content">
                         <div className="user-card__head">
                           <h2 className="user-card__title">{user.name}</h2>
                         </div>
@@ -103,6 +106,14 @@ export default function UserCardDetail(): JSX.Element {
                           <p>{user.description}</p>
                           <p>{user.resume}</p>
                         </div>
+                        {
+                          user.role === Role.Coach ?
+                            <button onClick={() => setIsViewPopupCertificates(true)} className="btn-flat user-card-coach__sertificate" type="button">
+                              <svg width="12" height="13" aria-hidden="true">
+                                <use xlinkHref="#icon-teacher"></use>
+                              </svg><span>Посмотреть сертификаты</span>
+                            </button> : null
+                        }
                         <ul className="user-card__hashtag-list">
                           {
                             user.trainingTypes?.map((item) => (
