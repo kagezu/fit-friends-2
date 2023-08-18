@@ -3,8 +3,22 @@ import SpecialForYou from '../../components/special-for-you/special-for-you';
 import SpecialOffers from '../../components/special-offers/special-offers';
 import LookForCompany from '../../components/look-for-company/look-for-company';
 import Trainings from '../../components/trainings/trainings';
+import { useNavigate } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import { useAppSelector } from '../../hooks';
+import { getUser } from '../../store/selectors';
+import { useEffect } from 'react';
 
 export default function Index(): JSX.Element {
+  const user = useAppSelector(getUser);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user.trainingLevel || !user.trainingTypes) {
+      navigate(AppRoute.QuestionnaireUser);
+    }
+  }, [navigate, user]);
+
   return (
     <>
       <Header />

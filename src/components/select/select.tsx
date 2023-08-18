@@ -39,7 +39,7 @@ export default function Select({ text, name, value = '', error, options, onUpdat
         onClick={() => setIsOpenList(!isOpenList)}
         disabled={disabled}
       >
-        <span className="custom-select__placeholder">{toUpperCaseFirst(value)}</span>
+        <span className="custom-select__placeholder">{value ? toUpperCaseFirst(value) : ''}</span>
         <span className="custom-select__icon">
           <svg width="15" height="6" aria-hidden="true">
             <use xlinkHref="#arrow-down"></use>

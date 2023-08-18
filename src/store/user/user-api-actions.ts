@@ -81,8 +81,8 @@ export const registerAction = createAsyncThunk(
       );
       saveItem(KeyName.Token, accessToken);
       saveItem(KeyName.RefreshToken, refreshToken);
-      dispatch(requireAuthorization(user));
       dispatch(responseError({}));
+      dispatch(requireAuthorization(user));
 
       if (user.role === Role.User) {
         navigate(AppRoute.QuestionnaireUser);

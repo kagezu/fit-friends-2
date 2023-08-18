@@ -123,8 +123,8 @@ export enum CaloriesPerDayLimit {
 }
 
 export enum ResumeLimit {
-  Max = 10,
-  Min = 140
+  Max = 140,
+  Min = 10
 }
 
 export enum Sort {
