@@ -13,7 +13,7 @@ _`.editorconfig`, `.gitattributes`, `.gitignore`, `package.json`._
 
 ### Переменные окружения
 
-Устанавливаются в файле **/.env.local**
+Устанавливаются в файле **/.env**
 Пример в файле **.env.example**
 
 PORT - порт для сервера
