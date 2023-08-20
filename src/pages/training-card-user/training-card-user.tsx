@@ -127,8 +127,8 @@ export default function TrainingCardUser(): JSX.Element {
                     <div className="training-video__thumbnail">
                       <VideoPlayer
                         isPlaying={isPlaying}
-                        src={`${STATIC_PATH}${training.demoVideo}`}
-                        previewImage={`${STATIC_PATH}${training.background}`}
+                        src={training.demoVideo ? `${STATIC_PATH}${training.demoVideo}` : ''}
+                        previewImage={training.background ? `${STATIC_PATH}${training.background}` : '/img/content/training-video/video-thumbnail.png'}
                         width={922}
                         height={566}
                       />

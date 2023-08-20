@@ -39,7 +39,7 @@ export default function CertificateList(): JSX.Element {
               className="visually-hidden"
               type="file"
               name="avatar"
-              accept="image/png, image/jpeg"
+              accept="image/png, image/jpeg, application/pdf"
               onChange={handleCertificateChange}
             />
             <span className="btn-flat btn-flat--underlined personal-account-coach__button">

@@ -4,8 +4,10 @@ import { OrderStatus } from '../../types/order-tatus';
 import { PersonalOrder } from '../../types/personal-order';
 import { useAppDispatch } from '../../hooks';
 import { acceptPersonalOrderAction, createPersonalOrderAction, getPersonalOrdersAction, rejectPersonalOrderAction } from '../../store/order/order-api-actions';
+import { useState } from 'react';
 
 export default function UserFriendCard({ user, order, userId, role }: { user: User; order?: PersonalOrder; userId: string; role: string }): JSX.Element {
+  const [isOrder, setIsOrder] = useState(!!order);
   const dispatch = useAppDispatch();
 
   const handleAcceptClick = () => {
@@ -58,8 +60,8 @@ export default function UserFriendCard({ user, order, userId, role }: { user: Us
                 <div className="thumbnail-friend__ready-status thumbnail-friend__ready-status--is-ready"><span>Готов к&nbsp;тренировке</span>
                 </div>
                 {
-                  !order && role === Role.User ?
-                    <button onClick={() => { dispatch(createPersonalOrderAction(user.id)); }} className="thumbnail-friend__invite-button" type="button">
+                  !isOrder && role === Role.User ?
+                    <button onClick={() => { dispatch(createPersonalOrderAction(user.id)); setIsOrder(true); }} className="thumbnail-friend__invite-button" type="button">
                       <svg width="43" height="46" aria-hidden="true" focusable="false">
                         <use xlinkHref="#icon-invite"></use>
                       </svg><span className="visually-hidden">Пригласить друга на совместную тренировку</span>

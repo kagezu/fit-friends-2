@@ -29,6 +29,7 @@ export default function QuestionnaireCoach(): JSX.Element {
       const file = evt.target.files[0];
       setRequest({ ...request, certificate: file });
       certificateRef.current.innerHTML = file.name;
+      dispatch(responseError({ ...errors, certificate: '' }));
     }
   };
 
@@ -148,9 +149,9 @@ export default function QuestionnaireCoach(): JSX.Element {
                             type="file"
                             name="certificate"
                             tabIndex={-1}
-                            accept=".pdf, .jpg, .png"
+                            accept="image/png, image/jpeg, application/pdf"
                           />
-                          {errors.certificate ? <span className="custom-input__error">{errors.certificate}</span> : ''}
+                          {errors.certificate ? <span className="custom-input__error" style={{ opacity: 1 }}>{errors.certificate}</span> : ''}
                         </label>
                       </div>
                     </div>
@@ -170,7 +171,7 @@ export default function QuestionnaireCoach(): JSX.Element {
                             required
                           >
                           </textarea>
-                          {errors.resume ? <span className="custom-textarea__error">{errors.resume}</span> : ''}
+                          {errors.resume ? <span className="custom-textarea__error" style={{ opacity: 1 }}>{errors.resume}</span> : ''}
                         </label>
                       </div>
                       <div className="questionnaire-coach__checkbox">

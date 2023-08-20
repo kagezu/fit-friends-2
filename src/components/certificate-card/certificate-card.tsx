@@ -14,7 +14,7 @@ export default function CertificateCard({ id, path, onDelete, editable }: propCe
     <li className="personal-account-coach__item">
       <div className={isEdit ? 'certificate-card certificate-card--edit' : 'certificate-card'}>
         <div className="certificate-card__image">
-          <img src={`${STATIC_PATH}${path}`} width="294" height="360" alt="Сертификат" />
+          <embed src={`${STATIC_PATH}${path}`} width="294" height="360" />
         </div>
         {
           editable ?
