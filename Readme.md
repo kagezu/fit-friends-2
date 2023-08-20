@@ -11,6 +11,16 @@ _`.editorconfig`, `.gitattributes`, `.gitignore`, `package.json`._
 
 ---
 
+### Переменные окружения
+
+Устанавливаются в файле **/.env.local**
+Пример в файле **.env.example**
+
+PORT - порт для сервера
+HOST - адрес хоста для запуска проекта
+DISABLE_ESLINT_PLUGIN - отключить плагин eslint-webpack-plugin
+GENERATE_SOURCEMAP - формирование source-map
+
 ### public
 
 Директория для размещения статичных ресурсов (шрифты, стили, изображения и так далее). Корневая директория проекта.

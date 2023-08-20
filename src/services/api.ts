@@ -3,6 +3,7 @@ import { KeyName, getItem } from './token';
 
 const BACKEND_URL = 'http://localhost:3333/api';
 const REQUEST_TIMEOUT = 5000;
+const AUTHORIZATION_FIELD = 'Authorization';
 
 const createAPI = (): AxiosInstance => {
   const api = axios.create({
@@ -15,7 +16,7 @@ const createAPI = (): AxiosInstance => {
       const token = getItem(KeyName.Token);
 
       if (token && config.headers) {
-        config.headers['Authorization'] = `Bearer ${token}`;
+        config.headers[AUTHORIZATION_FIELD] = `Bearer ${token}`;
       }
 
       return config;

@@ -1,5 +1,7 @@
 import { AxiosError } from 'axios';
 
+const MESSAGE_FIELD = 'message';
+
 export type ErrorList = {
   [key: string]: string;
 }
@@ -16,7 +18,7 @@ export const parseError = (err: AxiosError) => {
       message.forEach(parseMessageString);
     } else {
       parseMessageString(message);
-      errors['message'] = message;
+      errors[MESSAGE_FIELD] = message;
     }
     return errors;
   }
