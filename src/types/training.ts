@@ -17,8 +17,8 @@ export type Training = {
   specialOffer: boolean;
 
   background: string;
-  totalSale: number;
-  totalAmount: number;
+  totalSale?: number;
+  totalAmount?: number;
 
   count?: number;
 }

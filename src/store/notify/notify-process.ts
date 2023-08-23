@@ -2,11 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { Notify } from '../../types/notify';
 
-export const userInitialState: Notify[] = [];
+export const notifyInitialState: Notify[] = [];
 
 export const notifyProcess = createSlice({
-  name: NameSpace.User,
-  initialState: userInitialState,
+  name: NameSpace.Notify,
+  initialState: notifyInitialState,
   reducers: {
     notifyUpdate:
       (state, action: PayloadAction<Notify[]>) => {

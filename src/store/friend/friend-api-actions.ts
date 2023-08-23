@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { APIRoute } from '../../const';
-import { Axios } from '../../services/api';
 import { User } from '../../types/user';
 import { userInfoFriendAction } from '../user/user-slice';
 import axios from 'axios';
@@ -8,29 +7,34 @@ import { parseError } from '../../utils/parse-error';
 import { responseError } from '../error/error-process';
 import { Friend } from '../../types/friend';
 import { friendsAction } from './friend-slice';
+import { ThunkType } from '../../types/thunk-type';
 
-export const getFriendsAction = createAsyncThunk(
+export const getFriendsAction = createAsyncThunk<void, void, ThunkType>(
   'friend/index',
-  async (_, { dispatch }) => {
-    const { data } = await Axios.get<Friend[]>(APIRoute.FriendIndex);
-    dispatch(friendsAction(data));
+  async (_, { dispatch, extra: api }) => {
+    try {
+      const { data } = await api.get<Friend[]>(APIRoute.FriendIndex);
+      dispatch(friendsAction(data));
+    } catch {
+      dispatch(friendsAction([]));
+    }
   }
 );
 
-export const getFriendAction = createAsyncThunk(
+export const getFriendAction = createAsyncThunk<void, string, ThunkType>(
   'friend/check',
-  async (id: string, { dispatch }) => {
-    const { data } = await Axios.get<User>(`${APIRoute.Friend}/${id}`);
+  async (id: string, { dispatch, extra: api }) => {
+    const { data } = await api.get<User>(`${APIRoute.Friend}/${id}`);
     dispatch(userInfoFriendAction(!!data.friend));
     dispatch(responseError({}));
   }
 );
 
-export const addFriendAction = createAsyncThunk(
+export const addFriendAction = createAsyncThunk<void, string, ThunkType>(
   'friend/add',
-  async (id: string, { dispatch }) => {
+  async (id: string, { dispatch, extra: api }) => {
     try {
-      const { data } = await Axios.post<User>(`${APIRoute.Friend}/${id}`);
+      const { data } = await api.post<User>(`${APIRoute.Friend}/${id}`);
       dispatch(userInfoFriendAction(!!data.friend));
       dispatch(responseError({}));
     } catch (err) {
@@ -44,10 +48,10 @@ export const addFriendAction = createAsyncThunk(
   }
 );
 
-export const deleteFriendAction = createAsyncThunk(
+export const deleteFriendAction = createAsyncThunk<void, string, ThunkType>(
   'friend/delete',
-  async (id: string, { dispatch }) => {
-    await Axios.delete<User>(`${APIRoute.Friend}/${id}`);
+  async (id: string, { dispatch, extra: api }) => {
+    await api.delete<User>(`${APIRoute.Friend}/${id}`);
     dispatch(userInfoFriendAction(false));
     dispatch(responseError({}));
   }

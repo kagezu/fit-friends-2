@@ -132,3 +132,9 @@ export enum Sort {
   Asc = 'asc',
   Free = 'free'
 }
+
+export enum HTTPCode {
+  OK = 200,
+  CONFLICT = 409,
+  NOT_FOUND = 404
+}

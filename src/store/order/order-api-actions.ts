@@ -1,8 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { APIRoute } from '../../const';
-import { Axios } from '../../services/api';
 import { Balance } from '../../types/balance';
-import axios from 'axios';
 import { OrderData } from '../../types/order-data';
 import { parseError } from '../../utils/parse-error';
 import { responseError } from '../error/error-process';
@@ -10,12 +8,14 @@ import { balanceAction } from '../balance/balance-slice';
 import { PersonalOrder } from '../../types/personal-order';
 import { personalOrderAction, personalOrdersAction } from './order-slice';
 import { OrderStatus } from '../../types/order-tatus';
+import { ThunkType } from '../../types/thunk-type';
+import axios from 'axios';
 
-export const createNewOrderAction = createAsyncThunk(
+export const createNewOrderAction = createAsyncThunk<void, OrderData, ThunkType>(
   'order/create',
-  async (request: OrderData, { dispatch }) => {
+  async (request, { dispatch, extra: api }) => {
     try {
-      const { data } = await Axios.post<Balance>(`${APIRoute.Order}`, request);
+      const { data } = await api.post<Balance>(APIRoute.Order, request);
       dispatch(balanceAction(data));
       dispatch(responseError({}));
     }
@@ -30,42 +30,42 @@ export const createNewOrderAction = createAsyncThunk(
   }
 );
 
-export const getPersonalOrderAction = createAsyncThunk(
+export const getPersonalOrderAction = createAsyncThunk<void, string, ThunkType>(
   'personal-order/get',
-  async (id: string, { dispatch }) => {
-    const { data } = await Axios.get<PersonalOrder>(`${APIRoute.PersonalOrder}/${id}`);
+  async (id, { dispatch, extra: api }) => {
+    const { data } = await api.get<PersonalOrder>(`${APIRoute.PersonalOrder}/${id}`);
     dispatch(personalOrderAction(data));
   }
 );
 
-export const getPersonalOrdersAction = createAsyncThunk(
+export const getPersonalOrdersAction = createAsyncThunk<void, void, ThunkType>(
   'personal-order/index',
-  async (_, { dispatch }) => {
-    const { data } = await Axios.get<PersonalOrder[]>(APIRoute.PersonalOrders);
+  async (_, { dispatch, extra: api }) => {
+    const { data } = await api.get<PersonalOrder[]>(APIRoute.PersonalOrders);
     dispatch(personalOrdersAction(data));
   }
 );
 
-export const createPersonalOrderAction = createAsyncThunk(
+export const createPersonalOrderAction = createAsyncThunk<void, string, ThunkType>(
   'personal-order/create',
-  async (id: string, { dispatch }) => {
-    const { data } = await Axios.post<PersonalOrder>(`${APIRoute.PersonalOrder}/${id}`);
+  async (id: string, { dispatch, extra: api }) => {
+    const { data } = await api.post<PersonalOrder>(`${APIRoute.PersonalOrder}/${id}`);
     dispatch(personalOrderAction(data));
   }
 );
 
-export const acceptPersonalOrderAction = createAsyncThunk(
-  'personal-order/patch',
-  async (id: string, { dispatch }) => {
-    const { data } = await Axios.patch<PersonalOrder>(`${APIRoute.PersonalOrder}/${id}`, { orderStatus: OrderStatus.Accepted });
+export const acceptPersonalOrderAction = createAsyncThunk<void, string, ThunkType>(
+  'personal-order/accepted',
+  async (id: string, { dispatch, extra: api }) => {
+    const { data } = await api.patch<PersonalOrder>(`${APIRoute.PersonalOrder}/${id}`, { orderStatus: OrderStatus.Accepted });
     dispatch(personalOrderAction(data));
   }
 );
 
-export const rejectPersonalOrderAction = createAsyncThunk(
-  'personal-order/patch',
-  async (id: string, { dispatch }) => {
-    const { data } = await Axios.patch<PersonalOrder>(`${APIRoute.PersonalOrder}/${id}`, { orderStatus: OrderStatus.Rejected });
+export const rejectPersonalOrderAction = createAsyncThunk<void, string, ThunkType>(
+  'personal-order/rejected',
+  async (id: string, { dispatch, extra: api }) => {
+    const { data } = await api.patch<PersonalOrder>(`${APIRoute.PersonalOrder}/${id}`, { orderStatus: OrderStatus.Rejected });
     dispatch(personalOrderAction(data));
   }
 );

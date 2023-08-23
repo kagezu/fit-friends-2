@@ -1,6 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { APIRoute, AppRoute, Role } from '../../const';
-import { Axios } from '../../services/api';
 import { requireAuthorization, userInfoAction, userInitialState, userSubscribedAction, usersAction } from './user-slice';
 import { User } from '../../types/user';
 import { NavigateFunction } from 'react-router-dom';
@@ -14,12 +13,13 @@ import { parseError } from '../../utils/parse-error';
 import { QuestionnaireData } from '../../types/questionnaire-data';
 import { getNotifyIndexAction } from '../notify/notify-api-actions';
 import { UserQuery } from '../../types/user-query';
+import { ThunkType } from '../../types/thunk-type';
 
-export const checkAuthAction = createAsyncThunk(
+export const checkAuthAction = createAsyncThunk<void, void, ThunkType>(
   'user/checkAuth',
-  async (_, { dispatch }) => {
+  async (_, { dispatch, extra: api }) => {
     try {
-      const { data }: { data: User } = await Axios.get<User>(APIRoute.AuthCheck);
+      const { data }: { data: User } = await api.get<User>(APIRoute.AuthCheck);
       dispatch(requireAuthorization(data));
     } catch {
       dispatch(requireAuthorization(userInitialState));
@@ -27,19 +27,19 @@ export const checkAuthAction = createAsyncThunk(
   },
 );
 
-export const getUsersAction = createAsyncThunk(
+export const getUsersAction = createAsyncThunk<void, UserQuery, ThunkType>(
   'user/index',
-  async (params: UserQuery, { dispatch }) => {
-    const { data }: { data: User[] } = await Axios.get<User[]>(APIRoute.UserIndex, { params });
+  async (params, { dispatch, extra: api }) => {
+    const { data }: { data: User[] } = await api.get<User[]>(APIRoute.UserIndex, { params });
     dispatch(usersAction(data));
   },
 );
 
-export const getUserInfoAction = createAsyncThunk(
+export const getUserInfoAction = createAsyncThunk<void, { id: string; navigate: NavigateFunction }, ThunkType>(
   'user/info',
-  async ({ id, navigate }: { id: string; navigate: NavigateFunction }, { dispatch }) => {
+  async ({ id, navigate }, { dispatch, extra: api }) => {
     try {
-      const { data }: { data: User } = await Axios.get<User>(`${APIRoute.UserInfo}/${id}`);
+      const { data }: { data: User } = await api.get<User>(`${APIRoute.UserInfo}/${id}`);
       dispatch(userInfoAction(data));
     } catch {
       navigate(AppRoute.Error404);
@@ -47,11 +47,11 @@ export const getUserInfoAction = createAsyncThunk(
   },
 );
 
-export const loginAction = createAsyncThunk(
+export const loginAction = createAsyncThunk<void, AuthData & { navigate: NavigateFunction }, ThunkType>(
   'user/login',
-  async ({ email, password, navigate }: AuthData & { navigate: NavigateFunction }, { dispatch }) => {
+  async ({ email, password, navigate }, { dispatch, extra: api }) => {
     try {
-      const { data: { user, accessToken, refreshToken } } = await Axios.post<UserData>(APIRoute.SignIn, { email, password });
+      const { data: { user, accessToken, refreshToken } } = await api.post<UserData>(APIRoute.SignIn, { email, password });
       saveItem(KeyName.Token, accessToken);
       saveItem(KeyName.RefreshToken, refreshToken);
       dispatch(requireAuthorization(user));
@@ -70,19 +70,19 @@ export const loginAction = createAsyncThunk(
   }
 );
 
-export const registerAction = createAsyncThunk(
+export const registerAction = createAsyncThunk<void, { request: RegistrationData; navigate: NavigateFunction }, ThunkType>(
   'user/register',
-  async ({ request, navigate }: { request: RegistrationData; navigate: NavigateFunction }, { dispatch }) => {
+  async ({ request, navigate }, { dispatch, extra: api }) => {
     try {
-      const { data: { user, accessToken, refreshToken } } = await Axios.post<UserData>(
+      const { data: { user, accessToken, refreshToken } } = await api.post<UserData>(
         APIRoute.SignUp,
         request,
         { headers: { 'Content-Type': 'multipart/form-data' } }
       );
       saveItem(KeyName.Token, accessToken);
       saveItem(KeyName.RefreshToken, refreshToken);
-      dispatch(responseError({}));
       dispatch(requireAuthorization(user));
+      dispatch(responseError({}));
 
       if (user.role === Role.User) {
         navigate(AppRoute.QuestionnaireUser);
@@ -101,11 +101,11 @@ export const registerAction = createAsyncThunk(
   }
 );
 
-export const questionnaireAction = createAsyncThunk(
+export const questionnaireAction = createAsyncThunk<void, { request: QuestionnaireData; target: AppRoute; navigate: NavigateFunction }, ThunkType>(
   'user/register',
-  async ({ request, target, navigate }: { request: QuestionnaireData; target: AppRoute; navigate: NavigateFunction }, { dispatch }) => {
+  async ({ request, target, navigate }, { dispatch, extra: api }) => {
     try {
-      const { data }: { data: User } = await Axios.patch<User>(
+      const { data }: { data: User } = await api.patch<User>(
         APIRoute.UpdateUser,
         request,
         { headers: { 'Content-Type': 'multipart/form-data' } }
@@ -125,11 +125,11 @@ export const questionnaireAction = createAsyncThunk(
   }
 );
 
-export const userInfoEditAction = createAsyncThunk(
+export const userInfoEditAction = createAsyncThunk<void, QuestionnaireData, ThunkType>(
   'user/register',
-  async (request: QuestionnaireData, { dispatch }) => {
+  async (request, { dispatch, extra: api }) => {
     try {
-      const { data }: { data: User } = await Axios.patch<User>(
+      const { data }: { data: User } = await api.patch<User>(
         APIRoute.UpdateUser,
         request,
         { headers: { 'Content-Type': 'multipart/form-data' } }
@@ -147,26 +147,26 @@ export const userInfoEditAction = createAsyncThunk(
   }
 );
 
-export const getSubscribedAction = createAsyncThunk(
+export const getSubscribedAction = createAsyncThunk<void, string, ThunkType>(
   'subscribe/info',
-  async (id: string, { dispatch }) => {
-    const { data } = await Axios.get<{ coach: string }>(`${APIRoute.Subscribe}/${id}`);
+  async (id: string, { dispatch, extra: api }) => {
+    const { data } = await api.get<{ coach: string }>(`${APIRoute.Subscribe}/${id}`);
     dispatch(userSubscribedAction(!!data.coach));
   },
 );
 
-export const newSubscribeAction = createAsyncThunk(
+export const newSubscribeAction = createAsyncThunk<void, string, ThunkType>(
   'subscribe/new',
-  async (id: string, { dispatch }) => {
-    const { data } = await Axios.post<{ coach: string }>(`${APIRoute.Subscribe}/${id}`);
+  async (id: string, { dispatch, extra: api }) => {
+    const { data } = await api.post<{ coach: string }>(`${APIRoute.Subscribe}/${id}`);
     dispatch(userSubscribedAction(!!data.coach));
   },
 );
 
-export const deleteSubscribeAction = createAsyncThunk(
+export const deleteSubscribeAction = createAsyncThunk<void, string, ThunkType>(
   'subscribe/delete',
-  async (id: string, { dispatch }) => {
-    const { data } = await Axios.delete<{ coach: string }>(`${APIRoute.Subscribe}/${id}`);
+  async (id: string, { dispatch, extra: api }) => {
+    const { data } = await api.delete<{ coach: string }>(`${APIRoute.Subscribe}/${id}`);
     dispatch(userSubscribedAction(!!data.coach));
   },
 );

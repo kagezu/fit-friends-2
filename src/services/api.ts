@@ -5,7 +5,7 @@ const BACKEND_URL = 'http://localhost:3333/api';
 const REQUEST_TIMEOUT = 5000;
 const AUTHORIZATION_FIELD = 'Authorization';
 
-const createAPI = (): AxiosInstance => {
+export const createAPI = (): AxiosInstance => {
   const api = axios.create({
     baseURL: BACKEND_URL,
     timeout: REQUEST_TIMEOUT,
@@ -25,5 +25,3 @@ const createAPI = (): AxiosInstance => {
 
   return api;
 };
-
-export const Axios = createAPI();

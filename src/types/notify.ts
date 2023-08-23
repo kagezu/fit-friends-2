@@ -1,5 +1,5 @@
 export type Notify = {
   id: string;
-  createdAt: Date;
+  createdAt: Date | string;
   message: string;
 }

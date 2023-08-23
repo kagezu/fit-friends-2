@@ -6,12 +6,12 @@ export type User = {
   email: string;
   avatar?: string;
   gender: string;
-  birthday?: Date;
+  birthday?: Date | string;
   role: Role;
   description?: string;
   location: string;
   background?: string;
-  createdAt?: Date;
+  createdAt?: Date | string;
 
   trainingLevel?: string;
   trainingTypes?: string[];

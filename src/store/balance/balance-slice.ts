@@ -3,7 +3,6 @@ import { NameSpace } from '../../const';
 import { Balance } from '../../types/balance';
 
 export const balanceInitialState: Balance = {
-  training: '',
   count: 0
 };
 

@@ -20,7 +20,6 @@ export const userProcess = createSlice({
   },
 });
 
-
 export const usersSlice = createSlice({
   name: NameSpace.Users,
   initialState: [] as User[],

@@ -1,14 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { APIRoute } from '../../const';
-import { Axios } from '../../services/api';
 import { Notify } from '../../types/notify';
 import { notifyDelete, notifyUpdate } from './notify-process';
+import { ThunkType } from '../../types/thunk-type';
 
-export const getNotifyIndexAction = createAsyncThunk(
+export const getNotifyIndexAction = createAsyncThunk<void, void, ThunkType>(
   'notify/index',
-  async (_, { dispatch }) => {
+  async (_, { dispatch, extra: api }) => {
     try {
-      const { data }: { data: Notify[] } = await Axios.get<Notify[]>(APIRoute.Notify);
+      const { data }: { data: Notify[] } = await api.get<Notify[]>(APIRoute.Notify);
       dispatch(notifyUpdate(data));
     } catch {
       dispatch(notifyUpdate([]));
@@ -16,10 +16,10 @@ export const getNotifyIndexAction = createAsyncThunk(
   },
 );
 
-export const deleteNotifyAction = createAsyncThunk(
+export const deleteNotifyAction = createAsyncThunk<void, { id: string; index: number }, ThunkType>(
   'notify/delete',
-  async ({ id, index }: { id: string; index: number }, { dispatch }) => {
-    await Axios.delete(`${APIRoute.Notify}/${id}`);
+  async ({ id, index }, { dispatch, extra: api }) => {
+    await api.delete(`${APIRoute.Notify}/${id}`);
     dispatch(notifyDelete(index));
   },
 );
