@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { AppRoute, Role } from '../../const';
 import Intro from '../../pages/intro/intro';
 import SignIn from '../../pages/sign-in/sign-in';
@@ -59,239 +59,237 @@ const redirectSignIn: Redirect = {
 export default function App(): JSX.Element {
   const role = useAppSelector(getRole);
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Разводящая */}
-        <Route path={AppRoute.Intro} element={<Intro />} />
+    <Routes>
+      {/* Разводящая */}
+      <Route path={AppRoute.Intro} element={<Intro />} />
 
-        {/* Вход (роль: unknown) */}
-        <Route
-          path={AppRoute.SignIn}
-          element={
-            <RedirectRoute target={role} routes={[
-              redirectUserIndex,
-              redirectPersonalAccountCoach
-            ]}
-            >
-              <SignIn />
-            </RedirectRoute>
-          }
-        />
+      {/* Вход (роль: unknown) */}
+      <Route
+        path={AppRoute.SignIn}
+        element={
+          <RedirectRoute target={role} routes={[
+            redirectUserIndex,
+            redirectPersonalAccountCoach
+          ]}
+          >
+            <SignIn />
+          </RedirectRoute>
+        }
+      />
 
-        {/* Регистрация (роль: unknown) */}
-        <Route
-          path={AppRoute.SignUp}
-          element={
-            <RedirectRoute target={role} routes={[
-              redirectUserIndex,
-              redirectPersonalAccountCoach
-            ]}
-            >
-              <SignUp />
-            </RedirectRoute>
-          }
-        />
+      {/* Регистрация (роль: unknown) */}
+      <Route
+        path={AppRoute.SignUp}
+        element={
+          <RedirectRoute target={role} routes={[
+            redirectUserIndex,
+            redirectPersonalAccountCoach
+          ]}
+          >
+            <SignUp />
+          </RedirectRoute>
+        }
+      />
 
-        {/*  Главная (роль: user) */}
-        <Route
-          path={AppRoute.Index}
-          element={
-            <RedirectRoute target={role} routes={[
-              redirectSignIn, redirectPersonalAccountCoach
-            ]}
-            >
-              <Index />
-            </RedirectRoute>
-          }
-        />
+      {/*  Главная (роль: user) */}
+      <Route
+        path={AppRoute.Index}
+        element={
+          <RedirectRoute target={role} routes={[
+            redirectSignIn, redirectPersonalAccountCoach
+          ]}
+          >
+            <Index />
+          </RedirectRoute>
+        }
+      />
 
-        {/* Личный кабинет пользователя (роль: user) */}
-        <Route
-          path={AppRoute.PersonalAccountUser}
-          element={
-            <RedirectRoute target={role} routes={[
-              redirectSignIn,
-              redirectPersonalAccountCoach
-            ]}
-            >
-              <PersonalAccountUser />
-            </RedirectRoute>
-          }
-        />
+      {/* Личный кабинет пользователя (роль: user) */}
+      <Route
+        path={AppRoute.PersonalAccountUser}
+        element={
+          <RedirectRoute target={role} routes={[
+            redirectSignIn,
+            redirectPersonalAccountCoach
+          ]}
+          >
+            <PersonalAccountUser />
+          </RedirectRoute>
+        }
+      />
 
-        {/* Личный кабинет тренера (роль: coach) */}
-        <Route
-          path={AppRoute.PersonalAccountCoach}
-          element={
-            <PrivateRoute role={role} roles={[Role.Coach]}>
-              <PersonalAccountCoach />
-            </PrivateRoute>
-          }
-        />
+      {/* Личный кабинет тренера (роль: coach) */}
+      <Route
+        path={AppRoute.PersonalAccountCoach}
+        element={
+          <PrivateRoute role={role} roles={[Role.Coach]}>
+            <PersonalAccountCoach />
+          </PrivateRoute>
+        }
+      />
 
-        {/* Список друзей пользователя (роль: user) */}
-        <Route
-          path={AppRoute.FriendsListUser}
-          element={
-            <RedirectRoute target={role} routes={[
-              redirectSignIn,
-              redirectFriendsListCoach
-            ]}
-            >
-              <FriendsListUser />
-            </RedirectRoute>
-          }
-        />
+      {/* Список друзей пользователя (роль: user) */}
+      <Route
+        path={AppRoute.FriendsListUser}
+        element={
+          <RedirectRoute target={role} routes={[
+            redirectSignIn,
+            redirectFriendsListCoach
+          ]}
+          >
+            <FriendsListUser />
+          </RedirectRoute>
+        }
+      />
 
-        {/* Список друзей тренера (роль: coach) */}
-        <Route
-          path={AppRoute.FriendsListCoach}
-          element={
-            <PrivateRoute role={role} roles={[Role.Coach]}>
-              <FriendsListCoach />
-            </PrivateRoute>
-          }
-        />
+      {/* Список друзей тренера (роль: coach) */}
+      <Route
+        path={AppRoute.FriendsListCoach}
+        element={
+          <PrivateRoute role={role} roles={[Role.Coach]}>
+            <FriendsListCoach />
+          </PrivateRoute>
+        }
+      />
 
-        {/* Опросник пользователя (роль: user) */}
-        <Route
-          path={AppRoute.QuestionnaireUser}
-          element={
-            <PrivateRoute role={role} roles={[Role.User]}>
-              <QuestionnaireUser />
-            </PrivateRoute>
-          }
-        />
+      {/* Опросник пользователя (роль: user) */}
+      <Route
+        path={AppRoute.QuestionnaireUser}
+        element={
+          <PrivateRoute role={role} roles={[Role.User]}>
+            <QuestionnaireUser />
+          </PrivateRoute>
+        }
+      />
 
-        {/* Опросник тренера (роль: coach) */}
-        <Route
-          path={AppRoute.QuestionnaireCoach}
-          element={
-            <PrivateRoute role={role} roles={[Role.Coach]}>
-              <QuestionnaireCoach />
-            </PrivateRoute>
-          }
-        />
+      {/* Опросник тренера (роль: coach) */}
+      <Route
+        path={AppRoute.QuestionnaireCoach}
+        element={
+          <PrivateRoute role={role} roles={[Role.Coach]}>
+            <QuestionnaireCoach />
+          </PrivateRoute>
+        }
+      />
 
-        {/* Каталог тренировок (роль: user) */}
-        <Route
-          path={AppRoute.TrainingCatalog}
-          element={
-            <RedirectRoute target={role} routes={[
-              redirectSignIn,
-              redirectPersonalAccountCoach
-            ]}
-            >
-              <TrainingCatalog />
-            </RedirectRoute>
-          }
-        />
+      {/* Каталог тренировок (роль: user) */}
+      <Route
+        path={AppRoute.TrainingCatalog}
+        element={
+          <RedirectRoute target={role} routes={[
+            redirectSignIn,
+            redirectPersonalAccountCoach
+          ]}
+          >
+            <TrainingCatalog />
+          </RedirectRoute>
+        }
+      />
 
-        {/* Карточка тренировки (роль: user) */}
-        <Route
-          path={`${AppRoute.TrainingCardUser}/:id`}
-          element={
-            <RedirectRoute target={role} routes={[
-              redirectSignIn,
-              redirectTrainingCardCoach
-            ]}
-            >
-              <TrainingCardUser />
-            </RedirectRoute>
-          }
-        />
+      {/* Карточка тренировки (роль: user) */}
+      <Route
+        path={`${AppRoute.TrainingCardUser}/:id`}
+        element={
+          <RedirectRoute target={role} routes={[
+            redirectSignIn,
+            redirectTrainingCardCoach
+          ]}
+          >
+            <TrainingCardUser />
+          </RedirectRoute>
+        }
+      />
 
-        {/* Карточка тренировки (роль: coach) */}
-        <Route
-          path={`${AppRoute.TrainingCardCoach}/:id`}
-          element={
-            <RedirectRoute target={role} routes={[
-              redirectSignIn,
-              redirectTrainingCardUser
-            ]}
-            >
-              <TrainingCardCoach />
-            </RedirectRoute>
-          }
-        />
+      {/* Карточка тренировки (роль: coach) */}
+      <Route
+        path={`${AppRoute.TrainingCardCoach}/:id`}
+        element={
+          <RedirectRoute target={role} routes={[
+            redirectSignIn,
+            redirectTrainingCardUser
+          ]}
+          >
+            <TrainingCardCoach />
+          </RedirectRoute>
+        }
+      />
 
-        {/* Создание новой тренировки (роль: coach) */}
-        <Route
-          path={AppRoute.CreateTraining}
-          element={
-            <PrivateRoute role={role} roles={[Role.Coach]}>
-              <CreateTraining />
-            </PrivateRoute>
-          }
-        />
+      {/* Создание новой тренировки (роль: coach) */}
+      <Route
+        path={AppRoute.CreateTraining}
+        element={
+          <PrivateRoute role={role} roles={[Role.Coach]}>
+            <CreateTraining />
+          </PrivateRoute>
+        }
+      />
 
-        {/* Мои заказы (роль: coach) */}
-        <Route
-          path={AppRoute.MyOrders}
-          element={
-            <PrivateRoute role={role} roles={[Role.Coach]}>
-              <MyOrders />
-            </PrivateRoute>
-          }
-        />
+      {/* Мои заказы (роль: coach) */}
+      <Route
+        path={AppRoute.MyOrders}
+        element={
+          <PrivateRoute role={role} roles={[Role.Coach]}>
+            <MyOrders />
+          </PrivateRoute>
+        }
+      />
 
-        {/* Мои тренировки (роль: coach) */}
-        <Route
-          path={AppRoute.MyTrainings}
-          element={
-            <PrivateRoute role={role} roles={[Role.Coach]}>
-              <MyTrainings />
-            </PrivateRoute>
-          }
-        />
+      {/* Мои тренировки (роль: coach) */}
+      <Route
+        path={AppRoute.MyTrainings}
+        element={
+          <PrivateRoute role={role} roles={[Role.Coach]}>
+            <MyTrainings />
+          </PrivateRoute>
+        }
+      />
 
-        {/* Каталог пользователей (роль: user) */}
-        <Route
-          path={AppRoute.UsersCatalog}
-          element={
-            <PrivateRoute role={role} roles={[Role.User]}>
-              <UsersCatalog />
-            </PrivateRoute>
-          }
-        />
+      {/* Каталог пользователей (роль: user) */}
+      <Route
+        path={AppRoute.UsersCatalog}
+        element={
+          <PrivateRoute role={role} roles={[Role.User]}>
+            <UsersCatalog />
+          </PrivateRoute>
+        }
+      />
 
-        {/* Карточка пользователя */}
-        <Route
-          path={`${AppRoute.UserCardDetail}/:id`}
-          element={
-            <PrivateRoute role={role} roles={[Role.Coach, Role.User]}>
-              <UserCardDetail />
-            </PrivateRoute>
-          }
-        />
+      {/* Карточка пользователя */}
+      <Route
+        path={`${AppRoute.UserCardDetail}/:id`}
+        element={
+          <PrivateRoute role={role} roles={[Role.Coach, Role.User]}>
+            <UserCardDetail />
+          </PrivateRoute>
+        }
+      />
 
-        {/* Мои покупки (роль: user) */}
-        <Route
-          path={AppRoute.MyPurchases}
-          element={
-            <PrivateRoute role={role} roles={[Role.User]}>
-              <MyPurchases />
-            </PrivateRoute>
-          }
-        />
+      {/* Мои покупки (роль: user) */}
+      <Route
+        path={AppRoute.MyPurchases}
+        element={
+          <PrivateRoute role={role} roles={[Role.User]}>
+            <MyPurchases />
+          </PrivateRoute>
+        }
+      />
 
-        {/* Недостаточно прав */}
-        <Route
-          path={AppRoute.Error401}
-          element={<Error401 />}
-        />
+      {/* Недостаточно прав */}
+      <Route
+        path={AppRoute.Error401}
+        element={<Error401 />}
+      />
 
-        {/* Запрошенная страница не существует (роль: user,coach) */}
-        <Route
-          path={AppRoute.Error404}
-          element={
-            <PrivateRoute role={role} roles={[Role.Coach, Role.User]}>
-              <Error404 />
-            </PrivateRoute>
-          }
-        />
+      {/* Запрошенная страница не существует (роль: user,coach) */}
+      <Route
+        path={AppRoute.Error404}
+        element={
+          <PrivateRoute role={role} roles={[Role.Coach, Role.User]}>
+            <Error404 />
+          </PrivateRoute>
+        }
+      />
 
-      </Routes>
-    </BrowserRouter >
+    </Routes>
   );
 }

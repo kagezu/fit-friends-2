@@ -1,6 +1,6 @@
 import { APIRoute, HTTPCode } from '../../const';
 import { mockApi, mockStoreType, mockStore, extractActions } from '../../utils/mock-api';
-import { fakerBalance, fakerPersonalOrder, orderData } from '../../utils/mocks';
+import { fakerBalance, fakerPersonalOrder, orderData } from '../../utils/mock-data';
 import { balanceAction } from '../balance/balance-slice';
 import { responseError } from '../error/error-process';
 import { acceptPersonalOrderAction, createNewOrderAction, createPersonalOrderAction, getPersonalOrderAction, getPersonalOrdersAction, rejectPersonalOrderAction } from './order-api-actions';

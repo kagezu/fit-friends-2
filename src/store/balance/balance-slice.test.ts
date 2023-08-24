@@ -1,4 +1,4 @@
-import { emptyAction, fakerBalance } from '../../utils/mocks';
+import { emptyAction, fakerBalance } from '../../utils/mock-data';
 import { balanceInitialState, balanceAction, balanceSlice } from './balance-slice';
 
 describe('balanceSlice', () => {

@@ -1,4 +1,4 @@
-import { emptyAction, fakerUser, fakerCoach } from '../../utils/mocks';
+import { emptyAction, fakerUser, fakerCoach } from '../../utils/mock-data';
 import { Friend } from '../../types/friend';
 import { friendsSlice, friendsAction } from './friend-slice';
 

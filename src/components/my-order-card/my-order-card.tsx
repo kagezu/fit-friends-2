@@ -63,7 +63,7 @@ export default function MyOrderCard({ training }: { training: Training }): JSX.E
           <svg width="31" height="28" aria-hidden="true">
             <use xlinkHref="#icon-wallet"></use>
           </svg>
-          <p className="thumbnail-training__total-info-value">{training.totalAmount.toLocaleString()}<span>₽</span></p>
+          <p className="thumbnail-training__total-info-value">{training.totalAmount?.toLocaleString()}<span>₽</span></p>
           <p className="thumbnail-training__total-info-text">Общая сумма</p>
         </div>
       </div>

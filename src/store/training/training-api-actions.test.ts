@@ -1,6 +1,6 @@
 import { APIRoute, HTTPCode } from '../../const';
 import { mockApi, mockStoreType, mockStore, extractActions } from '../../utils/mock-api';
-import { fakerTraining } from '../../utils/mocks';
+import { fakerTraining } from '../../utils/mock-data';
 import { responseError } from '../error/error-process';
 import { createTrainingAction, getMyBuyTrainingsAction, getMyTrainingsAction, getTrainingAction, getTrainingsAction, updateTrainingAction } from './training-api-actions';
 import { trainingAction, trainingFiltred, trainingsAction } from './training-slice';

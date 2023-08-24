@@ -1,4 +1,4 @@
-import { emptyAction, fakerReview } from '../../utils/mocks';
+import { emptyAction, fakerReview } from '../../utils/mock-data';
 import { reviewsSlice, reviewsInitialState, reviewsAction, reviewAction } from './review-slice';
 
 describe('reviewsSlice', () => {

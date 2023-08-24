@@ -1,4 +1,4 @@
-import { emptyAction } from '../../utils/mocks';
+import { emptyAction } from '../../utils/mock-data';
 import { errorInitialState, errorProcess, responseError } from './error-process';
 
 describe('errorProcess', () => {

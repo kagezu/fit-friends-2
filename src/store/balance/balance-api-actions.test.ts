@@ -1,6 +1,6 @@
 import { APIRoute, HTTPCode } from '../../const';
 import { mockApi, mockStoreType, mockStore, extractActions } from '../../utils/mock-api';
-import { fakerBalance } from '../../utils/mocks';
+import { fakerBalance } from '../../utils/mock-data';
 import { decreaseBalanceAction, getBalanceAction } from './balance-api-actions';
 import { balanceAction } from './balance-slice';
 

@@ -1,4 +1,4 @@
-import { emptyAction, fakerPersonalOrder } from '../../utils/mocks';
+import { emptyAction, fakerPersonalOrder } from '../../utils/mock-data';
 import { PersonalOrder } from '../../types/personal-order';
 import { personalOrderSlice, initialPersonalOrder, personalOrderAction, personalOrdersSlice, personalOrdersAction } from './order-slice';
 

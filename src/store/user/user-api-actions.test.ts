@@ -1,7 +1,7 @@
 import { APIRoute, AppRoute, HTTPCode } from '../../const';
 import { KeyName } from '../../services/token';
 import { mockApi, mockStoreType, mockStore, extractActions } from '../../utils/mock-api';
-import { fakeUserData, fakerUser } from '../../utils/mocks';
+import { fakeUserData, fakerUser } from '../../utils/mock-data';
 import { responseError } from '../error/error-process';
 import { getNotifyIndexAction } from '../notify/notify-api-actions';
 import { checkAuthAction, deleteSubscribeAction, getSubscribedAction, getUsersAction, loginAction, newSubscribeAction, questionnaireAction, registerAction, userInfoEditAction } from './user-api-actions';

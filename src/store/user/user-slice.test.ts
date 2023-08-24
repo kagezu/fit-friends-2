@@ -1,4 +1,4 @@
-import { fakerCoach, emptyAction, fakerUser } from '../../utils/mocks';
+import { fakerCoach, emptyAction, fakerUser } from '../../utils/mock-data';
 import { User } from '../../types/user';
 import { userProcess, userInitialState, usersSlice, userInfoSlice, userInfoFriendAction, userInfoAction, userSubscribedAction, usersAction, requireAuthorization } from './user-slice';
 

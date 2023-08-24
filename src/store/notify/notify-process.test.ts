@@ -1,4 +1,4 @@
-import { emptyAction, fakerNotifies } from '../../utils/mocks';
+import { emptyAction, fakerNotifies } from '../../utils/mock-data';
 import { notifyDelete, notifyInitialState, notifyProcess, notifyUpdate } from './notify-process';
 
 describe('notifyProcess', () => {

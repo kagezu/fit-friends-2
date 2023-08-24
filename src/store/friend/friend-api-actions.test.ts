@@ -1,6 +1,6 @@
 import { APIRoute, HTTPCode } from '../../const';
 import { mockApi, mockStoreType, mockStore, extractActions } from '../../utils/mock-api';
-import { fakerFriend } from '../../utils/mocks';
+import { fakerFriend } from '../../utils/mock-data';
 import { responseError } from '../error/error-process';
 import { userInfoFriendAction } from '../user/user-slice';
 import { getFriendsAction, getFriendAction, addFriendAction, deleteFriendAction } from './friend-api-actions';

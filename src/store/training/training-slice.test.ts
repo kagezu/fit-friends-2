@@ -1,4 +1,4 @@
-import { emptyAction, fakerTraining } from '../../utils/mocks';
+import { emptyAction, fakerTraining } from '../../utils/mock-data';
 import { trainingSpecialSlice, trainingsInitialState, trainingSpecialForYou, trainingAction, trainingFiltred, trainingFiltredSlice, trainingOffers, trainingOffersSlice, trainingSlice, trainingsAction, trainingsSlice, trainingInitialState } from './training-slice';
 
 describe('trainingSpecialSlice', () => {

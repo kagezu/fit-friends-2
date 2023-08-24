@@ -1,6 +1,6 @@
 import { APIRoute, HTTPCode } from '../../const';
 import { mockApi, mockStoreType, mockStore, extractActions } from '../../utils/mock-api';
-import { fakerReview, reviewData } from '../../utils/mocks';
+import { fakerReview, reviewData } from '../../utils/mock-data';
 import { responseError } from '../error/error-process';
 import { createReviewsAction, getReviewsAction } from './review-api-actions';
 import { reviewAction, reviewsAction } from './review-slice';

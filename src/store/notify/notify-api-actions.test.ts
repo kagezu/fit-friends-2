@@ -1,6 +1,6 @@
 import { APIRoute, HTTPCode } from '../../const';
 import { mockApi, mockStoreType, mockStore, extractActions } from '../../utils/mock-api';
-import { fakerNotifies } from '../../utils/mocks';
+import { fakerNotifies } from '../../utils/mock-data';
 import { getNotifyIndexAction, deleteNotifyAction } from './notify-api-actions';
 import { notifyDelete, notifyUpdate } from './notify-process';
 
