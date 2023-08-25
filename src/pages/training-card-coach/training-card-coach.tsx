@@ -128,13 +128,13 @@ export default function TrainingCardCoach(): JSX.Element {
                         <div className="training-info__info-wrapper">
                           <div className="training-info__input training-info__input--training">
                             <label><span className="training-info__label">Название тренировки</span>
-                              <input onChange={handleFormDataChange} type="text" name="title" value={request?.title} disabled={!isEdit} />
+                              <input onChange={handleFormDataChange} type="text" name="title" value={request?.title ?? ''} disabled={!isEdit} />
                             </label>
                             {errors.title ? <div className="training-info__error" style={{ opacity: 1 }}>{errors.title}</div> : ''}
                           </div>
                           <div className="training-info__textarea">
                             <label><span className="training-info__label">Описание тренировки</span>
-                              <textarea onChange={handleFormDataChange} name="description" value={request?.description} disabled={!isEdit}></textarea>
+                              <textarea onChange={handleFormDataChange} name="description" value={request?.description ?? ''} disabled={!isEdit}></textarea>
                             </label>
                             {errors.description ? <span className="custom-input__error" style={{ opacity: 1 }}>{errors.description}</span> : ''}
                           </div>
@@ -147,7 +147,7 @@ export default function TrainingCardCoach(): JSX.Element {
                                   <use xlinkHref="#icon-star"></use>
                                 </svg>
                               </span>
-                              <input type="number" name="rating" value={training.rating.toFixed()} disabled />
+                              <input type="number" name="rating" value={training.rating.toFixed() ?? ''} disabled />
                             </label>
                           </div>
                           <ul className="training-info__list">
@@ -168,7 +168,7 @@ export default function TrainingCardCoach(): JSX.Element {
                         <div className="training-info__price-wrapper">
                           <div className="training-info__input training-info__input--price">
                             <label><span className="training-info__label">Стоимость, ₽</span>
-                              <input onChange={handleFormDataChange} type="number" name="price" value={request?.price} disabled={!isEdit} min={0} />
+                              <input onChange={handleFormDataChange} type="number" name="price" value={request?.price ?? ''} disabled={!isEdit} min={0} />
                             </label>
                             {errors.price ? <div className="custom-input__error" style={{ opacity: 1 }}>{errors.price}</div> : ''}
                           </div>

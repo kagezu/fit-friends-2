@@ -1,5 +1,5 @@
 import { name, datatype, internet, random, date } from 'faker';
-import { Gender, Intervals, PaymentMethod, Role, TrainingLevel, TrainingType } from '../const';
+import { Gender, Intervals, NameSpace, PaymentMethod, Role, TrainingLevel, TrainingType } from '../const';
 import { User } from '../types/user';
 import { locations } from '../types/arrays';
 import { Training } from '../types/training';
@@ -11,6 +11,7 @@ import { Friend } from '../types/friend';
 import { OrderData } from '../types/order-data';
 import { ReviewData } from '../types/review-data';
 import { UserData } from '../types/user-data';
+import { mockStore } from './mock-api';
 
 const NUMBER_COUNT = 1000;
 const STRING_LENGTH = 30;
@@ -138,3 +139,15 @@ export const fakeUserData: UserData = {
   accessToken: datatype.string(STRING_LENGTH),
   refreshToken: datatype.string(STRING_LENGTH)
 };
+
+export const fakerStore = mockStore({
+  [NameSpace.User]: fakerUser,
+  [NameSpace.UserInfo]: fakerUser,
+  [NameSpace.Users]: [fakerUser],
+  [NameSpace.Error]: {},
+  [NameSpace.Friends]: [fakerFriend],
+  [NameSpace.PersonalOrders]: [fakerPersonalOrder],
+  [NameSpace.TrainingFiltred]: [fakerTraining],
+  [NameSpace.Training]: fakerTraining,
+  [NameSpace.Balance]: fakerBalance,
+});
