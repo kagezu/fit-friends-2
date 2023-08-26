@@ -75,6 +75,8 @@ export const fakerTraining: Training = {
   usersGender: Gender.Unknown,
   specialOffer: false,
   background: BACKGROUND_PATH,
+  totalAmount: NUMBER_COUNT,
+  totalSale: COUNT
 };
 
 export const fakerBalance = {
@@ -142,12 +144,18 @@ export const fakeUserData: UserData = {
 
 export const fakerStore = mockStore({
   [NameSpace.User]: fakerUser,
-  [NameSpace.UserInfo]: fakerUser,
+  [NameSpace.UserInfo]: fakerCoach,
   [NameSpace.Users]: [fakerUser],
   [NameSpace.Error]: {},
   [NameSpace.Friends]: [fakerFriend],
   [NameSpace.PersonalOrders]: [fakerPersonalOrder],
+  [NameSpace.PersonalOrder]: fakerPersonalOrder,
   [NameSpace.TrainingFiltred]: [fakerTraining],
+  [NameSpace.Trainings]: [fakerTraining],
+  [NameSpace.TrainingSpecial]: [fakerTraining],
+  [NameSpace.TrainingOffers]: [fakerTraining],
   [NameSpace.Training]: fakerTraining,
   [NameSpace.Balance]: fakerBalance,
+  [NameSpace.Reviews]: [fakerReview],
+  [NameSpace.Notify]: fakerNotifies,
 });

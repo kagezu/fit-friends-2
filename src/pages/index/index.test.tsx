@@ -24,7 +24,6 @@ describe('Component: Index', () => {
         </BrowserRouter>
       </Provider>
     );
-
     expect(screen.getByText(/Время находить тренировки, спортзалы и друзей спортсменов/i)).toBeInTheDocument();
   });
 });

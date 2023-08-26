@@ -1,11 +1,11 @@
 import { Route, Routes } from 'react-router-dom';
 import { AppRoute, Role } from '../../const';
-import Intro from '../../pages/intro/intro';
-import SignIn from '../../pages/sign-in/sign-in';
-import SignUp from '../../pages/sign-up/sign-up';
 import { useAppSelector } from '../../hooks';
 import { getRole } from '../../store/selectors';
 import RedirectRoute, { Redirect } from '../redirect-route/redirect-route';
+import Intro from '../../pages/intro/intro';
+import SignIn from '../../pages/sign-in/sign-in';
+import SignUp from '../../pages/sign-up/sign-up';
 import Index from '../../pages/index';
 import PrivateRoute from '../private-route/private-route';
 import Error404 from '../../pages/error-404/error-404';
